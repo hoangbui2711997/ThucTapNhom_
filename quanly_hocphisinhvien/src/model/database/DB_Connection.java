@@ -15,25 +15,32 @@ public class DB_Connection {
      * Thay đổi giống tên password trong sql server
      */
     private static String PASSWORD = "hoangbui";
-    private Connection conn = null;
+    private static Connection conn = null;
+    private static Object lock = new Object();
 
-    private DB_Connection(){
+    private DB_Connection () {
     }
 
     /**
      * Khởi tạo lấy connection từ database
      * @return Connection giữa database và java
      */
-    public static Connection getConnection() {
-        Connection conn = null;
+    public synchronized static Connection getConnection() {
+
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
-            System.out.println("connect successfully!");
+            synchronized (lock) {
+                if (conn == null) {
+                    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                    conn = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
+                    System.out.println("connect successfully!");
+                }
+
+                return conn;
+            }
         } catch (Exception ex) {
             System.out.println("connect failure!");
             ex.printStackTrace();
+            return null;
         }
-        return conn;
     }
 }
