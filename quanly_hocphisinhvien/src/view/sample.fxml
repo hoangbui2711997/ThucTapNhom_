@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" />
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXButton layoutX="113.0" layoutY="76.0" prefHeight="59.0" prefWidth="154.0" />
+      <JFXCheckBox layoutX="124.0" layoutY="200.0" prefHeight="18.0" prefWidth="194.0" />
+      <JFXPasswordField layoutX="66.0" layoutY="254.0" />
+      <JFXProgressBar layoutX="50.0" layoutY="333.0" />
+      <JFXRadioButton layoutX="347.0" layoutY="118.0" />
+      <JFXSlider layoutX="370.0" layoutY="260.0" />
+      <JFXTextArea layoutY="60.0" prefHeight="114.0" prefWidth="75.0" />
+      <JFXTextField layoutX="326.0" layoutY="333.0" />
+   </children>
+</Pane>
