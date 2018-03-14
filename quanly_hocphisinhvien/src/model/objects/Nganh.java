@@ -16,9 +16,17 @@ public class Nganh {
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public Nganh(int ma, String ten) {
+    public Nganh(String ten) {
+        this.ten = ten;
+    }
+
+    private Nganh(int ma, String ten) {
         this.ma = ma;
         this.ten = ten;
+    }
+
+    public static Nganh getInstanceID(int ma, String ten) {
+        return new Nganh(ma, ten);
     }
 
     public List<BoMon> getDsBoMon() {
@@ -33,10 +41,6 @@ public class Nganh {
         return ma;
     }
 
-    public void setMa(int ma) {
-        this.ma = ma;
-    }
-
     public String getTen() {
         return ten;
     }
@@ -45,50 +49,58 @@ public class Nganh {
         this.ten = ten;
     }
 
-    public static class Search{
-        private Search() {}
-
-        public synchronized static Nganh where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM NGANH WHERE " + where);
-                resultSet.next();
-
-                return searchDB.getNganh(resultSet);
-            }
+    public static class Search {
+        private Search() {
         }
 
-        /**
-         *
-         * @return Lay tat ca sinh vien trong csdl
-         * @throws SQLException
-         */
-        public synchronized static List<Nganh> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsNganh();
-            }
+        public static Nganh where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM NGANH WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getNganh(resultSet);
         }
     }
 
-    public static Boolean Insert(Nganh nganh, int maKhoa) throws SQLException {
-        try {
-            statement = "INSERT INTO NGANH VALUES" +
-                    "(" + nganh.getMa() + ", " +
-                    "N'" + nganh.getTen() + "', " +
-                    maKhoa + ", " +
-                    ")";
+    /**
+     * @return Lay tat ca sinh vien trong csdl
+     * @throws SQLException
+     */
+    public static List<Nganh> getAll() throws SQLException {
+        return searchDB.getDsNganh();
+    }
 
+    @Override
+    public String toString() {
+        return "Nganh{" +
+                "ma=" + ma +
+                ", ten='" + ten + '\'' +
+                '}';
+    }
+
+    public static Nganh Insert(Nganh nganh, int maKhoa) throws SQLException {
+        try {
+//            statement = "INSERT INTO NGANH(manganh, tennganh, khoa) VALUES" +
+//                    "(" + nganh.getMa() + ", " +
+//                    "N'" + nganh.getTen() + "', " +
+//                    maKhoa + ", " +
+//                    ")";
+            int id = InsertDB.getInstance().initInsert("NGANH");
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            Nganh.Update.where("manganh = " + id, new Nganh(id, nganh.getTen()), maKhoa);
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new Nganh(id, nganh.getTen());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
@@ -107,8 +119,7 @@ public class Nganh {
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where    DK - update
          * @param newNganh DangKy update
          * @return
          * @throws SQLException
@@ -116,9 +127,10 @@ public class Nganh {
         public static Boolean where(String where, Nganh newNganh, int maKhoa) throws SQLException {
             try {
                 statement = "UPDATE NGANH " +
-                        "SET manganh = " + newNganh.getMa() + ", " +
+                        "SET " +
+//                        "manganh = " + newNganh.getMa() + ", " +
                         "tennganh = N'" + newNganh.getTen() + "', " +
-                        "makhoa = " + maKhoa + " " +
+                        "makhoa = " + maKhoa +
                         "where " + where;
                 UpdateDB.getInstance().updateCommand(statement);
                 return true;

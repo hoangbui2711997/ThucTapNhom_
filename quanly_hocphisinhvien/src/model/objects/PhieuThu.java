@@ -18,7 +18,15 @@ public class PhieuThu {
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public PhieuThu(int ma, int maSV, long soTien, Date ngayBatDauThu, Date ngayNop, boolean trangThai) {
+    public PhieuThu(int maSV, long soTien, Date ngayBatDauThu, Date ngayNop, boolean trangThai) {
+        this.maSV = maSV;
+        this.soTien = soTien;
+        this.ngayBatDauThu = ngayBatDauThu;
+        this.ngayNop = ngayNop;
+        this.trangThai = trangThai;
+    }
+
+    private PhieuThu(int ma, int maSV, long soTien, Date ngayBatDauThu, Date ngayNop, boolean trangThai) {
         this.ma = ma;
         this.maSV = maSV;
         this.soTien = soTien;
@@ -27,12 +35,12 @@ public class PhieuThu {
         this.trangThai = trangThai;
     }
 
-    public int getMa() {
-        return ma;
+    public static PhieuThu getInstanceID(int ma, int maSV, long soTien, Date ngayBatDauThu, Date ngayNop, boolean trangThai) {
+        return new PhieuThu(ma, maSV, soTien, ngayBatDauThu, ngayNop, trangThai);
     }
 
-    public void setMa(int ma) {
-        this.ma = ma;
+    public int getMa() {
+        return ma;
     }
 
     public int getMaSV() {
@@ -75,54 +83,68 @@ public class PhieuThu {
         this.trangThai = trangThai;
     }
 
-    public static class Search{
-        private Search() {}
+    public static class Search {
+        private Search() {
+        }
 
-        public synchronized static PhieuThu where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM PHIEUTHU WHERE " + where);
-                resultSet.next();
+        public static PhieuThu where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM PHIEUTHU WHERE " + where);
+            resultSet.next();
 
-                return searchDB.getPhieuThu(resultSet);
-            }
+            return searchDB.getPhieuThu(resultSet);
         }
 
         /**
-         *
          * @return Lay tat ca sinh vien trong csdl
          * @throws SQLException
          */
-        public synchronized static List<PhieuThu> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsPhieuThu();
-            }
+        public static List<PhieuThu> getAll() throws SQLException {
+            return searchDB.getDsPhieuThu();
         }
     }
 
-    public static Boolean Insert(PhieuThu phieuThu) throws SQLException {
-        try {
-            statement = "INSERT INTO PHIEUTHU VALUES" +
-                    "(" +
-                    phieuThu.getMa() + ", " +
-                    phieuThu.getSoTien() + ", " +
-                    phieuThu.getMaSV() + ", " +
-                    "'" + phieuThu.getNgayBatDauThu() + "', " +
-                    "'" + phieuThu.getNgayNop() + "', " +
-                    (phieuThu.getTrangThai() == true ? "1" : "0") + ", " +
-                    ")";
+    @Override
+    public String toString() {
+        return "PhieuThu{" +
+                "ma=" + ma +
+                ", maSV=" + maSV +
+                ", soTien=" + soTien +
+                ", ngayBatDauThu=" + ngayBatDauThu +
+                ", ngayNop=" + ngayNop +
+                ", trangThai=" + trangThai +
+                '}';
+    }
 
+    public static PhieuThu Insert(PhieuThu phieuThu) throws SQLException {
+        try {
+//            statement = "INSERT INTO PHIEUTHU VALUES" +
+//                    "(" +
+//                    phieuThu.getMa() + ", " +
+//                    phieuThu.getSoTien() + ", " +
+//                    phieuThu.getMaSV() + ", " +
+//                    "'" + phieuThu.getNgayBatDauThu() + "', " +
+//                    "'" + phieuThu.getNgayNop() + "', " +
+//                    (phieuThu.getTrangThai() == true ? "1" : "0") + ", " +
+//                    ")";
+            int id = InsertDB.getInstance().initInsert("PHIEUTHU");
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            PhieuThu.Update.where("mapt = " + id, new PhieuThu(id, phieuThu.getMaSV(),
+//                    phieuThu.getSoTien(), phieuThu.getNgayBatDauThu(), phieuThu.getNgayNop(), phieuThu.getTrangThai()));
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new PhieuThu(id, phieuThu.getMaSV(),
+                    phieuThu.getSoTien(), phieuThu.getNgayBatDauThu(), phieuThu.getNgayNop(), phieuThu.getTrangThai());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
@@ -141,8 +163,7 @@ public class PhieuThu {
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where       DK - update
          * @param newPhieuThu DangKy update
          * @return
          * @throws SQLException
@@ -150,12 +171,12 @@ public class PhieuThu {
         public static Boolean where(String where, PhieuThu newPhieuThu) throws SQLException {
             try {
                 statement = "UPDATE PHIEUTHU set " +
-                        "mahp = " + newPhieuThu.getMa() + ", " +
+//                        "mapt = " + newPhieuThu.getMa() + ", " +
                         "sotien = " + newPhieuThu.getSoTien() + ", " +
                         "masv = N'" + newPhieuThu.getMaSV() + "', " +
                         "ngaybatdauthu = " + newPhieuThu.getNgayBatDauThu() + ", " +
                         "ngaynop = " + newPhieuThu.getNgayNop() + ", " +
-                        "trangthai = N'"+ newPhieuThu.getTrangThai() +"' " +
+                        "trangthai = N'" + newPhieuThu.getTrangThai() + "' " +
                         "where " + where;
                 UpdateDB.getInstance().updateCommand(statement);
                 return true;

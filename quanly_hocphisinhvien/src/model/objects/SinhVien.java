@@ -19,7 +19,7 @@ public class SinhVien {
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public SinhVien(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, Date ngaySinh) {
+    public SinhVien(int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, Date ngaySinh) {
         this.maSV = maSV;
         this.maDT = maDT;
         this.maBoMon = maBoMon;
@@ -27,6 +27,20 @@ public class SinhVien {
         this.diaChi = diaChi;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
+    }
+
+    private SinhVien(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, Date ngaySinh) {
+        this.maSV = maSV;
+        this.maDT = maDT;
+        this.maBoMon = maBoMon;
+        this.tenSV = tenSV;
+        this.diaChi = diaChi;
+        this.gioiTinh = gioiTinh;
+        this.ngaySinh = ngaySinh;
+    }
+
+    public static SinhVien getInstanceID(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, Date ngaySinh) {
+        return new SinhVien(maSV, maDT, maBoMon, tenSV, diaChi, gioiTinh, ngaySinh);
     }
 
     public List<SinhVien> getDsSinhVien() {
@@ -39,10 +53,6 @@ public class SinhVien {
 
     public int getMaSV() {
         return maSV;
-    }
-
-    public void setMaSV(int maSV) {
-        this.maSV = maSV;
     }
 
     public int getMaDT() {
@@ -93,55 +103,54 @@ public class SinhVien {
         this.ngaySinh = ngaySinh;
     }
 
-    public static class Search{
-        private Search() {}
+    public static class Search {
+        private Search() {
+        }
 
-        public synchronized static SinhVien where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM SINHVIEN WHERE " + where);
-                resultSet.next();
+        public static SinhVien where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM SINHVIEN WHERE " + where);
+            resultSet.next();
 
-                return searchDB.getSV(resultSet);
-            }
+            return searchDB.getSV(resultSet);
         }
 
         /**
-         *
          * @return Lay tat ca sinh vien trong csdl
          * @throws SQLException
          */
-        public synchronized static List<SinhVien> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsSinhVien();
-            }
+        public static List<SinhVien> getAll() throws SQLException {
+            return searchDB.getDsSinhVien();
         }
     }
 
-    public static Boolean Insert(SinhVien sinhVien) throws SQLException {
+    public static SinhVien Insert(SinhVien sinhVien) throws SQLException {
         try {
-            statement = "INSERT INTO SINHVIEN VALUES" +
-                    "(" +
-                    sinhVien.getMaSV() + ", " +
-                    sinhVien.getMaDT() + ", " +
-                    sinhVien.getMaBoMon() + ", " +
-                    "N'" + sinhVien.getTenSV() + "', " +
-                    "N'" + (sinhVien.getGioiTinh() == true ? "Nam" : "Nữ") + "', " +
-                    "'" + sinhVien.getNgaySinh() + "', " +
-                    "N'" + sinhVien.getDiaChi() + "', " +
-                    ")";
+//            statement = "INSERT INTO SINHVIEN(masv, madt, mabm, tensv, gioitinh, ngaysinh, diachi) VALUES" +
+//                    "(" +
+//                    sinhVien.getMaSV() + ", " +
+//                    sinhVien.getMaDT() + ", " +
+//                    sinhVien.getMaBoMon() + ", " +
+//                    "N'" + sinhVien.getTenSV() + "', " +
+//                    "N'" + (sinhVien.getGioiTinh() == true ? "Nam" : "Nữ") + "', " +
+//                    "'" + sinhVien.getNgaySinh() + "', " +
+//                    "N'" + sinhVien.getDiaChi() + "', " +
+//                    ")";
+            int id = InsertDB.getInstance().initInsert("SINHVIEN");
 
+//            SinhVien.Update.where("masv = " + id, new SinhVien(id, sinhVien.getMaDT(), sinhVien.getMaBoMon(),
+//                    sinhVien.getTenSV(), sinhVien.getDiaChi(), sinhVien.getGioiTinh(), sinhVien.getNgaySinh()));
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new SinhVien(id, sinhVien.getMaDT(), sinhVien.getMaBoMon(),
+                    sinhVien.getTenSV(), sinhVien.getDiaChi(), sinhVien.getGioiTinh(), sinhVien.getNgaySinh());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
@@ -157,11 +166,23 @@ public class SinhVien {
         }
     }
 
+    @Override
+    public String toString() {
+        return "SinhVien{" +
+                "maSV=" + maSV +
+                ", maDT=" + maDT +
+                ", maBoMon=" + maBoMon +
+                ", tenSV='" + tenSV + '\'' +
+                ", diaChi='" + diaChi + '\'' +
+                ", gioiTinh=" + gioiTinh +
+                ", ngaySinh=" + ngaySinh +
+                '}';
+    }
+
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where       DK - update
          * @param newSinhVien DangKy update
          * @return
          * @throws SQLException
@@ -169,13 +190,13 @@ public class SinhVien {
         public static Boolean where(String where, SinhVien newSinhVien) throws SQLException {
             try {
                 statement = "UPDATE SINHVIEN set " +
-                        "masv = " + newSinhVien.getMaSV() + ", " +
+//                        "masv = " + newSinhVien.getMaSV() + ", " +
                         "madt = " + newSinhVien.getMaDT() + ", " +
                         "mabm = " + newSinhVien.getMaBoMon() + ", " +
                         "tensv = N'" + newSinhVien.getTenSV() + "', " +
                         "gioitinh = N'" + (newSinhVien.getGioiTinh() == true ? "Nam" : "Nữ") + "', " +
-                        "ngaysinh = '"+ newSinhVien.getNgaySinh() +"' " +
-                        "diachi = N'"+ newSinhVien.getDiaChi() +"' " +
+                        "ngaysinh = '" + newSinhVien.getNgaySinh() + "' " +
+                        "diachi = N'" + newSinhVien.getDiaChi() + "' " +
 
                         "where " + where;
                 UpdateDB.getInstance().updateCommand(statement);

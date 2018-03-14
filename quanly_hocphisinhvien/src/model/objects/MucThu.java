@@ -18,18 +18,23 @@ public class MucThu {
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public MucThu(int maMucThu, String moTa, long soTien) {
+    public MucThu(String moTa, long soTien) {
+        this.moTa = moTa;
+        this.soTien = soTien;
+    }
+
+    private MucThu(int maMucThu, String moTa, long soTien) {
         this.maMucThu = maMucThu;
         this.moTa = moTa;
         this.soTien = soTien;
     }
 
-    public int getMaMucThu() {
-        return maMucThu;
+    public static MucThu getInstanceID(int maMucThu, String moTa, long soTien) {
+        return new MucThu(maMucThu, moTa, soTien);
     }
 
-    public void setMaMucThu(int maMucThu) {
-        this.maMucThu = maMucThu;
+    public int getMaMucThu() {
+        return maMucThu;
     }
 
     public String getMoTa() {
@@ -56,50 +61,56 @@ public class MucThu {
         this.dsHocPhan = dsHocPhan;
     }
 
-    public static class Search{
-        private Search() {}
+    @Override
+    public String toString() {
+        return "MucThu{" +
+                "maMucThu=" + maMucThu +
+                ", moTa='" + moTa + '\'' +
+                ", soTien=" + soTien +
+                '}';
+    }
 
-        public synchronized static MucThu where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM MUCTHU WHERE " + where);
-                resultSet.next();
-
-                return searchDB.getMucThu(resultSet);
-            }
+    public static class Search {
+        private Search() {
         }
 
-        /**
-         *
-         * @return Lay tat ca sinh vien trong csdl
-         * @throws SQLException
-         */
-        public synchronized static List<MucThu> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsMucTHu();
-            }
+        public static MucThu where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM MUCTHU WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getMucThu(resultSet);
         }
     }
 
-    public static Boolean Insert(MucThu mucThu) throws SQLException {
-        try {
-            statement = "INSERT INTO MUCTHU VALUES" +
-                    "(" + mucThu.getMaMucThu() + ", " +
-                    "N'" + mucThu.getMoTa() + "', " +
-                    mucThu.getSoTien() +
-                    ")";
+    /**
+     * @return Lay tat ca sinh vien trong csdl
+     * @throws SQLException
+     */
+    public static List<MucThu> getAll() throws SQLException {
+        return searchDB.getDsMucTHu();
+    }
 
+    public static MucThu Insert(MucThu mucThu) throws SQLException {
+        try {
+//            statement = "INSERT INTO MUCTHU(mamucthu, mota, sotien) VALUES" +
+//                    "(" + mucThu.getMaMucThu() + ", " +
+//                    "N'" + mucThu.getMoTa() + "', " +
+//                    mucThu.getSoTien() +
+//                    ")";
+            int id = InsertDB.getInstance().initInsert("MUCTHU");
+
+            MucThu.Update.where("mamucthu = " + id, new MucThu(id, mucThu.getMoTa(), mucThu.getSoTien()));
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new MucThu(id, mucThu.getMoTa(), mucThu.getSoTien());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
@@ -118,8 +129,7 @@ public class MucThu {
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where     DK - update
          * @param newMucThu DangKy update
          * @return
          * @throws SQLException
@@ -127,7 +137,8 @@ public class MucThu {
         public static Boolean where(String where, MucThu newMucThu) throws SQLException {
             try {
                 statement = "UPDATE MUCTHU " +
-                        "SET mamucthu = " + newMucThu.getMaMucThu() + ", " +
+                        "SET " +
+//                        "mamucthu = " + newMucThu.getMaMucThu() + ", " +
                         "mota = N'" + newMucThu.getMoTa() + "', " +
                         "sotien = " + newMucThu.getSoTien() + " " +
                         "where " + where;

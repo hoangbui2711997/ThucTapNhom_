@@ -16,17 +16,22 @@ public class Khoa {
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public Khoa(int ma, String ten) {
+    public Khoa(String ten) {
         this.ma = ma;
         this.ten = ten;
     }
 
-    public int getMa() {
-        return ma;
+    private Khoa(int ma, String ten) {
+        this.ma = ma;
+        this.ten = ten;
     }
 
-    public void setMa(int ma) {
-        this.ma = ma;
+    public static Khoa getInstanceID(int ma, String ten) {
+        return new Khoa(ma, ten);
+    }
+
+    public int getMa() {
+        return ma;
     }
 
     public String getTen() {
@@ -45,49 +50,59 @@ public class Khoa {
         this.dsNganh = dsNganh;
     }
 
-    public static class Search{
-        private Search() {}
+    @Override
+    public String toString() {
+        return "Khoa{" +
+                "ma=" + ma +
+                ", ten='" + ten + '\'' +
+                '}';
+    }
 
-        public synchronized static Khoa where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM KHOA WHERE " + where);
-                resultSet.next();
-
-                return searchDB.getKhoa(resultSet);
-            }
+    public static class Search {
+        private Search() {
         }
 
-        /**
-         *
-         * @return Lay tat ca sinh vien trong csdl
-         * @throws SQLException
-         */
-        public synchronized static List<Khoa> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsKhoa();
-            }
+        public static Khoa where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM KHOA WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getKhoa(resultSet);
         }
     }
 
-    public static Boolean Insert(DoiTuong khoa) throws SQLException {
+    /**
+     * @return Lay tat ca sinh vien trong csdl
+     * @throws SQLException
+     */
+    public static List<Khoa> getAll() throws SQLException {
+        return searchDB.getDsKhoa();
+    }
+
+    public static Khoa Insert(Khoa khoa) throws SQLException {
         try {
-            statement = "INSERT INTO KHOA VALUES" +
-                    "(" +
-                    khoa.getMa() + ", " +
-                    "N'" + khoa.getTen() + "' " +
-                    ")";
+//            statement = "INSERT INTO KHOA(makhoa, tenkhoa) VALUES" +
+//                    "(" +
+//                    khoa.getMa() + ", " +
+//                    "N'" + khoa.getTen() + "' " +
+//                    ")";
+            int id = InsertDB.getInstance().initInsert("KHOA");
+
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            Khoa.Update.where("makhoa = " + id, new Khoa(id, khoa.getTen()));
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new Khoa(id, khoa.getTen());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
@@ -106,8 +121,7 @@ public class Khoa {
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where   DK - update
          * @param newKhoa DangKy update
          * @return
          * @throws SQLException
@@ -115,8 +129,9 @@ public class Khoa {
         public static Boolean where(String where, Khoa newKhoa) throws SQLException {
             try {
                 statement = "UPDATE KHOA " +
-                        "SET makhoa = " + newKhoa.getMa() + ", " +
-                        "tenkhoa = N'" + newKhoa.getTen() + "', " +
+                        "SET " +
+//                        "makhoa = " + newKhoa.getMa() + ", " +
+                        "tenkhoa = N'" + newKhoa.getTen() + "' " +
                         "WHERE " + where;
                 UpdateDB.getInstance().updateCommand(statement);
                 return true;

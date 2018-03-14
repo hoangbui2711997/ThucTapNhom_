@@ -16,17 +16,21 @@ public class GiangDuong {
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public GiangDuong(int ma, String ten) {
+    private GiangDuong(int ma, String ten) {
         this.ma = ma;
         this.ten = ten;
     }
 
-    public int getMa() {
-        return ma;
+    public GiangDuong(String ten) {
+        this.ten = ten;
     }
 
-    public void setMa(int ma) {
-        this.ma = ma;
+    public static GiangDuong getInstanceID(int ma, String ten) {
+        return new GiangDuong(ma, ten);
+    }
+
+    public int getMa() {
+        return ma;
     }
 
     public String getTen() {
@@ -45,49 +49,56 @@ public class GiangDuong {
         this.dsDangKy = dsDangKy;
     }
 
-    public static class Search{
-        private Search() {}
-
-        public synchronized static GiangDuong where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM GIANGDUONG WHERE " + where);
-                resultSet.next();
-
-                return searchDB.getGiangDuong(resultSet);
-            }
+    public static class Search {
+        private Search() {
         }
 
-        /**
-         *
-         * @return Lay tat ca sinh vien trong csdl
-         * @throws SQLException
-         */
-        public synchronized static List<GiangDuong> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsGiangDuong();
-            }
+        public static GiangDuong where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM GIANGDUONG WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getGiangDuong(resultSet);
         }
     }
 
-    public static Boolean Insert(GiangDuong giangDuong) throws SQLException {
+    /**
+     * @return Lay tat ca sinh vien trong csdl
+     * @throws SQLException
+     */
+    public static List<GiangDuong> getAll() throws SQLException {
+        return searchDB.getDsGiangDuong();
+    }
+
+    public static GiangDuong Insert(GiangDuong giangDuong) throws SQLException {
         try {
-            statement = "INSERT INTO GIANGDUONG VALUES" +
+
+
+            int id = InsertDB.getInstance().initInsert("GIANGDUONG");
+
+            statement = "INSERT INTO GIANGDUONG(tengd) VALUES" +
                     "(" +
-                    giangDuong.getMa() + ", " +
+//                    giangDuong.getMa() + ", " +
                     "N'"+ giangDuong.getTen() + "'" +
                     ")";
+
+
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            GiangDuong.Update.where("magd = " + id, new GiangDuong(id, giangDuong.getTen()));
+
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new GiangDuong(id, giangDuong.getTen());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
@@ -103,11 +114,18 @@ public class GiangDuong {
         }
     }
 
+    @Override
+    public String toString() {
+        return "GiangDuong{" +
+                "ma=" + ma +
+                ", ten='" + ten + '\'' +
+                '}';
+    }
+
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where         DK - update
          * @param newGiangDuong DangKy update
          * @return
          * @throws SQLException
@@ -115,7 +133,7 @@ public class GiangDuong {
         public static Boolean where(String where, GiangDuong newGiangDuong) throws SQLException {
             try {
                 statement = "UPDATE GIANGDUONG " +
-                        "SET magd = " + newGiangDuong.getMa() + ", " +
+                        "SET " +
                         "tengd = N'" + newGiangDuong.getTen() + "' " +
                         "WHERE " + where;
                 UpdateDB.getInstance().updateCommand(statement);
