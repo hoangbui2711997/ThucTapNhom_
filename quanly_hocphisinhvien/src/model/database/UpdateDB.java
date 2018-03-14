@@ -17,7 +17,7 @@ public class UpdateDB implements IUpdate{
     }
 
     @Override
-    public synchronized Boolean updateCommand(String statement) throws SQLException{
+    public Boolean updateCommand(String statement) throws SQLException{
         try {
             synchronized (conn) {
                 conn.prepareStatement(statement).executeQuery();
@@ -28,7 +28,7 @@ public class UpdateDB implements IUpdate{
         }
     }
 
-    public synchronized static UpdateDB getInstance() {
+    public static UpdateDB getInstance() {
         synchronized (lock) {
             if(instance == null) {
                 return new UpdateDB();

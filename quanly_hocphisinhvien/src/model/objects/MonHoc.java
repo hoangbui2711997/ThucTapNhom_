@@ -15,17 +15,29 @@ public class MonHoc {
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public MonHoc(int ma, String ten) {
+    public MonHoc(String ten) {
+        this.ten = ten;
+    }
+
+    private MonHoc(int ma, String ten) {
         this.ma = ma;
         this.ten = ten;
     }
 
-    public int getMa() {
-        return ma;
+    public static MonHoc getInstance(int ma, String ten) {
+        return new MonHoc(ma, ten);
     }
 
-    public void setMa(int ma) {
-        this.ma = ma;
+    @Override
+    public String toString() {
+        return "MonHoc{" +
+                "ma=" + ma +
+                ", ten='" + ten + '\'' +
+                '}';
+    }
+
+    public int getMa() {
+        return ma;
     }
 
     public String getTen() {
@@ -36,49 +48,51 @@ public class MonHoc {
         this.ten = ten;
     }
 
-    public static class Search{
-        private Search() {}
-
-        public synchronized static MonHoc where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM MONHOC WHERE " + where);
-                resultSet.next();
-
-                return searchDB.getMonHoc(resultSet);
-            }
+    public static class Search {
+        private Search() {
         }
 
-        /**
-         *
-         * @return Lay tat ca sinh vien trong csdl
-         * @throws SQLException
-         */
-        public synchronized static List<MonHoc> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsMonHoc();
-            }
+        public static MonHoc where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM MONHOC WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getMonHoc(resultSet);
         }
     }
 
-    public static Boolean Insert(MonHoc monHoc) throws SQLException {
-        try {
-            statement = "INSERT INTO MONHOC VALUES" +
-                    "(" + monHoc.getMa() + ", " +
-                    "N'" + monHoc.getTen() +"'" +
-                    ")";
+    /**
+     * @return Lay tat ca sinh vien trong csdl
+     * @throws SQLException
+     */
+    public static List<MonHoc> getAll() throws SQLException {
+        return searchDB.getDsMonHoc();
+    }
 
+    public static MonHoc Insert(MonHoc monHoc) throws SQLException {
+        try {
+//            statement = "INSERT INTO MONHOC(mamonhoc, tenmonhoc) VALUES" +
+//                    "(" + monHoc.getMa() + ", " +
+//                    "N'" + monHoc.getTen() +"'" +
+//                    ")";
+
+            int id = InsertDB.getInstance().initInsert("MONHOC");
+
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            MonHoc.Update.where("mamonhoc = " + id, new MonHoc(id, monHoc.getTen()));
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new MonHoc(id, monHoc.getTen());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
@@ -97,8 +111,7 @@ public class MonHoc {
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where     DK - update
          * @param newMonHoc DangKy update
          * @return
          * @throws SQLException
@@ -106,7 +119,8 @@ public class MonHoc {
         public static Boolean where(String where, MonHoc newMonHoc) throws SQLException {
             try {
                 statement = "UPDATE MONHOC " +
-                        "SET mamonhoc = " + newMonHoc.getMa() + ", " +
+                        "SET " +
+//                        "mamonhoc = " + newMonHoc.getMa() + ", " +
                         "tenmonhoc = N'" + newMonHoc.getTen() + "' " +
                         "where " + where;
                 UpdateDB.getInstance().updateCommand(statement);

@@ -14,7 +14,7 @@ public class DeleteDB implements IDelete{
     }
     private static Object lock = new Object();
 
-    public synchronized static DeleteDB getInstance() {
+    public static DeleteDB getInstance() {
         synchronized (lock) {
             if(instance == null) {
                 return new DeleteDB();
@@ -24,7 +24,7 @@ public class DeleteDB implements IDelete{
     }
 
     @Override
-    public synchronized Boolean deleteCommand(String statement) throws SQLException{
+    public Boolean deleteCommand(String statement) throws SQLException{
         try {
             synchronized (conn) {
                 conn.prepareStatement(statement).executeQuery();

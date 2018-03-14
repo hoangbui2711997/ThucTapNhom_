@@ -3,6 +3,7 @@ package model.database;
 import model.constract.ISearch;
 import model.objects.*;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class SearchDB implements ISearch{
         this.conn = DB_Connection.getConnection();
     }
 
-    public synchronized static SearchDB getQueryDB() {
+    public static SearchDB getQueryDB() {
         synchronized (lock) {
             if (instance == null) {
                 return new SearchDB();
@@ -49,7 +50,7 @@ public class SearchDB implements ISearch{
      * @throws SQLException
      */
     // searchCommand thực thi câu lệnh statement và trả về kết quả
-    public synchronized ResultSet searchCommand(String statement) throws SQLException {
+    public ResultSet searchCommand(String statement) throws SQLException {
         PreparedStatement preparedStatement = conn.prepareStatement(statement);
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet;
@@ -72,7 +73,7 @@ public class SearchDB implements ISearch{
             Object ngaysinh = resultSet.getObject(6);
             Object diachi = resultSet.getObject(7);
 
-            return new SinhVien((Integer) masv, (Integer) madt, (Integer) mabm, (String) tensv,
+            return SinhVien.getInstanceID((Integer) masv, (Integer) madt, (Integer) mabm, (String) tensv,
                     (String) diachi, (Boolean) gioitinh, (Date) ngaysinh);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -97,7 +98,7 @@ public class SearchDB implements ISearch{
             Object masv = resultSet.getObject(4);
             Object thoigianDK = resultSet.getObject(5);
 
-            return new DangKy((Integer) madk, (Integer) magd, (Integer) mahp, (Integer) masv,
+            return DangKy.getInstanceID((Integer) madk, (Integer) magd, (Integer) mahp, (Integer) masv,
                     (Date) thoigianDK);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -119,7 +120,7 @@ public class SearchDB implements ISearch{
             Object magd = resultSet.getObject(1);
             Object tengd = resultSet.getObject(2);
 
-            return new GiangDuong((Integer) magd, (String) tengd);
+            return GiangDuong.getInstanceID((Integer) magd, (String) tengd);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -139,15 +140,14 @@ public class SearchDB implements ISearch{
         try {
             Object mahp = resultSet.getObject(1);
             Object mamonhoc = resultSet.getObject(2);
-            Object tenhp = resultSet.getObject(3);
-            Object sotinchi = resultSet.getObject(4);
-            Object mamucthu = resultSet.getObject(5);
+            Object sotinchi = resultSet.getObject(3);
+            Object mamucthu = resultSet.getObject(4);
             //gvgd là giáo viên giảng dạy
-            Object gvgd = resultSet.getObject(6);
-            Object thoigian = resultSet.getObject(7);
+            Object gvgd = resultSet.getObject(5);
+            Object thoigian = resultSet.getObject(6);
 
-            return new HocPhan((Integer) mahp, (Integer) mamonhoc, (Integer) tenhp, (byte) sotinchi,
-                    (String) mamucthu, (String) gvgd, (Date) thoigian);
+            return HocPhan.getInstanceID((Integer) mahp, (Integer) mamonhoc, (byte) sotinchi,
+                    (Integer) mamucthu, (String) gvgd, (Date) thoigian);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -168,7 +168,7 @@ public class SearchDB implements ISearch{
             Object makhoa = resultSet.getObject(1);
             Object tenKhoa = resultSet.getObject(2);
 
-            return new Khoa((Integer) makhoa, (String) tenKhoa);
+            return Khoa.getInstanceID((Integer) makhoa, (String) tenKhoa);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -189,7 +189,7 @@ public class SearchDB implements ISearch{
             Object mamonhoc = resultSet.getObject(1);
             Object tenmonhoc = resultSet.getObject(2);
 
-            return new MonHoc((Integer) mamonhoc, (String) tenmonhoc);
+            return MonHoc.getInstance((Integer) mamonhoc, (String) tenmonhoc);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -211,7 +211,7 @@ public class SearchDB implements ISearch{
             Object mota = resultSet.getObject(2);
             Object sotien = resultSet.getObject(3);
 
-            return new MucThu((Integer) mamucthu, (String) mota, (Long) sotien);
+            return MucThu.getInstanceID((Integer) mamucthu, (String) mota, (Long) sotien);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -232,7 +232,7 @@ public class SearchDB implements ISearch{
             Object manganh = resultSet.getObject(1);
             Object tennganh = resultSet.getObject(2);
 
-            return new Nganh((Integer) manganh, (String) tennganh);
+            return Nganh.getInstanceID((Integer) manganh, (String) tennganh);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -257,7 +257,7 @@ public class SearchDB implements ISearch{
             Object ngaynop = resultSet.getObject(5);
             Object trangthai = resultSet.getObject(6);
 
-            return new PhieuThu((Integer) mapt, (Integer) sotien, (Integer) masv, (Date) ngaybatdauthu,
+            return PhieuThu.getInstanceID((Integer) mapt, (Integer) masv, (Integer) sotien, (Date) ngaybatdauthu,
                     (Date) ngaynop, (Boolean) trangthai);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -279,7 +279,7 @@ public class SearchDB implements ISearch{
             Object madt = resultSet.getObject(1);
             Object tenDoiTuong = resultSet.getObject(2);
 
-            return new DoiTuong((Integer) madt, (String) tenDoiTuong);
+            return DoiTuong.getInstanceID((Integer) madt, (String) tenDoiTuong);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -300,7 +300,7 @@ public class SearchDB implements ISearch{
             Object mabm = resultSet.getObject(1);
             Object tenbm = resultSet.getObject(2);
 
-            return new BoMon((Integer) mabm, (String) tenbm);
+            return BoMon.getInstanceID((Integer) mabm, (String) tenbm);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -477,5 +477,20 @@ public class SearchDB implements ISearch{
 
         this.dsSinhVien = dssv;
         return dssv;
+    }
+
+    /**
+     * Lock cho do bi race condition
+     */
+    Object anotherLock = new Object();
+    public Integer getLastID(String nameObject) throws SQLException {
+        synchronized (anotherLock) {
+            String query = "SELECT IDENT_CURRENT('" + nameObject + "') as id";
+            System.out.println(query);
+            ResultSet rs = searchCommand(query);
+            rs.next();
+            Object id = rs.getObject(1);
+            return (Integer.parseInt(id.toString()) + 2);
+        }
     }
 }

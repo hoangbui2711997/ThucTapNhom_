@@ -26,11 +26,17 @@ public class BoMon {
     }
 
     /**
-     *
-     * @param ma int
      * @param ten String
      */
-    public BoMon(int ma, String ten) {
+    public BoMon(String ten) {
+        this.ten = ten;
+    }
+
+    public static BoMon getInstanceID(int id, String ten) {
+        return new BoMon(id, ten);
+    }
+
+    private BoMon(int ma, String ten) {
         this.ma = ma;
         this.ten = ten;
     }
@@ -50,49 +56,55 @@ public class BoMon {
     /**
      * static Search class chiu trach nhiem tim kiem "tim kiem"
      */
-    public static class Search{
-        private Search() {}
-
-        public synchronized static BoMon where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM BOMON WHERE " + where);
-                resultSet.next();
-
-                return searchDB.getBoMon(resultSet);
-            }
+    public static class Search {
+        private Search() {
         }
 
-        /**
-         *
-         * @return Lay tat ca sinh vien trong csdl
-         * @throws SQLException
-         */
-        public synchronized static List<BoMon> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsBoMon();
-            }
+        public static BoMon where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM BOMON WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getBoMon(resultSet);
         }
     }
 
-    public static Boolean Insert(BoMon boMon) throws SQLException {
+    /**
+     * @return Lay tat ca sinh vien trong csdl
+     * @throws SQLException
+     */
+    public static List<BoMon> getAll() throws SQLException {
+        return searchDB.getDsBoMon();
+    }
+
+    public static BoMon Insert(BoMon boMon) throws SQLException {
         try {
-            statement = "INSERT INTO BOMON VALUES" +
-                    "("
-                    + boMon.getMa() + ", " +
+
+
+
+            int id = InsertDB.getInstance().initInsert("BOMON");
+
+            statement = "INSERT BOMON(ten) VALUES" +
+                    "(" +
+//                    + boMon.getMa() + ", " +
                     "N'" + boMon.getTen() + "'" +
                     ")";
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            BoMon.Update.where("mabm = " + id, new BoMon(id, boMon.getTen()));
+
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new BoMon(id, boMon.getTen());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
@@ -108,18 +120,26 @@ public class BoMon {
         }
     }
 
+
+    @Override
+    public String toString() {
+        return "BoMon{" +
+                "ma=" + ma +
+                ", ten='" + ten + '\'' +
+                '}';
+    }
+
     public static class Update {
 
         /**
-         *
          * @param newBoMon
          * @return
          * @throws SQLException
          */
+
         public static Boolean where(String where, BoMon newBoMon) throws SQLException {
             try {
                 statement = "UPDATE BOMON " +
-                        "SET mabm = " + newBoMon.getMa() + ", " +
                         "tenbm = N'" + newBoMon.getTen() + "' " +
                         "WHERE " + where;
                 UpdateDB.getInstance().updateCommand(statement);
