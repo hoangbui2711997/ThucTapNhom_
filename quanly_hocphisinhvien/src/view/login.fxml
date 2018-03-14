@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="452.0" prefWidth="688.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+   <children>
+      <JFXPasswordField layoutX="415.0" layoutY="250.0" prefHeight="25.0" prefWidth="206.0" promptText="Password">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXPasswordField>
+      <JFXButton layoutX="555.0" layoutY="332.0" ripplerFill="#222020" style="-fx-background-color: #ECECEC;" text="Login" textFill="#4d4d4d">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXButton>
+      <ImageView blendMode="OVERLAY" fitHeight="493.0" fitWidth="487.0" layoutX="-72.0" layoutY="11.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Desktop/logohocvien.png" />
+         </image>
+      </ImageView>
+      <JFXTextField focusColor="#1b40ae" layoutX="415.0" layoutY="165.0" prefHeight="25.0" prefWidth="206.0" promptText="Username">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <ImageView fitHeight="56.0" fitWidth="40.0" layoutX="362.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../AppData/Local/Temp/icons8_Anonymous_Mask_64px_1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="37.0" fitWidth="31.0" layoutX="367.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../AppData/Local/Temp/icons8_Password_52px_1.png" />
+         </image>
+      </ImageView>
+      <JFXCheckBox layoutX="367.0" layoutY="339.0" prefHeight="18.0" prefWidth="153.0" text="Remember me?" textFill="#4d4d4d" unCheckedColor="#e1dfdf">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXCheckBox>
+      <Text fill="#6b6868" layoutX="415.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
+         <font>
+            <Font size="72.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
