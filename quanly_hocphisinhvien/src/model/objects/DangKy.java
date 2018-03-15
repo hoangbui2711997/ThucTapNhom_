@@ -11,17 +11,18 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class DangKy {
-    private int maDangKy, maGiangDuong, maHocPhan, maSinhVien;
+    private String maDangKy;
+    private int maGiangDuong, maHocPhan, maSinhVien;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     Date thoiGianDangKy;
     private static String statement;
 
 
-    public static DangKy getInstanceID(int maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, Date thoiGianDangKy) {
+    public static DangKy getInstanceID(String maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, Date thoiGianDangKy) {
         return new DangKy(maDangKy, maGiangDuong, maHocPhan, maSinhVien, thoiGianDangKy);
     }
 
-    private DangKy(int maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, Date thoiGianDangKy) {
+    private DangKy(String maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, Date thoiGianDangKy) {
         this.maDangKy = maDangKy;
         this.maGiangDuong = maGiangDuong;
         this.maHocPhan = maHocPhan;
@@ -37,7 +38,7 @@ public class DangKy {
         this.thoiGianDangKy = thoiGianDangKy;
     }
 
-    public int getMaDangKy() {
+    public String getMaDangKy() {
         return maDangKy;
     }
 
@@ -83,21 +84,21 @@ public class DangKy {
 
             return searchDB.getDK(resultSet);
         }
-    }
 
-    /**
-     * @return Lay tat ca sinh vien trong csdl
-     * @throws SQLException
-     */
-    public static List<DangKy> getAll() throws SQLException {
-        return searchDB.getDsDangKy();
+        /**
+         * @return Lay tat ca sinh vien trong csdl
+         * @throws SQLException
+         */
+        public static List<DangKy> getAll() throws SQLException {
+            return searchDB.getDsDangKy();
+        }
     }
 
 
     public static DangKy Insert(DangKy dangKy) throws SQLException {
         try {
 
-            int id = InsertDB.getInstance().initInsert("DANGKY");
+            String id = InsertDB.getInstance().initInsert("DANGKY") + "";
 
             statement = "INSERT INTO DANGKY(magd, mahp, masv, thoigiandk) VALUES(" +
 //                    dangKy.getMaDangKy() + ", " +

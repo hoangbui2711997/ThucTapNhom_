@@ -1,9 +1,6 @@
 package model;
 
-import model.objects.BoMon;
-import model.objects.DoiTuong;
-import model.objects.HocPhan;
-import model.objects.Nganh;
+import model.objects.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -15,29 +12,31 @@ import java.util.List;
 
 public class TestModelHere {
     public int y = 10;
+
     public TestModelHere() {
         this.y = 11;
         final int x = y;
     }
+
     @Test
     void DoTest() throws SQLException, FileNotFoundException {
 
-        // chen doi tuong
-        DoiTuong dt = DoiTuong.Insert(new DoiTuong("Bui Minh Hoang"));
-        System.out.println(dt);
-        // tra ve ban ghi dau tien
-        System.out.println(DoiTuong.Search.where("madt = " + dt.getMa()));
-        // xoa doi tuong
-        System.out.println(DoiTuong.Delete.where("madt = " + dt.getMa()));
+
+//        // chen doi tuong
+//        DoiTuong dt = DoiTuong.Insert(new DoiTuong("Bui Minh Hoang"));
+//        System.out.println(dt);
+//        // tra ve ban ghi dau tien
+//        System.out.println(DoiTuong.Search.where("madt = " + dt.getMa()));
+//        // xoa doi tuong
+//        System.out.println(DoiTuong.Delete.where("madt = " + dt.getMa()));
+
+
+        List<SinhVien> ls = SinhVien.Search.getAll();
+        for (SinhVien hocPhan : ls) {
+            System.out.println(hocPhan.toString());
+        }
     }
-
-
-
-
-        //        List<HocPhan> ls = HocPhan.Search.getAll();
-//        for(HocPhan hocPhan: ls) {
-//            System.out.println(hocPhan.toString());
-//        }
+}
 
 //          BoMon.Insert(new BoMon(""))
 //        System.out.println(object.getClass().getSimpleName());
@@ -47,9 +46,9 @@ public class TestModelHere {
 //        int b = 0;
 //        int c = 0;
 //        int d = 0;
-//        try (BufferedReader data = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\DEVON\\Documents\\GitHub\\ThucTapNhom_\\quanly_hocphisinhvien\\src\\GIANGDUONG")))) {
-//            try (BufferedReader data1 = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\DEVON\\Documents\\GitHub\\ThucTapNhom_\\quanly_hocphisinhvien\\src\\HOCPHAN")))) {
-//                try (BufferedReader data2 = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\DEVON\\Documents\\GitHub\\ThucTapNhom_\\quanly_hocphisinhvien\\src\\MASV")))) {
+//        try (BufferedReader data = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\DEVON\\Documents\\GitHub\\ThucTapNhom_\\quanly_hocphiBoMon\\src\\HocPhan")))) {
+//            try (BufferedReader data1 = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\DEVON\\Documents\\GitHub\\ThucTapNhom_\\quanly_hocphiBoMon\\src\\HOCPHAN")))) {
+//                try (BufferedReader data2 = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\DEVON\\Documents\\GitHub\\ThucTapNhom_\\quanly_hocphiBoMon\\src\\MASV")))) {
 //
 //                    String readLine = "";
 //                    ArrayList<String> arrayGD = new ArrayList<>();
@@ -67,14 +66,14 @@ public class TestModelHere {
 //                    }
 ////            for (int i = 0; i < 164; i++) {
 ////                int maNganh = random.nextInt(arrayDataNganh.size());
-////                System.out.println("INSERT INTO NGANH(tennganh, makhoa) values(N'" + "Here!!!" + "', " +
+////                System.out.println("INSERT INTO NGANH(tennganh, maMonHoc) values(N'" + "Here!!!" + "', " +
 ////                        arrayDataNganh.get(maNganh) + "" +
 ////                        ")"
 ////                );
 ////            }
 //
 ////                    for (int i = 0; i < arrayMASV.size()*2; i++) {
-//////                int maNganh = random.nextInt(arrayDataGiangDuong.size());
+//////                int maNganh = random.nextInt(arrayDataHocPhan.size());
 ////                        a = random.nextInt(10);
 ////                        b = random.nextInt(10);
 ////                        c = random.nextInt(10);
@@ -90,7 +89,7 @@ public class TestModelHere {
 ////                        );
 ////                    }
 ////                    for (int i = 0; i < 1000; i++) {
-//////                int maNganh = random.nextInt(arrayDataGiangDuong.size());
+//////                int maNganh = random.nextInt(arrayDataHocPhan.size());
 ////
 ////                        System.out.println("INSERT INTO DANGKY(magd, mahp, masv) " +
 ////                                        "values(" +
@@ -112,4 +111,3 @@ public class TestModelHere {
 //            e.printStackTrace();
 //        }
 //    }
-}

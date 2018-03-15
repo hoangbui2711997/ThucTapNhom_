@@ -58,14 +58,15 @@ public class MonHoc {
 
             return searchDB.getMonHoc(resultSet);
         }
-    }
 
-    /**
-     * @return Lay tat ca sinh vien trong csdl
-     * @throws SQLException
-     */
-    public static List<MonHoc> getAll() throws SQLException {
-        return searchDB.getDsMonHoc();
+
+        /**
+         * @return Lay tat ca sinh vien trong csdl
+         * @throws SQLException
+         */
+        public static List<MonHoc> getAll() throws SQLException {
+            return searchDB.getDsMonHoc();
+        }
     }
 
     public static MonHoc Insert(MonHoc monHoc) throws SQLException {

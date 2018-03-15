@@ -59,14 +59,14 @@ public class Nganh {
 
             return searchDB.getNganh(resultSet);
         }
-    }
 
-    /**
-     * @return Lay tat ca sinh vien trong csdl
-     * @throws SQLException
-     */
-    public static List<Nganh> getAll() throws SQLException {
-        return searchDB.getDsNganh();
+        /**
+         * @return Lay tat ca sinh vien trong csdl
+         * @throws SQLException
+         */
+        public static List<Nganh> getAll() throws SQLException {
+            return searchDB.getDsNganh();
+        }
     }
 
     @Override

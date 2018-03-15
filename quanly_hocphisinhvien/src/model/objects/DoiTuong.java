@@ -77,14 +77,15 @@ public class DoiTuong {
 
             return searchDB.getDoiTuong(resultSet);
         }
-    }
 
-    /**
-     * @return Lay tat ca sinh vien trong csdl
-     * @throws SQLException
-     */
-    public static List<DoiTuong> getAll() throws SQLException {
-        return searchDB.getDsDoiTuong();
+
+        /**
+         * @return Lay tat ca sinh vien trong csdl
+         * @throws SQLException
+         */
+        public static List<DoiTuong> getAll() throws SQLException {
+            return searchDB.getDsDoiTuong();
+        }
     }
 
     public static DoiTuong Insert(DoiTuong doiTuong) throws SQLException {

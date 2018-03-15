@@ -12,14 +12,14 @@ import java.util.List;
 
 public class HocPhan {
     private int ma, maMucThu, maMonHoc;
-    private byte soTinChi;
+    private short soTinChi;
     private String giaoVienGiangDay;
     private Date thoiGian;
     private List<DangKy> dsHocPhan;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public HocPhan(int maMonHoc, byte soTinChi, int maMucThu, String giaoVienGiangDay, Date thoiGian) {
+    public HocPhan(int maMonHoc, short soTinChi, int maMucThu, String giaoVienGiangDay, Date thoiGian) {
         this.maMucThu = maMucThu;
         this.maMonHoc = maMonHoc;
         this.soTinChi = soTinChi;
@@ -27,7 +27,7 @@ public class HocPhan {
         this.thoiGian = thoiGian;
     }
 
-    private HocPhan(int ma, int maMonHoc, byte soTinChi, int maMucThu, String giaoVienGiangDay, Date thoiGian) {
+    private HocPhan(int ma, int maMonHoc, short soTinChi, int maMucThu, String giaoVienGiangDay, Date thoiGian) {
         this.ma = ma;
         this.maMucThu = maMucThu;
         this.maMonHoc = maMonHoc;
@@ -36,7 +36,7 @@ public class HocPhan {
         this.thoiGian = thoiGian;
     }
 
-    public static HocPhan getInstanceID(int ma, int maMonHoc, byte soTinChi, int maMucThu, String giaoVienGiangDay, Date thoiGian) {
+    public static HocPhan getInstanceID(int ma, int maMonHoc, short soTinChi, int maMucThu, String giaoVienGiangDay, Date thoiGian) {
         return new HocPhan(ma, maMonHoc, soTinChi, maMucThu, giaoVienGiangDay, thoiGian);
     }
 
@@ -60,11 +60,11 @@ public class HocPhan {
         this.maMonHoc = maMonHoc;
     }
 
-    public byte getSoTinChi() {
+    public short getSoTinChi() {
         return soTinChi;
     }
 
-    public void setSoTinChi(byte soTinChi) {
+    public void setSoTinChi(short soTinChi) {
         this.soTinChi = soTinChi;
     }
 
@@ -102,16 +102,16 @@ public class HocPhan {
 
             return searchDB.getHocPhan(resultSet);
         }
-    }
 
-    /**
-     * @return Lay tat ca sinh vien trong csdl
-     * @throws SQLException
-     */
-    public static List<HocPhan> getAll() throws SQLException {
-        return searchDB.getDsHocPhan();
-    }
 
+        /**
+         * @return Lay tat ca sinh vien trong csdl
+         * @throws SQLException
+         */
+        public static List<HocPhan> getAll() throws SQLException {
+            return searchDB.getDsHocPhan();
+        }
+    }
     public static HocPhan Insert(HocPhan hocPhan) throws SQLException {
         try {
 //            statement = "INSERT INTO HOCPHAN(mahp, mamonhoc, sotinchi, mamucthu, gvgd, thoigian) VALUES" +

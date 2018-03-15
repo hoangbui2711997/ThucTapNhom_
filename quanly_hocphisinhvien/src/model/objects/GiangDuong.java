@@ -59,14 +59,15 @@ public class GiangDuong {
 
             return searchDB.getGiangDuong(resultSet);
         }
-    }
 
-    /**
-     * @return Lay tat ca sinh vien trong csdl
-     * @throws SQLException
-     */
-    public static List<GiangDuong> getAll() throws SQLException {
-        return searchDB.getDsGiangDuong();
+
+        /**
+         * @return Lay tat ca sinh vien trong csdl
+         * @throws SQLException
+         */
+        public static List<GiangDuong> getAll() throws SQLException {
+            return searchDB.getDsGiangDuong();
+        }
     }
 
     public static GiangDuong Insert(GiangDuong giangDuong) throws SQLException {

@@ -98,7 +98,11 @@ public class SearchDB implements ISearch{
             Object masv = resultSet.getObject(4);
             Object thoigianDK = resultSet.getObject(5);
 
-            return DangKy.getInstanceID((Integer) madk, (Integer) magd, (Integer) mahp, (Integer) masv,
+            return DangKy.getInstanceID(
+                    (String) madk,
+                    (Integer) magd,
+                    (Integer) mahp,
+                    (Integer) masv,
                     (Date) thoigianDK);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -146,7 +150,7 @@ public class SearchDB implements ISearch{
             Object gvgd = resultSet.getObject(5);
             Object thoigian = resultSet.getObject(6);
 
-            return HocPhan.getInstanceID((Integer) mahp, (Integer) mamonhoc, (byte) sotinchi,
+            return HocPhan.getInstanceID((Integer) mahp, (Integer) mamonhoc, (Short) sotinchi,
                     (Integer) mamucthu, (String) gvgd, (Date) thoigian);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -210,8 +214,8 @@ public class SearchDB implements ISearch{
             Object mamucthu = resultSet.getObject(1);
             Object mota = resultSet.getObject(2);
             Object sotien = resultSet.getObject(3);
-
-            return MucThu.getInstanceID((Integer) mamucthu, (String) mota, (Long) sotien);
+            sotien = Double.parseDouble(sotien.toString());
+            return MucThu.getInstanceID((Integer) mamucthu, (String) mota,(Double) sotien);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }

@@ -68,14 +68,15 @@ public class Khoa {
 
             return searchDB.getKhoa(resultSet);
         }
-    }
 
-    /**
-     * @return Lay tat ca sinh vien trong csdl
-     * @throws SQLException
-     */
-    public static List<Khoa> getAll() throws SQLException {
-        return searchDB.getDsKhoa();
+
+        /**
+         * @return Lay tat ca sinh vien trong csdl
+         * @throws SQLException
+         */
+        public static List<Khoa> getAll() throws SQLException {
+            return searchDB.getDsKhoa();
+        }
     }
 
     public static Khoa Insert(Khoa khoa) throws SQLException {

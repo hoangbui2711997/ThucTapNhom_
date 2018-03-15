@@ -13,7 +13,7 @@ public class MucThu {
 
     private int maMucThu;
     private String moTa;
-    private long soTien;
+    private double soTien;
     private List<HocPhan> dsHocPhan;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
@@ -23,13 +23,13 @@ public class MucThu {
         this.soTien = soTien;
     }
 
-    private MucThu(int maMucThu, String moTa, long soTien) {
+    private MucThu(int maMucThu, String moTa, double soTien) {
         this.maMucThu = maMucThu;
         this.moTa = moTa;
         this.soTien = soTien;
     }
 
-    public static MucThu getInstanceID(int maMucThu, String moTa, long soTien) {
+    public static MucThu getInstanceID(int maMucThu, String moTa, double soTien) {
         return new MucThu(maMucThu, moTa, soTien);
     }
 
@@ -45,7 +45,7 @@ public class MucThu {
         this.moTa = moTa;
     }
 
-    public long getSoTien() {
+    public double getSoTien() {
         return soTien;
     }
 
@@ -80,14 +80,14 @@ public class MucThu {
 
             return searchDB.getMucThu(resultSet);
         }
-    }
 
-    /**
-     * @return Lay tat ca sinh vien trong csdl
-     * @throws SQLException
-     */
-    public static List<MucThu> getAll() throws SQLException {
-        return searchDB.getDsMucTHu();
+        /**
+         * @return Lay tat ca sinh vien trong csdl
+         * @throws SQLException
+         */
+        public static List<MucThu> getAll() throws SQLException {
+            return searchDB.getDsMucTHu();
+        }
     }
 
     public static MucThu Insert(MucThu mucThu) throws SQLException {

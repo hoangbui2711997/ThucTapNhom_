@@ -66,14 +66,15 @@ public class BoMon {
 
             return searchDB.getBoMon(resultSet);
         }
-    }
 
-    /**
-     * @return Lay tat ca sinh vien trong csdl
-     * @throws SQLException
-     */
-    public static List<BoMon> getAll() throws SQLException {
-        return searchDB.getDsBoMon();
+
+        /**
+         * @return Lay tat ca sinh vien trong csdl
+         * @throws SQLException
+         */
+        public static List<BoMon> getAll() throws SQLException {
+            return searchDB.getDsBoMon();
+        }
     }
 
     public static BoMon Insert(BoMon boMon) throws SQLException {
