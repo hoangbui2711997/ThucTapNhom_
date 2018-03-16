@@ -1,5 +1,7 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -10,19 +12,19 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class GiangDuong {
-    private int ma;
-    private String ten;
+    private SimpleIntegerProperty ma;
+    private SimpleStringProperty ten;
     private List<DangKy> dsDangKy = null;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
     private GiangDuong(int ma, String ten) {
-        this.ma = ma;
-        this.ten = ten;
+        this.ma = new SimpleIntegerProperty(ma);
+        this.ten = new SimpleStringProperty(ten);
     }
 
     public GiangDuong(String ten) {
-        this.ten = ten;
+        this.ten = new SimpleStringProperty(ten);
     }
 
     public static GiangDuong getInstanceID(int ma, String ten) {
@@ -30,15 +32,15 @@ public class GiangDuong {
     }
 
     public int getMa() {
-        return ma;
+        return ma.getValue();
     }
 
     public String getTen() {
-        return ten;
+        return ten.getValue();
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        this.ten.setValue(ten);
     }
 
     public List<DangKy> getDsDangKy() {

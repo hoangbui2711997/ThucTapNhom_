@@ -74,7 +74,7 @@ public class SearchDB implements ISearch{
             Object diachi = resultSet.getObject(7);
 
             return SinhVien.getInstanceID((Integer) masv, (Integer) madt, (Integer) mabm, (String) tensv,
-                    (String) diachi, (Boolean) gioitinh, (Date) ngaysinh);
+                    (String) diachi, (Boolean) gioitinh, ((Date) ngaysinh).toString());
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -103,7 +103,7 @@ public class SearchDB implements ISearch{
                     (Integer) magd,
                     (Integer) mahp,
                     (Integer) masv,
-                    (Date) thoigianDK);
+                    thoigianDK.toString());
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -151,7 +151,7 @@ public class SearchDB implements ISearch{
             Object thoigian = resultSet.getObject(6);
 
             return HocPhan.getInstanceID((Integer) mahp, (Integer) mamonhoc, (Short) sotinchi,
-                    (Integer) mamucthu, (String) gvgd, (Date) thoigian);
+                    (Integer) mamucthu, (String) gvgd, ((Date) thoigian).toString());
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -261,8 +261,8 @@ public class SearchDB implements ISearch{
             Object ngaynop = resultSet.getObject(5);
             Object trangthai = resultSet.getObject(6);
 
-            return PhieuThu.getInstanceID((Integer) mapt, (Integer) masv, (Integer) sotien, (Date) ngaybatdauthu,
-                    (Date) ngaynop, (Boolean) trangthai);
+            return PhieuThu.getInstanceID((Integer) mapt, (Integer) masv, (Integer) sotien, ((Date) ngaybatdauthu).toString(),
+                    ((Date) ngaynop).toString(), (Boolean) trangthai);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }

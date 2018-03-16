@@ -1,5 +1,7 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -11,14 +13,14 @@ import java.util.List;
 
 public class DoiTuong {
     private List<SinhVien> dsSV;
-    private int ma;
-    private String ten;
+    private SimpleIntegerProperty ma;
+    private SimpleStringProperty ten;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
     private static Object lock = new Object();
 
     public DoiTuong(String ten) {
-        this.ten = ten;
+        this.ten = new SimpleStringProperty(ten);
     }
 
     /**
@@ -34,8 +36,8 @@ public class DoiTuong {
     }
 
     private DoiTuong(int ma, String ten) {
-        this.ma = ma;
-        this.ten = ten;
+        this.ma = new SimpleIntegerProperty(ma);
+        this.ten = new SimpleStringProperty(ten);
     }
 
     public List<SinhVien> getDsSV() {
@@ -48,15 +50,15 @@ public class DoiTuong {
     }
 
     public int getMa() {
-        return ma;
+        return ma.getValue();
     }
 
     public String getTen() {
-        return ten;
+        return ten.getValue();
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        this.ten.setValue(ten);
     }
 
     @Override

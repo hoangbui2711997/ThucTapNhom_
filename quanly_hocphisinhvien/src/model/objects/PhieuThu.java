@@ -1,5 +1,9 @@
 package model.objects;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -11,76 +15,76 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class PhieuThu {
-    private int ma, maSV;
-    private long soTien;
-    private Date ngayBatDauThu, ngayNop;
-    private boolean trangThai;
+    private SimpleIntegerProperty ma, maSV;
+    private SimpleLongProperty soTien;
+    private SimpleStringProperty ngayBatDauThu, ngayNop;
+    private SimpleBooleanProperty trangThai;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public PhieuThu(int maSV, long soTien, Date ngayBatDauThu, Date ngayNop, boolean trangThai) {
-        this.maSV = maSV;
-        this.soTien = soTien;
-        this.ngayBatDauThu = ngayBatDauThu;
-        this.ngayNop = ngayNop;
-        this.trangThai = trangThai;
+    public PhieuThu(int maSV, long soTien, String ngayBatDauThu, String ngayNop, boolean trangThai) {
+        this.maSV = new SimpleIntegerProperty(maSV);
+        this.soTien = new SimpleLongProperty(soTien);
+        this.ngayBatDauThu = new SimpleStringProperty(ngayBatDauThu.toString());
+        this.ngayNop = new SimpleStringProperty(ngayNop.toString());
+        this.trangThai = new SimpleBooleanProperty(trangThai);
     }
 
-    private PhieuThu(int ma, int maSV, long soTien, Date ngayBatDauThu, Date ngayNop, boolean trangThai) {
-        this.ma = ma;
-        this.maSV = maSV;
-        this.soTien = soTien;
-        this.ngayBatDauThu = ngayBatDauThu;
-        this.ngayNop = ngayNop;
-        this.trangThai = trangThai;
+    private PhieuThu(int ma, int maSV, long soTien, String ngayBatDauThu, String ngayNop, boolean trangThai) {
+        this.ma = new SimpleIntegerProperty(ma);
+        this.maSV = new SimpleIntegerProperty(maSV);
+        this.soTien = new SimpleLongProperty(soTien);
+        this.ngayBatDauThu = new SimpleStringProperty(ngayBatDauThu.toString());
+        this.ngayNop = new SimpleStringProperty(ngayNop.toString());
+        this.trangThai = new SimpleBooleanProperty(trangThai);
     }
 
-    public static PhieuThu getInstanceID(int ma, int maSV, long soTien, Date ngayBatDauThu, Date ngayNop, boolean trangThai) {
+    public static PhieuThu getInstanceID(int ma, int maSV, long soTien, String ngayBatDauThu, String ngayNop, boolean trangThai) {
         return new PhieuThu(ma, maSV, soTien, ngayBatDauThu, ngayNop, trangThai);
     }
 
     public int getMa() {
-        return ma;
+        return ma.getValue();
     }
 
     public int getMaSV() {
-        return maSV;
+        return maSV.getValue();
     }
 
     public void setMaSV(int maSV) {
-        this.maSV = maSV;
+        this.maSV.setValue(maSV);
     }
 
     public long getSoTien() {
-        return soTien;
+        return soTien.getValue();
     }
 
     public void setSoTien(long soTien) {
-        this.soTien = soTien;
+        this.soTien.setValue(soTien);
     }
 
-    public Date getNgayBatDauThu() {
-        return ngayBatDauThu;
+    public String getNgayBatDauThu() {
+        return ngayBatDauThu.getValue();
     }
 
     public void setNgayBatDauThu(Date ngayBatDauThu) {
-        this.ngayBatDauThu = ngayBatDauThu;
+        this.ngayBatDauThu.setValue(ngayBatDauThu.toString());
     }
 
-    public Date getNgayNop() {
-        return ngayNop;
+    public String getNgayNop() {
+        return ngayNop.getValue();
     }
 
     public void setNgayNop(Date ngayNop) {
-        this.ngayNop = ngayNop;
+        this.ngayNop.setValue(ngayNop.toString());
     }
 
     public boolean getTrangThai() {
-        return trangThai;
+        return trangThai.getValue();
     }
 
     public void setTrangThai(boolean trangThai) {
-        this.trangThai = trangThai;
+        this.trangThai.setValue(trangThai);
     }
 
     public static class Search {
@@ -134,8 +138,9 @@ public class PhieuThu {
 //            PhieuThu.Update.where("mapt = " + id, new PhieuThu(id, phieuThu.getMaSV(),
 //                    phieuThu.getSoTien(), phieuThu.getNgayBatDauThu(), phieuThu.getNgayNop(), phieuThu.getTrangThai()));
             InsertDB.getInstance().insertCommand(statement);
-            return new PhieuThu(id, phieuThu.getMaSV(),
-                    phieuThu.getSoTien(), phieuThu.getNgayBatDauThu(), phieuThu.getNgayNop(), phieuThu.getTrangThai());
+            return new
+                    PhieuThu(id, phieuThu.getMaSV(), phieuThu.getSoTien(), phieuThu.getNgayBatDauThu(),
+                    phieuThu.getNgayNop().toString(), phieuThu.getTrangThai());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;

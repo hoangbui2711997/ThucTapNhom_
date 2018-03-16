@@ -1,5 +1,7 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -10,18 +12,18 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class MonHoc {
-    private int ma;
-    private String ten;
+    private SimpleIntegerProperty ma;
+    private SimpleStringProperty ten;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
     public MonHoc(String ten) {
-        this.ten = ten;
+        this.ten = new SimpleStringProperty(ten);
     }
 
     private MonHoc(int ma, String ten) {
-        this.ma = ma;
-        this.ten = ten;
+        this.ma = new SimpleIntegerProperty(ma);
+        this.ten = new SimpleStringProperty(ten);
     }
 
     public static MonHoc getInstance(int ma, String ten) {
@@ -37,15 +39,15 @@ public class MonHoc {
     }
 
     public int getMa() {
-        return ma;
+        return ma.getValue();
     }
 
     public String getTen() {
-        return ten;
+        return ten.getValue();
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        this.ten.setValue(ten);
     }
 
     public static class Search {

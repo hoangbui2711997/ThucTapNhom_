@@ -1,5 +1,7 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -8,70 +10,71 @@ import model.database.UpdateDB;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DangKy {
-    private String maDangKy;
-    private int maGiangDuong, maHocPhan, maSinhVien;
+    private SimpleStringProperty maDangKy;
+    private SimpleIntegerProperty maGiangDuong, maHocPhan, maSinhVien;
     private static SearchDB searchDB = SearchDB.getQueryDB();
-    Date thoiGianDangKy;
+    private SimpleStringProperty thoiGianDangKy;
     private static String statement;
 
 
-    public static DangKy getInstanceID(String maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, Date thoiGianDangKy) {
+    public static DangKy getInstanceID(String maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, String thoiGianDangKy) {
         return new DangKy(maDangKy, maGiangDuong, maHocPhan, maSinhVien, thoiGianDangKy);
     }
 
-    private DangKy(String maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, Date thoiGianDangKy) {
-        this.maDangKy = maDangKy;
-        this.maGiangDuong = maGiangDuong;
-        this.maHocPhan = maHocPhan;
-        this.maSinhVien = maSinhVien;
-        this.thoiGianDangKy = thoiGianDangKy;
+    private DangKy(String maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, String thoiGianDangKy) {
+        this.maDangKy = new SimpleStringProperty(maDangKy);
+        this.maGiangDuong = new SimpleIntegerProperty(maGiangDuong);
+        this.maHocPhan = new SimpleIntegerProperty(maHocPhan);
+        this.maSinhVien = new SimpleIntegerProperty(maSinhVien);
+        this.thoiGianDangKy = new SimpleStringProperty(thoiGianDangKy);
     }
 
-    public DangKy(int maGiangDuong, int maHocPhan, int maSinhVien, Date thoiGianDangKy) {
-        this.maDangKy = maDangKy;
-        this.maGiangDuong = maGiangDuong;
-        this.maHocPhan = maHocPhan;
-        this.maSinhVien = maSinhVien;
-        this.thoiGianDangKy = thoiGianDangKy;
+    public DangKy(int maGiangDuong, int maHocPhan, int maSinhVien, String thoiGianDangKy) {
+        this.maGiangDuong = new SimpleIntegerProperty(maGiangDuong);
+        this.maHocPhan = new SimpleIntegerProperty(maHocPhan);
+        this.maSinhVien = new SimpleIntegerProperty(maSinhVien);
+        this.thoiGianDangKy = new SimpleStringProperty(thoiGianDangKy);
+
     }
 
     public String getMaDangKy() {
-        return maDangKy;
+        return maDangKy.getValue();
     }
 
     public int getMaGiangDuong() {
-        return maGiangDuong;
+        return maGiangDuong.getValue();
     }
 
     public void setMaGiangDuong(int maGiangDuong) {
-        this.maGiangDuong = maGiangDuong;
+        this.maGiangDuong.setValue(maGiangDuong);
     }
 
     public int getMaHocPhan() {
-        return maHocPhan;
+        return maHocPhan.getValue();
     }
 
     public void setMaHocPhan(int maHocPhan) {
-        this.maHocPhan = maHocPhan;
+        this.maHocPhan.setValue(maHocPhan);
     }
 
     public int getMaSinhVien() {
-        return maSinhVien;
+        return maSinhVien.getValue();
     }
 
     public void setMaSinhVien(int maSinhVien) {
-        this.maSinhVien = maSinhVien;
+        this.maSinhVien.setValue(maSinhVien);
     }
 
-    public Date getThoiGianDangKy() {
-        return thoiGianDangKy;
+    public String getThoiGianDangKy() {
+        return this.thoiGianDangKy.getValue();
     }
 
     public void setThoiGianDangKy(Date thoiGianDangKy) {
-        this.thoiGianDangKy = thoiGianDangKy;
+        this.thoiGianDangKy.setValue(thoiGianDangKy.toString());
     }
 
     public static class Search {

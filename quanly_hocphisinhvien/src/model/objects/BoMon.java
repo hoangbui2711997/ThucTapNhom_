@@ -1,5 +1,8 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -11,8 +14,8 @@ import java.util.List;
 
 public class BoMon {
 
-    private int ma;
-    private String ten;
+    private SimpleIntegerProperty ma;
+    private SimpleStringProperty ten;
     private List<SinhVien> dsSV = null;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
@@ -29,7 +32,7 @@ public class BoMon {
      * @param ten String
      */
     public BoMon(String ten) {
-        this.ten = ten;
+        this.ten = new SimpleStringProperty(ten);
     }
 
     public static BoMon getInstanceID(int id, String ten) {
@@ -37,20 +40,20 @@ public class BoMon {
     }
 
     private BoMon(int ma, String ten) {
-        this.ma = ma;
-        this.ten = ten;
+        this.ma = new SimpleIntegerProperty(ma);
+        this.ten = new SimpleStringProperty(ten);
     }
 
     public int getMa() {
-        return ma;
+        return ma.getValue();
     }
 
     public String getTen() {
-        return ten;
+        return ten.getValue();
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        this.ten.setValue(ten);
     }
 
     /**

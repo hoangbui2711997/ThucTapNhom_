@@ -1,5 +1,8 @@
 package model.objects;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -12,34 +15,33 @@ import java.util.List;
 
 public class SinhVien {
     private List<SinhVien> dsSinhVien;
-    private int maSV, maDT, maBoMon;
-    private String tenSV, diaChi;
-    private boolean gioiTinh;
-    private Date ngaySinh;
+    private SimpleIntegerProperty maSV, maDT, maBoMon;
+    private SimpleStringProperty tenSV, diaChi;
+    private SimpleBooleanProperty gioiTinh;
+    private SimpleStringProperty ngaySinh;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public SinhVien(int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, Date ngaySinh) {
-        this.maSV = maSV;
-        this.maDT = maDT;
-        this.maBoMon = maBoMon;
-        this.tenSV = tenSV;
-        this.diaChi = diaChi;
-        this.gioiTinh = gioiTinh;
-        this.ngaySinh = ngaySinh;
+    public SinhVien(int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, String ngaySinh) {
+        this.maDT = new SimpleIntegerProperty(maDT);
+        this.maBoMon = new SimpleIntegerProperty(maBoMon);
+        this.tenSV = new SimpleStringProperty(tenSV);
+        this.diaChi = new SimpleStringProperty(diaChi);
+        this.gioiTinh = new SimpleBooleanProperty(gioiTinh);
+        this.ngaySinh = new SimpleStringProperty(ngaySinh);
     }
 
-    private SinhVien(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, Date ngaySinh) {
-        this.maSV = maSV;
-        this.maDT = maDT;
-        this.maBoMon = maBoMon;
-        this.tenSV = tenSV;
-        this.diaChi = diaChi;
-        this.gioiTinh = gioiTinh;
-        this.ngaySinh = ngaySinh;
+    private SinhVien(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, String ngaySinh) {
+        this.maSV = new SimpleIntegerProperty(maSV);
+        this.maDT = new SimpleIntegerProperty(maDT);
+        this.maBoMon = new SimpleIntegerProperty(maBoMon);
+        this.tenSV = new SimpleStringProperty(tenSV);
+        this.diaChi = new SimpleStringProperty(diaChi);
+        this.gioiTinh = new SimpleBooleanProperty(gioiTinh);
+        this.ngaySinh = new SimpleStringProperty(ngaySinh);
     }
 
-    public static SinhVien getInstanceID(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, Date ngaySinh) {
+    public static SinhVien getInstanceID(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, String ngaySinh) {
         return new SinhVien(maSV, maDT, maBoMon, tenSV, diaChi, gioiTinh, ngaySinh);
     }
 
@@ -52,55 +54,55 @@ public class SinhVien {
     }
 
     public int getMaSV() {
-        return maSV;
+        return maSV.getValue();
     }
 
     public int getMaDT() {
-        return maDT;
+        return maDT.getValue();
     }
 
     public void setMaDT(int maDT) {
-        this.maDT = maDT;
+        this.maDT.setValue(maDT);
     }
 
     public int getMaBoMon() {
-        return maBoMon;
+        return maBoMon.getValue();
     }
 
     public void setMaBoMon(int maBoMon) {
-        this.maBoMon = maBoMon;
+        this.maBoMon.setValue(maBoMon);
     }
 
     public String getTenSV() {
-        return tenSV;
+        return tenSV.getValue();
     }
 
     public void setTenSV(String tenSV) {
-        this.tenSV = tenSV;
+        this.tenSV.setValue(tenSV);
     }
 
     public String getDiaChi() {
-        return diaChi;
+        return diaChi.getValue();
     }
 
     public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
+        this.diaChi.setValue(diaChi);
     }
 
     public boolean getGioiTinh() {
-        return gioiTinh;
+        return gioiTinh.getValue();
     }
 
     public void setGioiTinh(boolean gioiTinh) {
-        this.gioiTinh = gioiTinh;
+        this.gioiTinh.setValue(gioiTinh);
     }
 
-    public Date getNgaySinh() {
-        return ngaySinh;
+    public String getNgaySinh() {
+        return ngaySinh.getValue();
     }
 
-    public void setNgaySinh(Date ngaySinh) {
-        this.ngaySinh = ngaySinh;
+    public void setNgaySinh(String ngaySinh) {
+        this.ngaySinh.setValue(ngaySinh);
     }
 
     public static class Search {

@@ -1,5 +1,8 @@
 package model.objects;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -11,22 +14,22 @@ import java.util.List;
 
 public class MucThu {
 
-    private int maMucThu;
-    private String moTa;
-    private double soTien;
+    private SimpleIntegerProperty maMucThu;
+    private SimpleStringProperty moTa;
+    private SimpleDoubleProperty soTien;
     private List<HocPhan> dsHocPhan;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
     public MucThu(String moTa, long soTien) {
-        this.moTa = moTa;
-        this.soTien = soTien;
+        this.moTa = new SimpleStringProperty(moTa);
+        this.soTien = new SimpleDoubleProperty(soTien);
     }
 
     private MucThu(int maMucThu, String moTa, double soTien) {
-        this.maMucThu = maMucThu;
-        this.moTa = moTa;
-        this.soTien = soTien;
+        this.maMucThu = new SimpleIntegerProperty(maMucThu);
+        this.moTa = new SimpleStringProperty(moTa);
+        this.soTien = new SimpleDoubleProperty(soTien);
     }
 
     public static MucThu getInstanceID(int maMucThu, String moTa, double soTien) {
@@ -34,23 +37,23 @@ public class MucThu {
     }
 
     public int getMaMucThu() {
-        return maMucThu;
+        return maMucThu.getValue();
     }
 
     public String getMoTa() {
-        return moTa;
+        return moTa.getValue();
     }
 
     public void setMoTa(String moTa) {
-        this.moTa = moTa;
+        this.moTa.setValue(moTa);
     }
 
     public double getSoTien() {
-        return soTien;
+        return soTien.getValue();
     }
 
     public void setSoTien(long soTien) {
-        this.soTien = soTien;
+        this.soTien.setValue(soTien);
     }
 
     public List<HocPhan> getDsHocPhan() {

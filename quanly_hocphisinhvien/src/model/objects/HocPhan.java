@@ -1,5 +1,7 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -11,77 +13,77 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class HocPhan {
-    private int ma, maMucThu, maMonHoc;
-    private short soTinChi;
-    private String giaoVienGiangDay;
-    private Date thoiGian;
+    private SimpleIntegerProperty ma, maMucThu, maMonHoc;
+    private SimpleIntegerProperty soTinChi;
+    private SimpleStringProperty giaoVienGiangDay;
+    private SimpleStringProperty thoiGian;
     private List<DangKy> dsHocPhan;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public HocPhan(int maMonHoc, short soTinChi, int maMucThu, String giaoVienGiangDay, Date thoiGian) {
-        this.maMucThu = maMucThu;
-        this.maMonHoc = maMonHoc;
-        this.soTinChi = soTinChi;
-        this.giaoVienGiangDay = giaoVienGiangDay;
-        this.thoiGian = thoiGian;
+    public HocPhan(int maMonHoc, short soTinChi, int maMucThu, String giaoVienGiangDay, String thoiGian) {
+        this.maMucThu = new SimpleIntegerProperty(maMucThu);
+        this.maMonHoc = new SimpleIntegerProperty(maMonHoc);
+        this.soTinChi = new SimpleIntegerProperty();
+        this.giaoVienGiangDay = new SimpleStringProperty(giaoVienGiangDay);
+        this.thoiGian = new SimpleStringProperty(thoiGian.toString());
     }
 
-    private HocPhan(int ma, int maMonHoc, short soTinChi, int maMucThu, String giaoVienGiangDay, Date thoiGian) {
-        this.ma = ma;
-        this.maMucThu = maMucThu;
-        this.maMonHoc = maMonHoc;
-        this.soTinChi = soTinChi;
-        this.giaoVienGiangDay = giaoVienGiangDay;
-        this.thoiGian = thoiGian;
+    private HocPhan(int ma, int maMonHoc, int soTinChi, int maMucThu, String giaoVienGiangDay, String thoiGian) {
+        this.ma = new SimpleIntegerProperty(ma);
+        this.maMucThu = new SimpleIntegerProperty(maMucThu);
+        this.maMonHoc = new SimpleIntegerProperty(maMonHoc);
+        this.soTinChi = new SimpleIntegerProperty(soTinChi);
+        this.giaoVienGiangDay = new SimpleStringProperty(giaoVienGiangDay);
+        this.thoiGian = new SimpleStringProperty(thoiGian.toString());
     }
 
-    public static HocPhan getInstanceID(int ma, int maMonHoc, short soTinChi, int maMucThu, String giaoVienGiangDay, Date thoiGian) {
+    public static HocPhan getInstanceID(int ma, int maMonHoc, short soTinChi, int maMucThu, String giaoVienGiangDay, String thoiGian) {
         return new HocPhan(ma, maMonHoc, soTinChi, maMucThu, giaoVienGiangDay, thoiGian);
     }
 
     public int getMa() {
-        return ma;
+        return ma.getValue();
     }
 
     public int getMaMucThu() {
-        return maMucThu;
+        return maMucThu.getValue();
     }
 
     public void setMaMucThu(int maMucThu) {
-        this.maMucThu = maMucThu;
+        this.maMucThu.setValue(maMucThu);
     }
 
     public int getMaMonHoc() {
-        return maMonHoc;
+        return maMonHoc.getValue();
     }
 
     public void setMaMonHoc(int maMonHoc) {
-        this.maMonHoc = maMonHoc;
+        this.maMonHoc.setValue(maMonHoc);
     }
 
-    public short getSoTinChi() {
-        return soTinChi;
+    public Integer getSoTinChi() {
+        return soTinChi.getValue();
     }
 
-    public void setSoTinChi(short soTinChi) {
-        this.soTinChi = soTinChi;
+    public void setSoTinChi(int soTinChi) {
+        this.soTinChi.setValue(soTinChi);
     }
 
     public String getGiaoVienGiangDay() {
-        return giaoVienGiangDay;
+        return giaoVienGiangDay.getValue();
     }
 
     public void setGiaoVienGiangDay(String giaoVienGiangDay) {
-        this.giaoVienGiangDay = giaoVienGiangDay;
+        this.giaoVienGiangDay.setValue(giaoVienGiangDay);
     }
 
-    public Date getThoiGian() {
-        return thoiGian;
+    public String getThoiGian() {
+        return thoiGian.toString();
     }
 
     public void setThoiGian(Date thoiGian) {
-        this.thoiGian = thoiGian;
+        this.thoiGian.setValue(thoiGian.toString());
     }
 
     public List<DangKy> getDsHocPhan() {
@@ -132,7 +134,8 @@ public class HocPhan {
 //            HocPhan.Update.where("mahp = " + id, new HocPhan(id, hocPhan.getMaMonHoc(), hocPhan.getSoTinChi(),
 //                    hocPhan.getMaMucThu(), hocPhan.getGiaoVienGiangDay(), hocPhan.getThoiGian()));
             InsertDB.getInstance().insertCommand(statement);
-            return new HocPhan(id, hocPhan.maMonHoc, hocPhan.soTinChi, hocPhan.maMucThu, hocPhan.giaoVienGiangDay, hocPhan.thoiGian);
+            return new HocPhan(id, hocPhan.getMaMonHoc(), hocPhan.getSoTinChi(), hocPhan.getMaMucThu(),
+                    hocPhan.getGiaoVienGiangDay(), hocPhan.getThoiGian());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
