@@ -115,6 +115,10 @@ public class GiangDuong {
                 return false;
             }
         }
+
+        public static Boolean whereId(String where) {
+            return Delete.where("magd = " + where);
+        }
     }
 
     @Override
@@ -145,6 +149,10 @@ public class GiangDuong {
                 System.out.println(e.getMessage());
                 return false;
             }
+        }
+
+        public static Boolean whereId(String where, GiangDuong gd) throws SQLException {
+            return Update.where("magd = " + where, gd);
         }
     }
 }

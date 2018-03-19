@@ -17,31 +17,31 @@ public class SinhVien {
     private List<SinhVien> dsSinhVien;
     private SimpleIntegerProperty maSV, maDT, maBoMon;
     private SimpleStringProperty tenSV, diaChi;
-    private SimpleBooleanProperty gioiTinh;
+    private SimpleStringProperty gioiTinh;
     private SimpleStringProperty ngaySinh;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public SinhVien(int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, String ngaySinh) {
+    public SinhVien(int maDT, int maBoMon, String tenSV, String diaChi, String gioiTinh, String ngaySinh) {
         this.maDT = new SimpleIntegerProperty(maDT);
         this.maBoMon = new SimpleIntegerProperty(maBoMon);
         this.tenSV = new SimpleStringProperty(tenSV);
         this.diaChi = new SimpleStringProperty(diaChi);
-        this.gioiTinh = new SimpleBooleanProperty(gioiTinh);
+        this.gioiTinh = new SimpleStringProperty(gioiTinh);
         this.ngaySinh = new SimpleStringProperty(ngaySinh);
     }
 
-    private SinhVien(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, String ngaySinh) {
+    private SinhVien(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, String gioiTinh, String ngaySinh) {
         this.maSV = new SimpleIntegerProperty(maSV);
         this.maDT = new SimpleIntegerProperty(maDT);
         this.maBoMon = new SimpleIntegerProperty(maBoMon);
         this.tenSV = new SimpleStringProperty(tenSV);
         this.diaChi = new SimpleStringProperty(diaChi);
-        this.gioiTinh = new SimpleBooleanProperty(gioiTinh);
+        this.gioiTinh = new SimpleStringProperty(gioiTinh);
         this.ngaySinh = new SimpleStringProperty(ngaySinh);
     }
 
-    public static SinhVien getInstanceID(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, boolean gioiTinh, String ngaySinh) {
+    public static SinhVien getInstanceID(int maSV, int maDT, int maBoMon, String tenSV, String diaChi, String gioiTinh, String ngaySinh) {
         return new SinhVien(maSV, maDT, maBoMon, tenSV, diaChi, gioiTinh, ngaySinh);
     }
 
@@ -89,11 +89,11 @@ public class SinhVien {
         this.diaChi.setValue(diaChi);
     }
 
-    public boolean getGioiTinh() {
+    public String getGioiTinh() {
         return gioiTinh.getValue();
     }
 
-    public void setGioiTinh(boolean gioiTinh) {
+    public void setGioiTinh(String gioiTinh) {
         this.gioiTinh.setValue(gioiTinh);
     }
 
@@ -166,6 +166,10 @@ public class SinhVien {
                 return false;
             }
         }
+
+        public static Boolean whereId(String where) {
+            return Delete.where("masv = " + where);
+        }
     }
 
     @Override
@@ -196,7 +200,7 @@ public class SinhVien {
                         "madt = " + newSinhVien.getMaDT() + ", " +
                         "mabm = " + newSinhVien.getMaBoMon() + ", " +
                         "tensv = N'" + newSinhVien.getTenSV() + "', " +
-                        "gioitinh = N'" + (newSinhVien.getGioiTinh() == true ? "Nam" : "Nữ") + "', " +
+                        "gioitinh = N'" + newSinhVien.getGioiTinh() + "', " +
                         "ngaysinh = '" + newSinhVien.getNgaySinh() + "' " +
                         "diachi = N'" + newSinhVien.getDiaChi() + "' " +
 
@@ -207,6 +211,10 @@ public class SinhVien {
                 System.out.println(e.getMessage());
                 return false;
             }
+        }
+
+        public static Boolean whereId(String where, SinhVien sv) throws SQLException {
+            return Update.where("masv = " + where, sv);
         }
     }
 }

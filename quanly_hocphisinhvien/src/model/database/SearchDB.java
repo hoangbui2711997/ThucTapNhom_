@@ -73,8 +73,9 @@ public class SearchDB implements ISearch{
             Object ngaysinh = resultSet.getObject(6);
             Object diachi = resultSet.getObject(7);
 
-            return SinhVien.getInstanceID((Integer) masv, (Integer) madt, (Integer) mabm, (String) tensv,
-                    (String) diachi, (Boolean) gioitinh, ((Date) ngaysinh).toString());
+            return SinhVien.getInstanceID((Integer) masv, (Integer) madt == null ? -1 : (Integer) madt,
+                    (Integer) mabm == null ? -1 : (Integer) madt, (String) tensv,
+                    (String) diachi, (String) gioitinh, ((Date) ngaysinh).toString());
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }

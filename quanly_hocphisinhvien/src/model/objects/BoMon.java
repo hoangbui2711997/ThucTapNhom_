@@ -122,6 +122,10 @@ public class BoMon {
                 return false;
             }
         }
+
+        public static Boolean whereId(String where) {
+            return Delete.where("mabm = " + where);
+        }
     }
 
 
@@ -152,6 +156,10 @@ public class BoMon {
                 System.out.println(e.getMessage());
                 return false;
             }
+        }
+
+        public static Boolean whereId(String where, BoMon bm) throws SQLException {
+            return Update.where("mabm = " + where, bm);
         }
     }
 }

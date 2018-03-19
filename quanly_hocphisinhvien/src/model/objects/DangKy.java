@@ -10,7 +10,6 @@ import model.database.UpdateDB;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DangKy {
@@ -19,7 +18,6 @@ public class DangKy {
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private SimpleStringProperty thoiGianDangKy;
     private static String statement;
-
 
     public static DangKy getInstanceID(String maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, String thoiGianDangKy) {
         return new DangKy(maDangKy, maGiangDuong, maHocPhan, maSinhVien, thoiGianDangKy);
@@ -141,6 +139,10 @@ public class DangKy {
                 return false;
             }
         }
+
+        public static Boolean whereId(String where) {
+            return Delete.where("madk = " + where);
+        }
     }
 
     @Override
@@ -178,6 +180,10 @@ public class DangKy {
                 System.out.println(e.getMessage());
                 return false;
             }
+        }
+
+        public static Boolean whereId(String where, DangKy dk) throws SQLException {
+            return Update.where("madk = " + where, dk);
         }
     }
 }

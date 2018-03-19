@@ -127,6 +127,10 @@ public class MucThu {
                 return false;
             }
         }
+
+        public static Boolean whereId(String where) {
+            return Delete.where("mamucthu = " + where);
+        }
     }
 
     public static class Update {
@@ -151,6 +155,10 @@ public class MucThu {
                 System.out.println(e.getMessage());
                 return false;
             }
+        }
+
+        public static Boolean whereId(String where, MucThu mt) throws SQLException {
+            return Update.where("mamucthu = " + where, mt);
         }
     }
 }

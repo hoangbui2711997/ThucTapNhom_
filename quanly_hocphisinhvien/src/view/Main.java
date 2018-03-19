@@ -14,7 +14,9 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 1200, 700));
 
-
+        primaryStage.setFullScreen(false);
+        primaryStage.setTitle("Quản lý học phí sinh viên nhóm x");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

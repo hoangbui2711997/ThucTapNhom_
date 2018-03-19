@@ -109,6 +109,10 @@ public class MonHoc {
                 return false;
             }
         }
+
+        public static Boolean whereId(String where) {
+            return Delete.where("mamonhoc = " + where);
+        }
     }
 
     public static class Update {
@@ -132,6 +136,10 @@ public class MonHoc {
                 System.out.println(e.getMessage());
                 return false;
             }
+        }
+
+        public static Boolean whereId(String where, MonHoc mh) throws SQLException {
+            return Update.where("mamonhoc = " + where, mh);
         }
     }
 }

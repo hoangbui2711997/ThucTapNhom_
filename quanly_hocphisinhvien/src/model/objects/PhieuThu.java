@@ -163,6 +163,10 @@ public class PhieuThu {
                 return false;
             }
         }
+
+        public static Boolean whereId(String where) {
+            return Delete.where("mapt = " + where);
+        }
     }
 
     public static class Update {
@@ -189,6 +193,10 @@ public class PhieuThu {
                 System.out.println(e.getMessage());
                 return false;
             }
+        }
+
+        public static Boolean whereId(String where, PhieuThu pt) throws SQLException {
+            return Update.where("mapt = " + where, pt);
         }
     }
 }

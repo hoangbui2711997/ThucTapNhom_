@@ -118,6 +118,10 @@ public class Khoa {
                 return false;
             }
         }
+
+        public static Boolean whereId(String where) {
+            return Delete.where("makhoa = " + where);
+        }
     }
 
     public static class Update {
@@ -141,6 +145,10 @@ public class Khoa {
                 System.out.println(e.getMessage());
                 return false;
             }
+        }
+
+        public static Boolean whereId(String where, Khoa khoa) throws SQLException {
+            return Update.where("makhoa = " + where, khoa);
         }
     }
 }

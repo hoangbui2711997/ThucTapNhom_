@@ -11,6 +11,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
@@ -68,43 +69,25 @@
                                  </children></AnchorPane>
                             <AnchorPane prefHeight="622.0" prefWidth="457.0">
                                  <children>
-                                    <VBox layoutX="763.0" prefHeight="631.0" prefWidth="269.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Pane prefHeight="69.0" prefWidth="269.0" style="-fx-background-color: #4080ff;">
-                                             <children>
-                                                <Label alignment="CENTER" layoutX="50.0" layoutY="17.0" minHeight="35.0" prefHeight="35.0" prefWidth="169.0" style="-fx-alignment: center; -fx-background-color: #aea0ff;" text="Thêm - Sửa ..." textFill="WHITE">
-                                                   <font>
-                                                      <Font name="Times New Roman" size="24.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </Pane>
-                                          <Pane prefHeight="563.0" prefWidth="269.0">
-                                             <children>
-                                                <JFXButton layoutX="14.0" layoutY="98.0" prefHeight="25.0" prefWidth="96.0" />
-                                             </children>
-                                          </Pane>
-                                       </children>
-                                    </VBox>
                                     <VBox prefHeight="631.0" prefWidth="1032.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <ToolBar prefHeight="54.0" prefWidth="1032.0">
+                                          <ToolBar prefHeight="47.0" prefWidth="1032.0">
                                              <items>
                                                 <JFXComboBox fx:id="selectTable" labelFloat="true" minHeight="28.0" minWidth="155.0" promptText="Chọn bảng">
                                                    <padding>
                                                       <Insets top="10.0" />
                                                    </padding></JFXComboBox>
-                                                <JFXButton fx:id="add" blendMode="GREEN" buttonType="RAISED" onMouseClicked="#TestHidden" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Thêm">
+                                                <JFXButton fx:id="add" blendMode="GREEN" buttonType="RAISED" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Thêm">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </JFXButton>
-                                                <JFXButton fx:id="repair" blendMode="BLUE" buttonType="RAISED" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Sửa">
+                                                <JFXButton fx:id="repair" blendMode="BLUE" buttonType="RAISED" onMouseClicked="#onUpdateButtonClicked" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Sửa">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
                                                 </JFXButton>
-                                                <JFXButton fx:id="delete" blendMode="RED" buttonType="RAISED" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Xóa">
+                                                <JFXButton fx:id="delete" blendMode="RED" buttonType="RAISED" onMouseClicked="#onDeleteButtonClicked" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Xóa">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -139,7 +122,11 @@
                                                 </HBox>
                                              </items>
                                           </ToolBar>
-                                          <TableView fx:id="table" editable="true" prefHeight="568.0" prefWidth="1032.0" style="-fx-background-color: #f8f9fa;" tableMenuButtonVisible="true" />
+                                          <TableView fx:id="table" editable="true" prefHeight="523.0" prefWidth="1032.0" style="-fx-background-color: #f8f9fa;" tableMenuButtonVisible="true">
+                                             <columns>
+                                                <TableColumn prefWidth="75.0" text="Column X" />
+                                             </columns>
+                                          </TableView>
                                        </children>
                                     </VBox>
                                  </children>

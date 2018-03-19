@@ -31,10 +31,7 @@ public class TestModelHere {
 //        System.out.println(DoiTuong.Delete.where("madt = " + dt.getMa()));
 
 
-        List<SinhVien> ls = SinhVien.Search.getAll();
-        for (SinhVien hocPhan : ls) {
-            System.out.println(hocPhan.toString());
-        }
+        System.out.println(SinhVien.Delete.whereId("1"));
     }
 }
 

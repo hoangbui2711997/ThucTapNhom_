@@ -79,7 +79,7 @@ public class HocPhan {
     }
 
     public String getThoiGian() {
-        return thoiGian.toString();
+        return thoiGian.getValue();
     }
 
     public void setThoiGian(Date thoiGian) {
@@ -158,6 +158,10 @@ public class HocPhan {
                 return false;
             }
         }
+
+        public static Boolean whereId(String where) {
+            return Delete.where("mahp = " + where);
+        }
     }
 
     @Override
@@ -196,6 +200,10 @@ public class HocPhan {
                 System.out.println(e.getMessage());
                 return false;
             }
+        }
+
+        public static Boolean whereId(String where, HocPhan hp) throws SQLException {
+            return Update.where("mahp = " + where, hp);
         }
     }
 }
