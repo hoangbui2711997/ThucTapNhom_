@@ -1,5 +1,7 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -11,78 +13,77 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class HocPhan {
-    private int ma, maMucThu, maMonHoc;
-    private byte soTinChi;
-    private String ten, giaoVienGiangDay;
-    private Date thoiGian;
+    private SimpleIntegerProperty ma, maMucThu, maMonHoc;
+    private SimpleIntegerProperty soTinChi;
+    private SimpleStringProperty giaoVienGiangDay;
+    private SimpleStringProperty thoiGian;
     private List<DangKy> dsHocPhan;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public HocPhan(int ma, int maMucThu, int maMonHoc, byte soTinChi, String ten, String giaoVienGiangDay, Date thoiGian) {
-        this.ma = ma;
-        this.maMucThu = maMucThu;
-        this.maMonHoc = maMonHoc;
-        this.soTinChi = soTinChi;
-        this.ten = ten;
-        this.giaoVienGiangDay = giaoVienGiangDay;
-        this.thoiGian = thoiGian;
+    public HocPhan(int maMonHoc, short soTinChi, int maMucThu, String giaoVienGiangDay, String thoiGian) {
+        this.maMucThu = new SimpleIntegerProperty(maMucThu);
+        this.maMonHoc = new SimpleIntegerProperty(maMonHoc);
+        this.soTinChi = new SimpleIntegerProperty();
+        this.giaoVienGiangDay = new SimpleStringProperty(giaoVienGiangDay);
+        this.thoiGian = new SimpleStringProperty(thoiGian);
+    }
+
+    private HocPhan(int ma, int maMonHoc, int soTinChi, int maMucThu, String giaoVienGiangDay, String thoiGian) {
+        this.ma = new SimpleIntegerProperty(ma);
+        this.maMucThu = new SimpleIntegerProperty(maMucThu);
+        this.maMonHoc = new SimpleIntegerProperty(maMonHoc);
+        this.soTinChi = new SimpleIntegerProperty(soTinChi);
+        this.giaoVienGiangDay = new SimpleStringProperty(giaoVienGiangDay);
+        this.thoiGian = new SimpleStringProperty(thoiGian);
+    }
+
+    public static HocPhan getInstanceID(int ma, int maMonHoc, short soTinChi, int maMucThu, String giaoVienGiangDay, String thoiGian) {
+        return new HocPhan(ma, maMonHoc, soTinChi, maMucThu, giaoVienGiangDay, thoiGian);
     }
 
     public int getMa() {
-        return ma;
-    }
-
-    public void setMa(int ma) {
-        this.ma = ma;
+        return ma.getValue();
     }
 
     public int getMaMucThu() {
-        return maMucThu;
+        return maMucThu.getValue();
     }
 
     public void setMaMucThu(int maMucThu) {
-        this.maMucThu = maMucThu;
+        this.maMucThu.setValue(maMucThu);
     }
 
     public int getMaMonHoc() {
-        return maMonHoc;
+        return maMonHoc.getValue();
     }
 
     public void setMaMonHoc(int maMonHoc) {
-        this.maMonHoc = maMonHoc;
+        this.maMonHoc.setValue(maMonHoc);
     }
 
-    public byte getSoTinChi() {
-        return soTinChi;
+    public Integer getSoTinChi() {
+        return soTinChi.getValue();
     }
 
-    public void setSoTinChi(byte soTinChi) {
-        this.soTinChi = soTinChi;
-    }
-
-    public String getTen() {
-        return ten;
-    }
-
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void setSoTinChi(int soTinChi) {
+        this.soTinChi.setValue(soTinChi);
     }
 
     public String getGiaoVienGiangDay() {
-        return giaoVienGiangDay;
+        return giaoVienGiangDay.getValue();
     }
 
     public void setGiaoVienGiangDay(String giaoVienGiangDay) {
-        this.giaoVienGiangDay = giaoVienGiangDay;
+        this.giaoVienGiangDay.setValue(giaoVienGiangDay);
     }
 
-    public Date getThoiGian() {
-        return thoiGian;
+    public String getThoiGian() {
+        return thoiGian.toString();
     }
 
     public void setThoiGian(Date thoiGian) {
-        this.thoiGian = thoiGian;
+        this.thoiGian.setValue(thoiGian.toString());
     }
 
     public List<DangKy> getDsHocPhan() {
@@ -93,61 +94,63 @@ public class HocPhan {
         this.dsHocPhan = dsHocPhan;
     }
 
-    public static class Search{
-        private Search() {}
-
-        public synchronized static HocPhan where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM HOCPHAN WHERE " + where);
-                resultSet.next();
-
-                return searchDB.getHocPhan(resultSet);
-            }
+    public static class Search {
+        private Search() {
         }
 
+        public static HocPhan where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM HOCPHAN WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getHocPhan(resultSet);
+        }
+
+
         /**
-         *
          * @return Lay tat ca sinh vien trong csdl
          * @throws SQLException
          */
-        public synchronized static List<HocPhan> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsHocPhan();
-            }
+        public static List<HocPhan> getAll() throws SQLException {
+            return searchDB.getDsHocPhan();
         }
     }
-
-    public static Boolean Insert(HocPhan hocPhan) throws SQLException {
+    public static HocPhan Insert(HocPhan hocPhan) throws SQLException {
         try {
-            statement = "INSERT INTO HOCPHAN VALUES" +
-                    "(" +
-                    hocPhan.getMa() + ", " +
-                    hocPhan.getMaMonHoc() + ", " +
-                    "N'" + hocPhan.getTen() + "', " +
-                    hocPhan.getSoTinChi() + ", " +
-                    hocPhan.getMaMucThu() + ", " +
-                    "N'"+ hocPhan.getGiaoVienGiangDay() + "', " +
-                    "'" + hocPhan.getThoiGian() +"'" +
-                    ")";
+//            statement = "INSERT INTO HOCPHAN(mahp, mamonhoc, sotinchi, mamucthu, gvgd, thoigian) VALUES" +
+//                    "(" +
+//                    hocPhan.getMa() + ", " +
+//                    hocPhan.getMaMonHoc() + ", " +
+//                    hocPhan.getSoTinChi() + ", " +
+//                    hocPhan.getMaMucThu() + ", " +
+//                    "N'"+ hocPhan.getGiaoVienGiangDay() + "', " +
+//                    "'" + hocPhan.getThoiGian() +"'" +
+//                    ")";
+            int id = InsertDB.getInstance().initInsert("HOCPHAN");
 
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            HocPhan.Update.where("mahp = " + id, new HocPhan(id, hocPhan.getMaMonHoc(), hocPhan.getSoTinChi(),
+//                    hocPhan.getMaMucThu(), hocPhan.getGiaoVienGiangDay(), hocPhan.getThoiGian()));
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new HocPhan(id, hocPhan.getMaMonHoc(), hocPhan.getSoTinChi(), hocPhan.getMaMucThu(),
+                    hocPhan.getGiaoVienGiangDay(), hocPhan.getThoiGian());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
-        public static Boolean where(String where) {
+        public static Boolean where(int where) {
             try {
-                statement = "DELETE HOCPHAN WHERE " + where;
+                statement = "DELETE FROM HOCPHAN WHERE mahp = " + where;
                 DeleteDB.getInstance().deleteCommand(statement);
                 return true;
             } catch (SQLException e) {
@@ -157,25 +160,35 @@ public class HocPhan {
         }
     }
 
+    @Override
+    public String toString() {
+        return "HocPhan{" +
+                "ma=" + ma +
+                ", maMucThu=" + maMucThu +
+                ", maMonHoc=" + maMonHoc +
+                ", soTinChi=" + soTinChi +
+                ", giaoVienGiangDay='" + giaoVienGiangDay + '\'' +
+                ", thoiGian=" + thoiGian +
+                '}';
+    }
+
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where      DK - update
          * @param newHocPhan DangKy update
          * @return
          * @throws SQLException
          */
         public static Boolean where(String where, HocPhan newHocPhan) throws SQLException {
             try {
-                statement = "UPDATE HOCPHAN set " +
-                        "mahp = " + newHocPhan.getMa() + ", " +
+                statement = "UPDATE HOCPHAN SET " +
+//                        "mahp = " + newHocPhan.getMa() + ", " +
                         "mamonhoc = " + newHocPhan.getMaMonHoc() + ", " +
-                        "tenhp = N'" + newHocPhan.getTen() + "', " +
                         "sotinchi = " + newHocPhan.getSoTinChi() + ", " +
                         "mamucthu = " + newHocPhan.getMaMucThu() + ", " +
-                        "gvgd = N'"+ newHocPhan.getGiaoVienGiangDay() +"', " +
-                        "thoigian = '"+ newHocPhan.getThoiGian() +"' " +
+                        "gvgd = N'" + newHocPhan.getGiaoVienGiangDay() + "', " +
+                        "thoigian = '" + newHocPhan.getThoiGian() + "' " +
                         "where " + where;
                 UpdateDB.getInstance().updateCommand(statement);
                 return true;

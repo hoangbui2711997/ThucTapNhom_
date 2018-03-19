@@ -1,5 +1,8 @@
 package model.objects;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -11,41 +14,46 @@ import java.util.List;
 
 public class MucThu {
 
-    private int maMucThu;
-    private String moTa;
-    private long soTien;
+    private SimpleIntegerProperty maMucThu;
+    private SimpleStringProperty moTa;
+    private SimpleDoubleProperty soTien;
     private List<HocPhan> dsHocPhan;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public MucThu(int maMucThu, String moTa, long soTien) {
-        this.maMucThu = maMucThu;
-        this.moTa = moTa;
-        this.soTien = soTien;
+    public MucThu(String moTa, long soTien) {
+        this.moTa = new SimpleStringProperty(moTa);
+        this.soTien = new SimpleDoubleProperty(soTien);
+    }
+
+    private MucThu(int maMucThu, String moTa, double soTien) {
+        this.maMucThu = new SimpleIntegerProperty(maMucThu);
+        this.moTa = new SimpleStringProperty(moTa);
+        this.soTien = new SimpleDoubleProperty(soTien);
+    }
+
+    public static MucThu getInstanceID(int maMucThu, String moTa, double soTien) {
+        return new MucThu(maMucThu, moTa, soTien);
     }
 
     public int getMaMucThu() {
-        return maMucThu;
-    }
-
-    public void setMaMucThu(int maMucThu) {
-        this.maMucThu = maMucThu;
+        return maMucThu.getValue();
     }
 
     public String getMoTa() {
-        return moTa;
+        return moTa.getValue();
     }
 
     public void setMoTa(String moTa) {
-        this.moTa = moTa;
+        this.moTa.setValue(moTa);
     }
 
-    public long getSoTien() {
-        return soTien;
+    public double getSoTien() {
+        return soTien.getValue();
     }
 
     public void setSoTien(long soTien) {
-        this.soTien = soTien;
+        this.soTien.setValue(soTien);
     }
 
     public List<HocPhan> getDsHocPhan() {
@@ -56,50 +64,56 @@ public class MucThu {
         this.dsHocPhan = dsHocPhan;
     }
 
-    public static class Search{
-        private Search() {}
+    @Override
+    public String toString() {
+        return "MucThu{" +
+                "maMucThu=" + maMucThu +
+                ", moTa='" + moTa + '\'' +
+                ", soTien=" + soTien +
+                '}';
+    }
 
-        public synchronized static MucThu where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM MUCTHU WHERE " + where);
-                resultSet.next();
+    public static class Search {
+        private Search() {
+        }
 
-                return searchDB.getMucThu(resultSet);
-            }
+        public static MucThu where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM MUCTHU WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getMucThu(resultSet);
         }
 
         /**
-         *
          * @return Lay tat ca sinh vien trong csdl
          * @throws SQLException
          */
-        public synchronized static List<MucThu> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsMucTHu();
-            }
+        public static List<MucThu> getAll() throws SQLException {
+            return searchDB.getDsMucTHu();
         }
     }
 
-    public static Boolean Insert(MucThu mucThu) throws SQLException {
+    public static MucThu Insert(MucThu mucThu) throws SQLException {
         try {
-            statement = "INSERT INTO MUCTHU VALUES" +
-                    "(" + mucThu.getMaMucThu() + ", " +
-                    "N'" + mucThu.getMoTa() + "', " +
-                    mucThu.getSoTien() +
-                    ")";
+//            statement = "INSERT INTO MUCTHU(mamucthu, mota, sotien) VALUES" +
+//                    "(" + mucThu.getMaMucThu() + ", " +
+//                    "N'" + mucThu.getMoTa() + "', " +
+//                    mucThu.getSoTien() +
+//                    ")";
+            int id = InsertDB.getInstance().initInsert("MUCTHU");
 
+            MucThu.Update.where("mamucthu = " + id, new MucThu(id, mucThu.getMoTa(), mucThu.getSoTien()));
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new MucThu(id, mucThu.getMoTa(), mucThu.getSoTien());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
@@ -118,8 +132,7 @@ public class MucThu {
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where     DK - update
          * @param newMucThu DangKy update
          * @return
          * @throws SQLException
@@ -127,7 +140,8 @@ public class MucThu {
         public static Boolean where(String where, MucThu newMucThu) throws SQLException {
             try {
                 statement = "UPDATE MUCTHU " +
-                        "SET mamucthu = " + newMucThu.getMaMucThu() + ", " +
+                        "SET " +
+//                        "mamucthu = " + newMucThu.getMaMucThu() + ", " +
                         "mota = N'" + newMucThu.getMoTa() + "', " +
                         "sotien = " + newMucThu.getSoTien() + " " +
                         "where " + where;

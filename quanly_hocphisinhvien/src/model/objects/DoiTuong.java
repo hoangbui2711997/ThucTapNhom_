@@ -1,5 +1,7 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -11,15 +13,31 @@ import java.util.List;
 
 public class DoiTuong {
     private List<SinhVien> dsSV;
-    private int ma;
-    private String ten;
+    private SimpleIntegerProperty ma;
+    private SimpleStringProperty ten;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
     private static Object lock = new Object();
 
-    public DoiTuong(int ma, String ten) {
-        this.ma = ma;
-        this.ten = ten;
+    public DoiTuong(String ten) {
+        this.ten = new SimpleStringProperty(ten);
+    }
+
+    /**
+     * Hàm này trả về ID nếu muốn tạo construct có ID, và tên
+     * giống Factory
+     *
+     * @param id
+     * @param ten
+     * @return
+     */
+    public static DoiTuong getInstanceID(int id, String ten) {
+        return new DoiTuong(id, ten);
+    }
+
+    private DoiTuong(int ma, String ten) {
+        this.ma = new SimpleIntegerProperty(ma);
+        this.ten = new SimpleStringProperty(ten);
     }
 
     public List<SinhVien> getDsSV() {
@@ -32,19 +50,15 @@ public class DoiTuong {
     }
 
     public int getMa() {
-        return ma;
-    }
-
-    public void setMa(int ma) {
-        this.ma = ma;
+        return ma.getValue();
     }
 
     public String getTen() {
-        return ten;
+        return ten.getValue();
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        this.ten.setValue(ten);
     }
 
     @Override
@@ -55,55 +69,62 @@ public class DoiTuong {
                 '}';
     }
 
-    public static class Search{
-        private Search() {}
-
-        public synchronized static DoiTuong where(String where) throws SQLException {
-            synchronized (lock) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM DOITUONG WHERE " + where);
-                resultSet.next();
-
-                return searchDB.getDoiTuong(resultSet);
-            }
+    public static class Search {
+        private Search() {
         }
 
+        public static DoiTuong where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM DOITUONG WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getDoiTuong(resultSet);
+        }
+
+
         /**
-         *
          * @return Lay tat ca sinh vien trong csdl
          * @throws SQLException
          */
-        public synchronized static List<DoiTuong> getAll() throws SQLException {
-            synchronized (lock) {
-                return searchDB.getDsDoiTuong();
-            }
+        public static List<DoiTuong> getAll() throws SQLException {
+            return searchDB.getDsDoiTuong();
         }
     }
 
-    public static Boolean Insert(DoiTuong doiTuong) throws SQLException {
+    public static DoiTuong Insert(DoiTuong doiTuong) throws SQLException {
         try {
-            statement = "INSERT INTO DOITUONG VALUES" +
+
+            int id = InsertDB.getInstance().initInsert("DOITUONG");
+
+            statement = "INSERT INTO DOITUONG(loaidt) VALUES" +
                     "(" +
-                    doiTuong.getMa() + ", " +
+//                    doiTuong.getMa() + ", " +
                     "N'" + doiTuong.getTen() + "' " +
                     ")";
+
+//            System.out.println(id);
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            DoiTuong.Update.where("madt = " + id, new DoiTuong(id, doiTuong.getTen()));
+
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new DoiTuong(id, doiTuong.getTen());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
-        public static Boolean where(String where) {
+        public static Boolean where(int where) {
             try {
-                statement = "DELETE DOITUONG WHERE " + where;
+                statement = "DELETE FROM DOITUONG WHERE madt = " + where;
                 DeleteDB.getInstance().deleteCommand(statement);
                 return true;
             } catch (SQLException e) {
@@ -116,8 +137,7 @@ public class DoiTuong {
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where       DK - update
          * @param newDoiTuong DangKy update
          * @return
          * @throws SQLException
@@ -125,9 +145,10 @@ public class DoiTuong {
         public static Boolean where(String where, DoiTuong newDoiTuong) throws SQLException {
             try {
                 statement = "UPDATE DOITUONG " +
-                        "SET madt = " + newDoiTuong.getMa() + ", " +
-                        "tendt = N'" + newDoiTuong.getTen() + "', " +
+                        "SET " +
+                        "loaidt = N'" + newDoiTuong.getTen() + "' " +
                         "WHERE " + where;
+                System.out.println(statement);
                 UpdateDB.getInstance().updateCommand(statement);
                 return true;
             } catch (SQLException e) {

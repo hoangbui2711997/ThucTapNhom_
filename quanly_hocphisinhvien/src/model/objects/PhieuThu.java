@@ -1,5 +1,9 @@
 package model.objects;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -11,118 +15,141 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class PhieuThu {
-    private int ma, maSV;
-    private long soTien;
-    private Date ngayBatDauThu, ngayNop;
-    private boolean trangThai;
+    private SimpleIntegerProperty ma, maSV;
+    private SimpleLongProperty soTien;
+    private SimpleStringProperty ngayBatDauThu, ngayNop;
+    private SimpleBooleanProperty trangThai;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public PhieuThu(int ma, int maSV, long soTien, Date ngayBatDauThu, Date ngayNop, boolean trangThai) {
-        this.ma = ma;
-        this.maSV = maSV;
-        this.soTien = soTien;
-        this.ngayBatDauThu = ngayBatDauThu;
-        this.ngayNop = ngayNop;
-        this.trangThai = trangThai;
+    public PhieuThu(int maSV, long soTien, String ngayBatDauThu, String ngayNop, boolean trangThai) {
+        this.maSV = new SimpleIntegerProperty(maSV);
+        this.soTien = new SimpleLongProperty(soTien);
+        this.ngayBatDauThu = new SimpleStringProperty(ngayBatDauThu.toString());
+        this.ngayNop = new SimpleStringProperty(ngayNop.toString());
+        this.trangThai = new SimpleBooleanProperty(trangThai);
+    }
+
+    private PhieuThu(int ma, int maSV, long soTien, String ngayBatDauThu, String ngayNop, boolean trangThai) {
+        this.ma = new SimpleIntegerProperty(ma);
+        this.maSV = new SimpleIntegerProperty(maSV);
+        this.soTien = new SimpleLongProperty(soTien);
+        this.ngayBatDauThu = new SimpleStringProperty(ngayBatDauThu.toString());
+        this.ngayNop = new SimpleStringProperty(ngayNop.toString());
+        this.trangThai = new SimpleBooleanProperty(trangThai);
+    }
+
+    public static PhieuThu getInstanceID(int ma, int maSV, long soTien, String ngayBatDauThu, String ngayNop, boolean trangThai) {
+        return new PhieuThu(ma, maSV, soTien, ngayBatDauThu, ngayNop, trangThai);
     }
 
     public int getMa() {
-        return ma;
-    }
-
-    public void setMa(int ma) {
-        this.ma = ma;
+        return ma.getValue();
     }
 
     public int getMaSV() {
-        return maSV;
+        return maSV.getValue();
     }
 
     public void setMaSV(int maSV) {
-        this.maSV = maSV;
+        this.maSV.setValue(maSV);
     }
 
     public long getSoTien() {
-        return soTien;
+        return soTien.getValue();
     }
 
     public void setSoTien(long soTien) {
-        this.soTien = soTien;
+        this.soTien.setValue(soTien);
     }
 
-    public Date getNgayBatDauThu() {
-        return ngayBatDauThu;
+    public String getNgayBatDauThu() {
+        return ngayBatDauThu.getValue();
     }
 
     public void setNgayBatDauThu(Date ngayBatDauThu) {
-        this.ngayBatDauThu = ngayBatDauThu;
+        this.ngayBatDauThu.setValue(ngayBatDauThu.toString());
     }
 
-    public Date getNgayNop() {
-        return ngayNop;
+    public String getNgayNop() {
+        return ngayNop.getValue();
     }
 
     public void setNgayNop(Date ngayNop) {
-        this.ngayNop = ngayNop;
+        this.ngayNop.setValue(ngayNop.toString());
     }
 
     public boolean getTrangThai() {
-        return trangThai;
+        return trangThai.getValue();
     }
 
     public void setTrangThai(boolean trangThai) {
-        this.trangThai = trangThai;
+        this.trangThai.setValue(trangThai);
     }
 
-    public static class Search{
-        private Search() {}
+    public static class Search {
+        private Search() {
+        }
 
-        public synchronized static PhieuThu where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM PHIEUTHU WHERE " + where);
-                resultSet.next();
+        public static PhieuThu where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM PHIEUTHU WHERE " + where);
+            resultSet.next();
 
-                return searchDB.getPhieuThu(resultSet);
-            }
+            return searchDB.getPhieuThu(resultSet);
         }
 
         /**
-         *
          * @return Lay tat ca sinh vien trong csdl
          * @throws SQLException
          */
-        public synchronized static List<PhieuThu> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsPhieuThu();
-            }
+        public static List<PhieuThu> getAll() throws SQLException {
+            return searchDB.getDsPhieuThu();
         }
     }
 
-    public static Boolean Insert(PhieuThu phieuThu) throws SQLException {
-        try {
-            statement = "INSERT INTO PHIEUTHU VALUES" +
-                    "(" +
-                    phieuThu.getMa() + ", " +
-                    phieuThu.getSoTien() + ", " +
-                    phieuThu.getMaSV() + ", " +
-                    "'" + phieuThu.getNgayBatDauThu() + "', " +
-                    "'" + phieuThu.getNgayNop() + "', " +
-                    (phieuThu.getTrangThai() == true ? "1" : "0") + ", " +
-                    ")";
+    @Override
+    public String toString() {
+        return "PhieuThu{" +
+                "ma=" + ma +
+                ", maSV=" + maSV +
+                ", soTien=" + soTien +
+                ", ngayBatDauThu=" + ngayBatDauThu +
+                ", ngayNop=" + ngayNop +
+                ", trangThai=" + trangThai +
+                '}';
+    }
 
+    public static PhieuThu Insert(PhieuThu phieuThu) throws SQLException {
+        try {
+//            statement = "INSERT INTO PHIEUTHU VALUES" +
+//                    "(" +
+//                    phieuThu.getMa() + ", " +
+//                    phieuThu.getSoTien() + ", " +
+//                    phieuThu.getMaSV() + ", " +
+//                    "'" + phieuThu.getNgayBatDauThu() + "', " +
+//                    "'" + phieuThu.getNgayNop() + "', " +
+//                    (phieuThu.getTrangThai() == true ? "1" : "0") + ", " +
+//                    ")";
+            int id = InsertDB.getInstance().initInsert("PHIEUTHU");
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            PhieuThu.Update.where("mapt = " + id, new PhieuThu(id, phieuThu.getMaSV(),
+//                    phieuThu.getSoTien(), phieuThu.getNgayBatDauThu(), phieuThu.getNgayNop(), phieuThu.getTrangThai()));
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new
+                    PhieuThu(id, phieuThu.getMaSV(), phieuThu.getSoTien(), phieuThu.getNgayBatDauThu(),
+                    phieuThu.getNgayNop().toString(), phieuThu.getTrangThai());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
@@ -141,8 +168,7 @@ public class PhieuThu {
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where       DK - update
          * @param newPhieuThu DangKy update
          * @return
          * @throws SQLException
@@ -150,12 +176,12 @@ public class PhieuThu {
         public static Boolean where(String where, PhieuThu newPhieuThu) throws SQLException {
             try {
                 statement = "UPDATE PHIEUTHU set " +
-                        "mahp = " + newPhieuThu.getMa() + ", " +
+//                        "mapt = " + newPhieuThu.getMa() + ", " +
                         "sotien = " + newPhieuThu.getSoTien() + ", " +
                         "masv = N'" + newPhieuThu.getMaSV() + "', " +
                         "ngaybatdauthu = " + newPhieuThu.getNgayBatDauThu() + ", " +
                         "ngaynop = " + newPhieuThu.getNgayNop() + ", " +
-                        "trangthai = N'"+ newPhieuThu.getTrangThai() +"' " +
+                        "trangthai = N'" + newPhieuThu.getTrangThai() + "' " +
                         "where " + where;
                 UpdateDB.getInstance().updateCommand(statement);
                 return true;

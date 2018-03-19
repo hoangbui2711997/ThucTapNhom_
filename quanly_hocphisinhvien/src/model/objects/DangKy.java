@@ -1,5 +1,7 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -8,113 +10,130 @@ import model.database.UpdateDB;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class DangKy {
-    private int maDangKy, maGiangDuong, maHocPhan, maSinhVien;
+    private SimpleStringProperty maDangKy;
+    private SimpleIntegerProperty maGiangDuong, maHocPhan, maSinhVien;
     private static SearchDB searchDB = SearchDB.getQueryDB();
-    Date thoiGianDangKy;
+    private SimpleStringProperty thoiGianDangKy;
     private static String statement;
 
-    public DangKy(int maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, Date thoiGianDangKy) {
-        this.maDangKy = maDangKy;
-        this.maGiangDuong = maGiangDuong;
-        this.maHocPhan = maHocPhan;
-        this.maSinhVien = maSinhVien;
-        this.thoiGianDangKy = thoiGianDangKy;
+
+    public static DangKy getInstanceID(String maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, String thoiGianDangKy) {
+        return new DangKy(maDangKy, maGiangDuong, maHocPhan, maSinhVien, thoiGianDangKy);
     }
 
-    public int getMaDangKy() {
-        return maDangKy;
+    private DangKy(String maDangKy, int maGiangDuong, int maHocPhan, int maSinhVien, String thoiGianDangKy) {
+        this.maDangKy = new SimpleStringProperty(maDangKy);
+        this.maGiangDuong = new SimpleIntegerProperty(maGiangDuong);
+        this.maHocPhan = new SimpleIntegerProperty(maHocPhan);
+        this.maSinhVien = new SimpleIntegerProperty(maSinhVien);
+        this.thoiGianDangKy = new SimpleStringProperty(thoiGianDangKy);
     }
 
-    public void setMaDangKy(int maDangKy) {
-        this.maDangKy = maDangKy;
+    public DangKy(int maGiangDuong, int maHocPhan, int maSinhVien, String thoiGianDangKy) {
+        this.maGiangDuong = new SimpleIntegerProperty(maGiangDuong);
+        this.maHocPhan = new SimpleIntegerProperty(maHocPhan);
+        this.maSinhVien = new SimpleIntegerProperty(maSinhVien);
+        this.thoiGianDangKy = new SimpleStringProperty(thoiGianDangKy);
+
+    }
+
+    public String getMaDangKy() {
+        return maDangKy.getValue();
     }
 
     public int getMaGiangDuong() {
-        return maGiangDuong;
+        return maGiangDuong.getValue();
     }
 
     public void setMaGiangDuong(int maGiangDuong) {
-        this.maGiangDuong = maGiangDuong;
+        this.maGiangDuong.setValue(maGiangDuong);
     }
 
     public int getMaHocPhan() {
-        return maHocPhan;
+        return maHocPhan.getValue();
     }
 
     public void setMaHocPhan(int maHocPhan) {
-        this.maHocPhan = maHocPhan;
+        this.maHocPhan.setValue(maHocPhan);
     }
 
     public int getMaSinhVien() {
-        return maSinhVien;
+        return maSinhVien.getValue();
     }
 
     public void setMaSinhVien(int maSinhVien) {
-        this.maSinhVien = maSinhVien;
+        this.maSinhVien.setValue(maSinhVien);
     }
 
-    public Date getThoiGianDangKy() {
-        return thoiGianDangKy;
+    public String getThoiGianDangKy() {
+        return this.thoiGianDangKy.getValue();
     }
 
     public void setThoiGianDangKy(Date thoiGianDangKy) {
-        this.thoiGianDangKy = thoiGianDangKy;
+        this.thoiGianDangKy.setValue(thoiGianDangKy.toString());
     }
 
-    public static class Search{
-        private Search() {}
+    public static class Search {
+        private Search() {
+        }
 
-        public synchronized static DangKy where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM DANGKY WHERE " + where);
-                resultSet.next();
+        public static DangKy where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM DANGKY WHERE " + where);
+            resultSet.next();
 
-                return searchDB.getDK(resultSet);
-            }
+            return searchDB.getDK(resultSet);
         }
 
         /**
-         *
          * @return Lay tat ca sinh vien trong csdl
          * @throws SQLException
          */
-        public synchronized static List<DangKy> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsDangKy();
-            }
+        public static List<DangKy> getAll() throws SQLException {
+            return searchDB.getDsDangKy();
         }
     }
 
-    public static Boolean Insert(DangKy dangKy) throws SQLException {
+
+    public static DangKy Insert(DangKy dangKy) throws SQLException {
         try {
-            statement = "INSERT INTO DANGKY VALUES(" +
-                    dangKy.getMaDangKy() + ", " +
+
+            String id = InsertDB.getInstance().initInsert("DANGKY") + "";
+
+            statement = "INSERT INTO DANGKY(magd, mahp, masv, thoigiandk) VALUES(" +
+//                    dangKy.getMaDangKy() + ", " +
                     dangKy.getMaGiangDuong() + ", " +
                     dangKy.getMaHocPhan() +", " +
                     dangKy.getMaSinhVien() +", " +
                     "'" + dangKy.getThoiGianDangKy() + "'" +
                     ")";
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            DangKy.Update.where("madk = " + id, new DangKy(id, dangKy.getMaGiangDuong(),
+//                    dangKy.getMaHocPhan(), dangKy.getMaSinhVien(), dangKy.getThoiGianDangKy()));
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new DangKy(id, dangKy.getMaGiangDuong(), dangKy.getMaHocPhan(),
+                    dangKy.getMaSinhVien(), dangKy.getThoiGianDangKy());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
         public static Boolean where(String where) {
             try {
-                statement = "DELETE DANGKY WHERE " + where;
+                statement = "DELETE FROM DANGKY WHERE madk = " + where;
                 DeleteDB.getInstance().deleteCommand(statement);
                 return true;
             } catch (SQLException e) {
@@ -124,11 +143,21 @@ public class DangKy {
         }
     }
 
+    @Override
+    public String toString() {
+        return "DangKy{" +
+                "maDangKy=" + maDangKy +
+                ", maGiangDuong=" + maGiangDuong +
+                ", maHocPhan=" + maHocPhan +
+                ", maSinhVien=" + maSinhVien +
+                ", thoiGianDangKy=" + thoiGianDangKy +
+                '}';
+    }
+
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where     DK - update
          * @param newDangKy DangKy update
          * @return
          * @throws SQLException
@@ -136,7 +165,8 @@ public class DangKy {
         public static Boolean where(String where, DangKy newDangKy) throws SQLException {
             try {
                 statement = "UPDATE DANGKY " +
-                        "SET madk = " + newDangKy.getMaDangKy() + ", " +
+                        "SET " +
+//                        "madk = " + newDangKy.getMaDangKy() + ", " +
                         "tengd = " + newDangKy.getMaGiangDuong() + ", " +
                         "mahp = " + newDangKy.getMaHocPhan() + ", " +
                         "masv = " + newDangKy.getMaSinhVien() + ", " +

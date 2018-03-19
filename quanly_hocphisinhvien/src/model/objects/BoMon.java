@@ -1,5 +1,8 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -11,8 +14,9 @@ import java.util.List;
 
 public class BoMon {
 
-    private int ma;
-    private String ten;
+    // cai simple nay la danh dau de thang kia nhan ra. De la int no ko tu nhan
+    private SimpleIntegerProperty ma;
+    private SimpleStringProperty ten;
     private List<SinhVien> dsSV = null;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
@@ -26,79 +30,89 @@ public class BoMon {
     }
 
     /**
-     *
-     * @param ma int
      * @param ten String
      */
-    public BoMon(int ma, String ten) {
-        this.ma = ma;
-        this.ten = ten;
+    public BoMon(String ten) {
+        this.ten = new SimpleStringProperty(ten);
+    }
+
+    public static BoMon getInstanceID(int id, String ten) {
+        return new BoMon(id, ten);
+    }
+
+    private BoMon(int ma, String ten) {
+        this.ma = new SimpleIntegerProperty(ma);
+        this.ten = new SimpleStringProperty(ten);
     }
 
     public int getMa() {
-        return ma;
+        return ma.getValue();
     }
 
     public String getTen() {
-        return ten;
+        return ten.getValue();
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        this.ten.setValue(ten);
     }
 
     /**
      * static Search class chiu trach nhiem tim kiem "tim kiem"
      */
-    public static class Search{
-        private Search() {}
-
-        public synchronized static BoMon where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM BOMON WHERE " + where);
-                resultSet.next();
-
-                return searchDB.getBoMon(resultSet);
-            }
+    public static class Search {
+        private Search() {
         }
 
+        public static BoMon where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM BOMON WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getBoMon(resultSet);
+        }
+
+
         /**
-         *
          * @return Lay tat ca sinh vien trong csdl
          * @throws SQLException
          */
-        public synchronized static List<BoMon> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsBoMon();
-            }
+        public static List<BoMon> getAll() throws SQLException {
+            return searchDB.getDsBoMon();
         }
     }
 
-    public static Boolean Insert(BoMon boMon) throws SQLException {
+    public static BoMon Insert(BoMon boMon) throws SQLException {
         try {
-            statement = "INSERT INTO BOMON VALUES" +
-                    "("
-                    + boMon.getMa() + ", " +
+            int id = InsertDB.getInstance().initInsert("BOMON");
+
+            statement = "INSERT BOMON(ten) VALUES" +
+                    "(" +
+//                    + boMon.getMa() + ", " +
                     "N'" + boMon.getTen() + "'" +
                     ")";
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            BoMon.Update.where("mabm = " + id, new BoMon(id, boMon.getTen()));
+
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new BoMon(id, boMon.getTen());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
-        public static Boolean where(String where) {
+        public static Boolean where(int where) {
             try {
-                statement = "DELETE BOMON WHERE " + where;
+                statement = "DELETE FROM BOMON WHERE mabm = " + where;
                 DeleteDB.getInstance().deleteCommand(statement);
                 return true;
             } catch (SQLException e) {
@@ -108,18 +122,26 @@ public class BoMon {
         }
     }
 
+
+    @Override
+    public String toString() {
+        return "BoMon{" +
+                "ma=" + ma +
+                ", ten='" + ten + '\'' +
+                '}';
+    }
+
     public static class Update {
 
         /**
-         *
          * @param newBoMon
          * @return
          * @throws SQLException
          */
+
         public static Boolean where(String where, BoMon newBoMon) throws SQLException {
             try {
                 statement = "UPDATE BOMON " +
-                        "SET mabm = " + newBoMon.getMa() + ", " +
                         "tenbm = N'" + newBoMon.getTen() + "' " +
                         "WHERE " + where;
                 UpdateDB.getInstance().updateCommand(statement);

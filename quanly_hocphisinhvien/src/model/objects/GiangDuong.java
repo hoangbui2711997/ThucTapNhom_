@@ -1,5 +1,7 @@
 package model.objects;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import model.database.DeleteDB;
 import model.database.InsertDB;
 import model.database.SearchDB;
@@ -10,31 +12,35 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class GiangDuong {
-    private int ma;
-    private String ten;
+    private SimpleIntegerProperty ma;
+    private SimpleStringProperty ten;
     private List<DangKy> dsDangKy = null;
     private static SearchDB searchDB = SearchDB.getQueryDB();
     private static String statement;
 
-    public GiangDuong(int ma, String ten) {
-        this.ma = ma;
-        this.ten = ten;
+    private GiangDuong(int ma, String ten) {
+        this.ma = new SimpleIntegerProperty(ma);
+        this.ten = new SimpleStringProperty(ten);
+    }
+
+    public GiangDuong(String ten) {
+        this.ten = new SimpleStringProperty(ten);
+    }
+
+    public static GiangDuong getInstanceID(int ma, String ten) {
+        return new GiangDuong(ma, ten);
     }
 
     public int getMa() {
-        return ma;
-    }
-
-    public void setMa(int ma) {
-        this.ma = ma;
+        return ma.getValue();
     }
 
     public String getTen() {
-        return ten;
+        return ten.getValue();
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        this.ten.setValue(ten);
     }
 
     public List<DangKy> getDsDangKy() {
@@ -45,55 +51,63 @@ public class GiangDuong {
         this.dsDangKy = dsDangKy;
     }
 
-    public static class Search{
-        private Search() {}
-
-        public synchronized static GiangDuong where(String where) throws SQLException {
-            synchronized (searchDB) {
-                ResultSet resultSet = searchDB.searchCommand("SELECT * FROM GIANGDUONG WHERE " + where);
-                resultSet.next();
-
-                return searchDB.getGiangDuong(resultSet);
-            }
+    public static class Search {
+        private Search() {
         }
 
+        public static GiangDuong where(String where) throws SQLException {
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM GIANGDUONG WHERE " + where);
+            resultSet.next();
+
+            return searchDB.getGiangDuong(resultSet);
+        }
+
+
         /**
-         *
          * @return Lay tat ca sinh vien trong csdl
          * @throws SQLException
          */
-        public synchronized static List<GiangDuong> getAll() throws SQLException {
-            synchronized (searchDB) {
-                return searchDB.getDsGiangDuong();
-            }
+        public static List<GiangDuong> getAll() throws SQLException {
+            return searchDB.getDsGiangDuong();
         }
     }
 
-    public static Boolean Insert(GiangDuong giangDuong) throws SQLException {
+    public static GiangDuong Insert(GiangDuong giangDuong) throws SQLException {
         try {
-            statement = "INSERT INTO GIANGDUONG VALUES" +
+
+
+            int id = InsertDB.getInstance().initInsert("GIANGDUONG");
+
+            statement = "INSERT INTO GIANGDUONG(tengd) VALUES" +
                     "(" +
-                    giangDuong.getMa() + ", " +
+//                    giangDuong.getMa() + ", " +
                     "N'"+ giangDuong.getTen() + "'" +
                     ")";
+
+
+            // wait form input
+            // wait form input
+            // wait form input
+
+//            GiangDuong.Update.where("magd = " + id, new GiangDuong(id, giangDuong.getTen()));
+
             InsertDB.getInstance().insertCommand(statement);
-            return true;
+            return new GiangDuong(id, giangDuong.getTen());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return false;
+            return null;
         }
     }
 
     public static class Delete {
 
         /**
-         *
          * @param where DK Xóa
          * @return
          */
-        public static Boolean where(String where) {
+        public static Boolean where(int where) {
             try {
-                statement = "DELETE GIANGDUONG WHERE " + where;
+                statement = "DELETE FROM GIANGDUONG WHERE magd = " + where;
                 DeleteDB.getInstance().deleteCommand(statement);
                 return true;
             } catch (SQLException e) {
@@ -103,11 +117,18 @@ public class GiangDuong {
         }
     }
 
+    @Override
+    public String toString() {
+        return "GiangDuong{" +
+                "ma=" + ma +
+                ", ten='" + ten + '\'' +
+                '}';
+    }
+
     public static class Update {
 
         /**
-         *
-         * @param where DK - update
+         * @param where         DK - update
          * @param newGiangDuong DangKy update
          * @return
          * @throws SQLException
@@ -115,7 +136,7 @@ public class GiangDuong {
         public static Boolean where(String where, GiangDuong newGiangDuong) throws SQLException {
             try {
                 statement = "UPDATE GIANGDUONG " +
-                        "SET magd = " + newGiangDuong.getMa() + ", " +
+                        "SET " +
                         "tengd = N'" + newGiangDuong.getTen() + "' " +
                         "WHERE " + where;
                 UpdateDB.getInstance().updateCommand(statement);

@@ -4,7 +4,7 @@ import java.sql.*;
 
 
 public class DB_Connection {
-    private static String DB_URL = "jdbc:sqlserver://localhost:1433;"
+    private static String DB_URL = "jdbc:sqlserver://DESKTOP-KSKSCJ5\\SQLEXPRESS;"
             + "databaseName=QL_HOCPHI_SV;";
 //            + "integratedSecurity=true";
     /**
@@ -14,7 +14,7 @@ public class DB_Connection {
     /**
      * Thay đổi giống tên password trong sql server
      */
-    private static String PASSWORD = "hoangbui";
+    private static String PASSWORD = "tretrau6969";
     private static Connection conn = null;
     private static Object lock = new Object();
 
