@@ -12,6 +12,7 @@ import model.database.UpdateDB;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhieuThu {
@@ -26,7 +27,7 @@ public class PhieuThu {
         this.maSV = new SimpleIntegerProperty(maSV);
         this.soTien = new SimpleLongProperty(soTien);
         this.ngayBatDauThu = new SimpleStringProperty(ngayBatDauThu.toString());
-        this.ngayNop = new SimpleStringProperty(ngayNop.toString());
+        this.ngayNop = ngayNop != null ? new SimpleStringProperty(ngayNop.toString()) : new SimpleStringProperty();
         this.trangThai = new SimpleBooleanProperty(trangThai);
     }
 
@@ -35,7 +36,7 @@ public class PhieuThu {
         this.maSV = new SimpleIntegerProperty(maSV);
         this.soTien = new SimpleLongProperty(soTien);
         this.ngayBatDauThu = new SimpleStringProperty(ngayBatDauThu.toString());
-        this.ngayNop = new SimpleStringProperty(ngayNop.toString());
+        this.ngayNop = ngayNop != null ? new SimpleStringProperty(ngayNop.toString()) : new SimpleStringProperty();
         this.trangThai = new SimpleBooleanProperty(trangThai);
     }
 
@@ -105,6 +106,17 @@ public class PhieuThu {
         public static List<PhieuThu> getAll() throws SQLException {
             return searchDB.getDsPhieuThu();
         }
+
+        public static List<PhieuThu> whereCondition(String where) throws SQLException{
+            List<PhieuThu> listPhieuThu = new ArrayList<>();
+            ResultSet resultSet = searchDB.searchCommand("SELECT * FROM PHIEUTHU WHERE " + where);
+
+            while(resultSet.next()) {
+                listPhieuThu.add(searchDB.getPhieuThu(resultSet));
+            }
+
+            return listPhieuThu;
+        }
     }
 
     @Override
@@ -121,16 +133,18 @@ public class PhieuThu {
 
     public static PhieuThu Insert(PhieuThu phieuThu) throws SQLException {
         try {
-//            statement = "INSERT INTO PHIEUTHU VALUES" +
-//                    "(" +
-//                    phieuThu.getMa() + ", " +
-//                    phieuThu.getSoTien() + ", " +
-//                    phieuThu.getMaSV() + ", " +
-//                    "'" + phieuThu.getNgayBatDauThu() + "', " +
-//                    "'" + phieuThu.getNgayNop() + "', " +
-//                    (phieuThu.getTrangThai() == true ? "1" : "0") + ", " +
-//                    ")";
+
             int id = InsertDB.getInstance().initInsert("PHIEUTHU");
+            statement = "INSERT INTO PHIEUTHU VALUES" +
+                    "(" +
+//                    id + ", " +
+                    phieuThu.getSoTien() + ", " +
+                    phieuThu.getMaSV() + ", " +
+                    "'" + phieuThu.getNgayBatDauThu() + "', " +
+                    "'" + (phieuThu.getNgayNop() == null ? "" : phieuThu.getNgayNop()) + "', " +
+                    (phieuThu.getTrangThai() == true ? "1" : "0") + " " +
+                    ")";
+
             // wait form input
             // wait form input
             // wait form input
@@ -140,7 +154,7 @@ public class PhieuThu {
             InsertDB.getInstance().insertCommand(statement);
             return new
                     PhieuThu(id, phieuThu.getMaSV(), phieuThu.getSoTien(), phieuThu.getNgayBatDauThu(),
-                    phieuThu.getNgayNop().toString(), phieuThu.getTrangThai());
+                    phieuThu.getNgayNop() == null ? "" : phieuThu.getNgayNop(), phieuThu.getTrangThai());
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return null;
@@ -184,7 +198,7 @@ public class PhieuThu {
                         "sotien = " + newPhieuThu.getSoTien() + ", " +
                         "masv = N'" + newPhieuThu.getMaSV() + "', " +
                         "ngaybatdauthu = " + newPhieuThu.getNgayBatDauThu() + ", " +
-                        "ngaynop = " + newPhieuThu.getNgayNop() + ", " +
+                        "'" +  newPhieuThu.getNgayNop() == null ? "" : newPhieuThu.getNgayNop() + "', " +
                         "trangthai = N'" + newPhieuThu.getTrangThai() + "' " +
                         "where " + where;
                 UpdateDB.getInstance().updateCommand(statement);

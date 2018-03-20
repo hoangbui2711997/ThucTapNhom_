@@ -10,7 +10,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
@@ -24,8 +23,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.MainController">
+<VBox style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.MainUserController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1200.0" prefHeight="600.0" prefWidth="800.0">
           <children>
@@ -56,7 +54,7 @@
                                   <children>
                                       <SplitPane dividerPositions="0.15594855305466238" prefHeight="619.0" prefWidth="1200.0">
                                           <items>
-                                              <AnchorPane maxWidth="160.0" minHeight="160.0" prefWidth="95.0">
+                                              <AnchorPane maxWidth="160.0" minHeight="160.0" onMouseClicked="#bringMeBack" prefWidth="95.0">
                                                   <children>
                                                       <ImageView fitHeight="150.0" fitWidth="160.0" layoutX="5.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">
                                                           <image>
@@ -76,12 +74,12 @@
                                                           <children>
                                                               <ToolBar prefHeight="47.0" prefWidth="1032.0">
                                                                   <items>
-                                                                      <JFXButton fx:id="add" blendMode="GREEN" buttonType="RAISED" onMouseClicked="#TestHidden" prefHeight="35.0" prefWidth="166.0" style="-fx-background-color: white;" text="Đăng Ký">
+                                                                      <JFXButton fx:id="btnRegis" blendMode="GREEN" buttonType="RAISED" onMouseClicked="#actionRegis" prefHeight="35.0" prefWidth="166.0" style="-fx-background-color: white;" text="Đăng Ký">
                                                                           <font>
                                                                               <Font name="System Bold Italic" size="14.0" />
                                                                           </font>
                                                                       </JFXButton>
-                                                      <JFXButton fx:id="add1" buttonType="RAISED" onMouseClicked="#TestHidden" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Lịch Sử Đăng Ký">
+                                                      <JFXButton fx:id="btnHistoryRegis" buttonType="RAISED" onMouseClicked="#actionLookHistoryRegis" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Lịch Sử Đăng Ký">
                                                          <font>
                                                             <Font name="System Bold Italic" size="14.0" />
                                                          </font>
@@ -94,7 +92,7 @@
                                                             </LinearGradient>
                                                          </textFill>
                                                       </JFXButton>
-                                                      <JFXButton fx:id="add12" buttonType="RAISED" onMouseClicked="#TestHidden" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Xem Phiếu Thu">
+                                                      <JFXButton fx:id="btnLookTax" buttonType="RAISED" onMouseClicked="#actionLookTax" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Xem Phiếu Thu">
                                                          <font>
                                                             <Font name="System Bold Italic" size="14.0" />
                                                          </font>
@@ -107,9 +105,30 @@
                                                             </LinearGradient>
                                                          </textFill>
                                                       </JFXButton>
-                                                                      <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="579.0">
+                                                      <JFXButton fx:id="btnBack" buttonType="RAISED" onMouseClicked="#bringMeBack" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Trở Về">
+                                                         <font>
+                                                            <Font name="Times New Roman Bold Italic" size="14.0" />
+                                                         </font>
+                                                         <textFill>
+                                                            <LinearGradient endX="1.0" endY="1.0">
+                                                               <stops>
+                                                                  <Stop color="#ff4747" />
+                                                                  <Stop color="#323232" offset="1.0" />
+                                                               </stops>
+                                                            </LinearGradient>
+                                                         </textFill>
+                                                         <ripplerFill>
+                                                            <LinearGradient endX="1.0" endY="1.0">
+                                                               <stops>
+                                                                  <Stop color="#e84949" />
+                                                                  <Stop color="WHITE" offset="1.0" />
+                                                               </stops>
+                                                            </LinearGradient>
+                                                         </ripplerFill>
+                                                      </JFXButton>
+                                                                      <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="447.0">
                                                                           <children>
-                                                                              <JFXTextField fx:id="search" labelFloat="true" prefHeight="33.0" prefWidth="135.0" promptText="Tìm kiếm">
+                                                                              <JFXTextField fx:id="txtSearchRegis" labelFloat="true" onAction="#actionSearchSubjectRegis" prefHeight="33.0" prefWidth="135.0" promptText="Tìm kiếm">
                                                                                   <padding>
                                                                                       <Insets top="20.0" />
                                                                                   </padding>
@@ -137,23 +156,19 @@
                                                                       </HBox>
                                                                   </items>
                                                               </ToolBar>
-                                                              <TableView fx:id="table" editable="true" prefHeight="268.0" prefWidth="1032.0" style="-fx-background-color: #f8f9fa;" tableMenuButtonVisible="true">
-                                                                  <columns>
-                                                                      <TableColumn prefWidth="75.0" text="Column X" />
-                                                                  </columns>
-                                                              </TableView>
+                                                              <TableView fx:id="tableRegis" editable="true" prefHeight="268.0" prefWidth="1032.0" style="-fx-background-color: #f8f9fa;" tableMenuButtonVisible="true" />
                                                 <VBox prefHeight="46.0" prefWidth="1032.0">
                                                    <children>
                                                       <ToolBar prefHeight="47.0" prefWidth="1032.0">
                                                          <items>
-                                                            <JFXButton fx:id="delete1" blendMode="RED" buttonType="RAISED" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Xóa">
+                                                            <JFXButton fx:id="btnDelete" blendMode="RED" buttonType="RAISED" onMouseClicked="#actionDelete" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Xóa">
                                                                <font>
                                                                   <Font name="System Bold Italic" size="14.0" />
                                                                </font>
                                                             </JFXButton>
                                                             <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="885.0">
                                                                <children>
-                                                                  <JFXTextField fx:id="search1" labelFloat="true" prefHeight="33.0" prefWidth="135.0" promptText="Tìm kiếm">
+                                                                  <JFXTextField fx:id="txtSearchHistory" labelFloat="true" onAction="#actionSearchSubjectRegisted" prefHeight="33.0" prefWidth="135.0" promptText="Tìm kiếm">
                                                                      <padding>
                                                                         <Insets top="20.0" />
                                                                      </padding>
@@ -185,12 +200,7 @@
                                                 </VBox>
                                                 <VBox prefHeight="207.0" prefWidth="1032.0">
                                                    <children>
-                                                      <TableView prefHeight="200.0" prefWidth="200.0">
-                                                        <columns>
-                                                          <TableColumn prefWidth="75.0" text="C1" />
-                                                          <TableColumn prefWidth="75.0" text="C2" />
-                                                        </columns>
-                                                      </TableView>
+                                                      <TableView fx:id="tableWaitToBeSubmit" prefHeight="200.0" prefWidth="200.0" />
                                                    </children>
                                                 </VBox>
                                                 <HBox prefHeight="40.0" prefWidth="1032.0" style="-fx-background-color: #e5effe;">
@@ -200,7 +210,7 @@
                                                             <Font name="Times New Roman Bold Italic" size="18.0" />
                                                          </font>
                                                       </Label>
-                                                      <JFXButton fx:id="add11" buttonType="RAISED" onMouseClicked="#TestHidden" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #9cbee7;" text="Xác Nhận" textFill="RED">
+                                                      <JFXButton fx:id="btnSummit" buttonType="RAISED" onMouseClicked="#actionSubmit" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #9cbee7;" text="Xác Nhận" textFill="RED">
                                                          <font>
                                                             <Font name="System Bold Italic" size="14.0" />
                                                          </font>

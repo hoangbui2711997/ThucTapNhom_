@@ -408,16 +408,6 @@ public class MainController<T>{
         arrayList.add("Phiếu thu");
         arrayList.add("Sinh viên");
 
-        // Khoi tao database
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                DB_Connection.getConnection();
-                return null;
-            }
-        };
-        task.run();
-
         //
         selectTable.getItems().addAll(arrayList);
         selectTable.setOnAction((e) -> {
@@ -587,21 +577,21 @@ public class MainController<T>{
                 getThreadTableMonHoc.run();
                 break;
             case "Mức thu":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
+                MucThu mucThu = (MucThu) table.getSelectionModel().getSelectedItem();
+                MucThu.Delete.whereId("" + mucThu.getMaMucThu());
+                refreshTableView();
                 getThreadTableMucThu.run();
                 break;
             case "Ngành":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
+                Nganh nganh = (Nganh) table.getSelectionModel().getSelectedItem();
+                MucThu.Delete.whereId("" + nganh.getMa());
+                refreshTableView();
                 getThreadTableNganh.run();
                 break;
             case "Sinh viên":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
+                SinhVien sinhVien = (SinhVien) table.getSelectionModel().getSelectedItem();
+                SinhVien.Delete.whereId("" + sinhVien.getMaSV());
+                refreshTableView();
                 getThreadTableSinhVien.run();
                 break;
         }

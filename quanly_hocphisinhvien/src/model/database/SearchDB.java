@@ -96,14 +96,14 @@ public class SearchDB implements ISearch{
             Object madk = resultSet.getObject(1);
             Object magd = resultSet.getObject(2);
             Object mahp = resultSet.getObject(3);
-            Object masv = resultSet.getObject(4);
+//            Object masv = resultSet.getObject(4);
             Object thoigianDK = resultSet.getObject(5);
 
             return DangKy.getInstanceID(
                     (String) madk,
                     (Integer) magd,
                     (Integer) mahp,
-                    (Integer) masv,
+//                    (Integer) masv,
                     thoigianDK.toString());
         }catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -262,7 +262,8 @@ public class SearchDB implements ISearch{
             Object ngaynop = resultSet.getObject(5);
             Object trangthai = resultSet.getObject(6);
 
-            return PhieuThu.getInstanceID((Integer) mapt, (Integer) masv, (Integer) sotien, ((Date) ngaybatdauthu).toString(),
+            return PhieuThu.getInstanceID((Integer) mapt, Integer.parseInt(masv.toString()),
+                    (long)Double.parseDouble(sotien.toString()), ((Date) ngaybatdauthu).toString(),
                     ((Date) ngaynop).toString(), (Boolean) trangthai);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -306,6 +307,20 @@ public class SearchDB implements ISearch{
             Object tenbm = resultSet.getObject(2);
 
             return BoMon.getInstanceID((Integer) mabm, (String) tenbm);
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Nếu ResultSet không có gì thì trả về null
+        return null;
+    }
+
+    public LichSuPhieuThu getLichSuPhieuThu(ResultSet resultSet) throws SQLException{
+        try {
+            Object mabm = resultSet.getObject(1);
+            Object tenbm = resultSet.getObject(2);
+
+            return LichSuPhieuThu.getInstanceID((Integer) mabm, (String) tenbm);
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
