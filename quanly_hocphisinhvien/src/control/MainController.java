@@ -70,6 +70,11 @@ public class MainController<T> {
     @FXML
     private TableView<?> table;
 
+    /**
+     * Đây là hàm dùng để sử lý khi update -- chưa xong
+     * @param whatObject là String xác định đây là Object nào
+     * @param event event gọi từ function setEditCellEnable
+     */
     public void handlerEventCommit(String whatObject, TableColumn.CellEditEvent event) {
         int rowChangeWhenCommit = event.getTablePosition().getRow();
         try {
@@ -153,6 +158,12 @@ public class MainController<T> {
         }
     }
 
+    /**
+     * Hàm tiền sử lý và gọi hàm khi update
+     * @param whatObject là String xác định đây là Object nào
+     * @param typesOf truyền vào mảng các đối tượng cần xác định kiểu để convert về String
+     * @param tableColumn các column cần chỉnh sửa, đặt thuộc tính
+     */
     public void setEditCellEnable(String whatObject, Object[] typesOf, TableColumn... tableColumn) {
 
         for (int i = 0; i < typesOf.length; i++) {
@@ -267,6 +278,7 @@ public class MainController<T> {
         System.out.println("I'm running");
     });
 
+    // những cái dưới tương tự cái trên
     Thread getThreadTableBoMon = new Thread(() -> {
         // Tao column cho table nhe
         TableColumn ma = new TableColumn("Mã bộ môn");
@@ -709,12 +721,19 @@ public class MainController<T> {
 //        System.out.println(table.isEditable());
     }
 
+    /**
+     * Dùng để làm mới bảng khi chuyển đối tượng đổ dữ liệu
+     */
     private void refreshTableView() {
 //        table.getItems().clear();
         table.getColumns().clear();
         table.refresh();
     }
 
+    /**
+     * Phần thêm ở đây -- chưa xong
+     * @throws IOException
+     */
     public void onAddButtonClicked() throws IOException {
         Stage secondaryStage = new Stage();
         secondaryStage.setResizable(false);
@@ -762,6 +781,9 @@ public class MainController<T> {
         secondaryStage.showAndWait();
     }
 
+    /**
+     * Xóa đã xong
+     */
     public void onDeleteButtonClicked() {
         Alert info = new Alert(Alert.AlertType.CONFIRMATION, "Bạn có thực sự muốn xóa?");
         info.showAndWait();
@@ -824,6 +846,11 @@ public class MainController<T> {
         }
     }
 
+    /**
+     * Tìm kiếm đã xong
+     * @param event
+     * @throws SQLException
+     */
     @FXML
     void actionSearch(ActionEvent event) throws SQLException {
         Platform.runLater(() -> {
