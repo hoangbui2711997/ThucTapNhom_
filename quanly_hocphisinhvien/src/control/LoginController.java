@@ -1,6 +1,5 @@
 package control;
 
-import com.jfoenix.animation.alert.JFXAlertAnimation;
 import com.jfoenix.controls.*;
 
 import java.io.IOException;
@@ -14,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Hyperlink;
-import javafx.stage.Stage;
 import model.objects.SinhVien;
 import model.objects.User;
 import view.Main;
@@ -58,7 +56,7 @@ public class LoginController {
         btnSignIn.setVisible(false);
         spinManager.setVisible(true);
         if(User.checkSignin(user, passWord)) {
-            Parent root = FXMLLoader.load(getClass().getResource("../view/UI.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../view/Admin.fxml"));
             Main.primaryStage.setScene(new Scene(root, 1200, 700));
         } else {
             new Alert(Alert.AlertType.ERROR, "Sai mật khẩu hoặc tài khoản đăng nhập!!!").showAndWait();

@@ -11,7 +11,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
@@ -77,12 +76,7 @@
                                                    <padding>
                                                       <Insets top="10.0" />
                                                    </padding></JFXComboBox>
-                                                <JFXButton fx:id="add" blendMode="GREEN" buttonType="RAISED" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Thêm">
-                                                   <font>
-                                                      <Font size="14.0" />
-                                                   </font>
-                                                </JFXButton>
-                                                <JFXButton fx:id="repair" blendMode="BLUE" buttonType="RAISED" onMouseClicked="#onUpdateButtonClicked" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Sửa">
+                                                <JFXButton fx:id="add" blendMode="GREEN" buttonType="RAISED" onMouseClicked="#onAddButtonClicked" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: white;" text="Thêm">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -92,9 +86,9 @@
                                                       <Font size="14.0" />
                                                    </font>
                                                 </JFXButton>
-                                                <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="468.0">
+                                                <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="594.0">
                                                    <children>
-                                                      <JFXTextField fx:id="search" labelFloat="true" prefHeight="33.0" prefWidth="135.0" promptText="Tìm kiếm">
+                                                      <JFXTextField fx:id="search" labelFloat="true" onAction="#actionSearch" prefHeight="40.0" prefWidth="183.0" promptText="Tìm kiếm">
                                                          <padding>
                                                             <Insets top="20.0" />
                                                          </padding>
@@ -122,11 +116,7 @@
                                                 </HBox>
                                              </items>
                                           </ToolBar>
-                                          <TableView fx:id="table" editable="true" prefHeight="523.0" prefWidth="1032.0" style="-fx-background-color: #f8f9fa;" tableMenuButtonVisible="true">
-                                             <columns>
-                                                <TableColumn prefWidth="75.0" text="Column X" />
-                                             </columns>
-                                          </TableView>
+                                          <TableView fx:id="table" editable="true" prefHeight="566.0" prefWidth="1032.0" style="-fx-background-color: #f8f9fa;" tableMenuButtonVisible="true" />
                                        </children>
                                     </VBox>
                                  </children>

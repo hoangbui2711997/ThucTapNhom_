@@ -130,13 +130,13 @@ public class Nganh {
          * @return
          * @throws SQLException
          */
-        public static Boolean where(String where, Nganh newNganh, int maKhoa) throws SQLException {
+        public static Boolean where(String where, Nganh newNganh) throws SQLException {
             try {
                 statement = "UPDATE NGANH " +
                         "SET " +
 //                        "manganh = " + newNganh.getMa() + ", " +
-                        "tennganh = N'" + newNganh.getTen() + "', " +
-                        "makhoa = " + maKhoa +
+                        "tennganh = N'" + newNganh.getTen() + "' " +
+//                        "makhoa = " + maKhoa +
                         "where " + where;
                 UpdateDB.getInstance().updateCommand(statement);
                 return true;
@@ -146,8 +146,8 @@ public class Nganh {
             }
         }
 
-        public static Boolean whereId(String where, Nganh nganh, int maKhoa) throws SQLException {
-            return Update.where("manganh = " + where, nganh, maKhoa);
+        public static Boolean whereId(String where, Nganh nganh) throws SQLException {
+            return Update.where("manganh = " + where, nganh);
         }
     }
 }

@@ -193,7 +193,8 @@ public class PhieuThu {
          */
         public static Boolean where(String where, PhieuThu newPhieuThu) throws SQLException {
             try {
-                statement = "UPDATE PHIEUTHU set " +
+                statement = "UPDATE PHIEUTHU " +
+                        "SET " +
 //                        "mapt = " + newPhieuThu.getMa() + ", " +
                         "sotien = " + newPhieuThu.getSoTien() + ", " +
                         "masv = N'" + newPhieuThu.getMaSV() + "', " +

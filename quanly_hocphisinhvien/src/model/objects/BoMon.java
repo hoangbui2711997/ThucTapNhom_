@@ -148,8 +148,10 @@ public class BoMon {
         public static Boolean where(String where, BoMon newBoMon) throws SQLException {
             try {
                 statement = "UPDATE BOMON " +
+                        "SET " +
                         "tenbm = N'" + newBoMon.getTen() + "' " +
                         "WHERE " + where;
+                System.out.println(statement);
                 UpdateDB.getInstance().updateCommand(statement);
                 return true;
             } catch (SQLException e) {

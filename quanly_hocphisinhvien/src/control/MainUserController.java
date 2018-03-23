@@ -159,12 +159,14 @@ public class MainUserController {
 
         // because identity data must be serializable so need to be refresh object set before
         // set this project
-        if (!btnBack.isDisable()) {
+        if (!btnBack.isDisable() || !btnRegis.isDisable()) {
             refreshAll();
         }
+
         initEnableAllButton();
         btnBack.setDisable(false);
         btnRegis.setDisable(true);
+        btnHistoryRegis.setDisable(true);
 
         List<MucThu_MonHoc_HocPhan> list = null;
 

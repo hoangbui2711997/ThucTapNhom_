@@ -98,11 +98,11 @@
                                                                      <image>
                                                                         <Image url="@../img/locked.png" />
                                                                      </image></ImageView>
-                                                                  <JFXTextField fx:id="txtManager" labelFloat="true" layoutX="140.0" layoutY="110.0" prefHeight="50.0" prefWidth="245.0" promptText="Tài khoản">
+                                                                  <JFXTextField fx:id="txtManager" labelFloat="true" layoutX="140.0" layoutY="110.0" prefHeight="50.0" prefWidth="245.0" promptText="Tài khoản" text="hoangbui">
                                                                      <font>
                                                                         <Font name="Times New Roman" size="14.0" />
                                                                      </font></JFXTextField>
-                                                                  <JFXPasswordField fx:id="txtPassword" labelFloat="true" layoutX="140.0" layoutY="211.0" prefHeight="50.0" prefWidth="245.0" promptText="Mật khẩu">
+                                                                  <JFXPasswordField fx:id="txtPassword" labelFloat="true" layoutX="140.0" layoutY="211.0" prefHeight="50.0" prefWidth="245.0" promptText="Mật khẩu" text="hoangbui">
                                                                      <font>
                                                                         <Font size="14.0" />
                                                                      </font>

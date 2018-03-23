@@ -5,8 +5,11 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 import model.database.DB_Connection;
+
+import java.util.concurrent.Future;
 
 public class Main extends Application {
 
@@ -23,7 +26,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         // Khoi tao database
         task.run();
-
         // UI
         Main.primaryStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));

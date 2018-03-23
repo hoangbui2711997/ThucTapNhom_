@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,17 +16,32 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.util.converter.BooleanStringConverter;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.LongStringConverter;
 import model.database.DB_Connection;
 import model.objects.*;
 
-public class MainController<T>{
+import javax.lang.model.type.UnionType;
+
+public class MainController<T> {
 
     @FXML
     private ResourceBundle resources;
@@ -54,6 +70,155 @@ public class MainController<T>{
     @FXML
     private TableView<?> table;
 
+    public void handlerEventCommit(String whatObject, TableColumn.CellEditEvent event) {
+        int rowChangeWhenCommit = event.getTablePosition().getRow();
+        try {
+            switch (whatObject) {
+                case "Bộ môn":
+
+                    // Đây là ví dụ
+                    BoMon boMon = (BoMon) table.getItems().get(rowChangeWhenCommit);
+                    boMon.setTen(event.getNewValue().toString());
+                    allData[1].set(rowChangeWhenCommit, boMon);
+                    BoMon.Update.whereId(boMon.getMa() + "", boMon);
+                    // Đây là ví dụ
+
+                    break;
+                case "Đăng ký":
+                    DangKy dangKy = (DangKy) table.getItems().get(rowChangeWhenCommit);
+                    allData[0].set(rowChangeWhenCommit, dangKy);
+                    DangKy.Update.whereId(dangKy.getMaDangKy() + "", dangKy);
+
+                    // Bắt đầu làm update từ đây lưu ý thứ tự của các trường
+                    break;
+                case "Đối tượng":
+                    DoiTuong doiTuong = (DoiTuong) table.getItems().get(rowChangeWhenCommit);
+                    allData[2].set(rowChangeWhenCommit, doiTuong);
+                    DoiTuong.Update.whereId(doiTuong.getMa() + "", doiTuong);
+
+                    // Bắt đầu làm update từ đây lưu ý thứ tự của các trường
+                    break;
+                case "Giảng đường":
+                    GiangDuong giangDuong = (GiangDuong) table.getItems().get(rowChangeWhenCommit);
+                    allData[3].set(rowChangeWhenCommit, giangDuong);
+                    GiangDuong.Update.whereId(giangDuong.getMa() + "", giangDuong);
+
+                    // Bắt đầu làm update từ đây lưu ý thứ tự của các trường
+                    break;
+                case "Học phần":
+                    HocPhan hocPhan = (HocPhan) table.getItems().get(rowChangeWhenCommit);
+                    allData[4].set(rowChangeWhenCommit, hocPhan);
+                    HocPhan.Update.whereId(hocPhan.getMa() + "", hocPhan);
+
+                    // Bắt đầu làm update từ đây lưu ý thứ tự của các trường
+                    break;
+                case "Khoa":
+                    Khoa khoa = (Khoa) table.getItems().get(rowChangeWhenCommit);
+                    allData[5].set(rowChangeWhenCommit, khoa);
+                    Khoa.Update.whereId(khoa.getMa() + "", khoa);
+
+                    // Bắt đầu làm update từ đây lưu ý thứ tự của các trường
+                    break;
+                case "Môn học":
+                    MonHoc monHoc = (MonHoc) table.getItems().get(rowChangeWhenCommit);
+                    allData[6].set(rowChangeWhenCommit, monHoc);
+                    MonHoc.Update.whereId(monHoc.getMa() + "", monHoc);
+
+                    // Bắt đầu làm update từ đây lưu ý thứ tự của các trường
+                    break;
+                case "Mức thu":
+                    MucThu mucThu = (MucThu) table.getItems().get(rowChangeWhenCommit);
+                    allData[7].set(rowChangeWhenCommit, mucThu);
+                    MucThu.Update.whereId(mucThu.getMaMucThu() + "", mucThu);
+
+                    // Bắt đầu làm update từ đây lưu ý thứ tự của các trường
+                    break;
+                case "Ngành":
+                    Nganh nganh = (Nganh) table.getItems().get(rowChangeWhenCommit);
+                    allData[8].set(rowChangeWhenCommit, nganh);
+                    Nganh.Update.whereId(nganh.getMa() + "", nganh);
+
+                    // Bắt đầu làm update từ đây lưu ý thứ tự của các trường
+                    break;
+                case "Sinh viên":
+                    SinhVien sinhVien = (SinhVien) table.getItems().get(rowChangeWhenCommit);
+                    allData[9].set(rowChangeWhenCommit, sinhVien);
+                    SinhVien.Update.whereId(sinhVien.getMaSV() + "", sinhVien);
+
+                    // Bắt đầu làm update từ đây lưu ý thứ tự của các trường
+                    break;
+            }
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void setEditCellEnable(String whatObject, Object[] typesOf, TableColumn... tableColumn) {
+
+        for (int i = 0; i < typesOf.length; i++) {
+            // Phần này phục vụ việc edit vào bảng ---
+            if (typesOf[i] instanceof Integer) {
+                //convert String to value
+                // Mặc định tính chất của textfield là String -> convert từ Integer sang String để code chạy hợp lệ
+                tableColumn[i].setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+            } else if (typesOf[i] instanceof String) {
+                // Giải thích tương tự
+
+                tableColumn[i].setCellFactory(TextFieldTableCell.forTableColumn());
+            } else if (typesOf[i] instanceof Double) {
+                // Giải thích tương tự
+
+                tableColumn[i].setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+            } else if (typesOf[i] instanceof Boolean) {
+                // Giải thích tương tự
+
+                tableColumn[i].setCellFactory(TextFieldTableCell.forTableColumn(new BooleanStringConverter()));
+            } else {
+                // Giải thích tương tự
+
+                tableColumn[i].setCellFactory(TextFieldTableCell.forTableColumn(new LongStringConverter()));
+            }
+            tableColumn[i].setStyle("-fx-font: 16px 'Times New Roman'");
+            tableColumn[i].setPrefWidth(200);
+            tableColumn[i].setOnEditCommit(new EventHandler<TableColumn.CellEditEvent>() {
+                @Override
+                public void handle(TableColumn.CellEditEvent event) {
+//                    System.out.println(event.getNewValue().toString());
+//                    System.out.println(event.getRowValue().toString());
+//                    System.out.println(event.getOldValue().toString());
+//                    System.out.println(event.getTablePosition().getRow());
+//                    System.out.println(event.getTablePosition().getColumn());
+                    Alert thongBao = new Alert(Alert.AlertType.WARNING, "Bạn có chắc chắn muốn muốn thay đổi!", ButtonType.OK, ButtonType.CANCEL);
+                    if(thongBao.showAndWait().get().equals(ButtonType.OK)) {
+
+                        handlerEventCommit(whatObject , event);
+                    } else {
+                       // do nothing in here
+                        table.refresh();
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * Theo thứ tự allData[0] -> 10 sẽ lấy dữ liệu từ trên xuống dưới
+     * vd:
+     * allData[0] = danh sách đăng ký
+     * allData[1] = danh sách bộ môn
+     * allData[2] = danh sách đối tượng
+     * allData[3] = danh sách giảng đường
+     * allData[4] = danh sách học phần
+     * allData[5] = danh sách khoa
+     * allData[6] = danh sách môn học
+     * allData[7] = danh sách mức thu
+     * allData[8] = danh sách ngành
+     * allData[9] = danh sách sinh viên
+     * allData[10] = danh sách phiếu thu
+     */
+    List[] allData = new ArrayList[11];
+
+    // Tạo thread gọi data từ bảng đăng ký trong csdl rồi add vào table
     Thread getThreadTableDangKy = new Thread(() -> {
         TableColumn ma = new TableColumn("Mã đăng ký");
         ma.setCellValueFactory(
@@ -70,11 +235,6 @@ public class MainController<T>{
                 new PropertyValueFactory<DangKy, String>("maHocPhan")
         );
 
-        TableColumn sv = new TableColumn("Mã sinh viên");
-        sv.setCellValueFactory(
-                new PropertyValueFactory<DangKy, String>("maSinhVien")
-        );
-
         TableColumn dk = new TableColumn("Thời gian đăng ký");
         dk.setCellValueFactory(
                 new PropertyValueFactory<DangKy, String>("thoiGianDangKy")
@@ -88,13 +248,20 @@ public class MainController<T>{
             e.printStackTrace();
         }
 
+        allData[0] = list;
         ObservableList observableList = FXCollections.observableArrayList(
                 list
         );
         Platform.runLater(() -> {
                     table.setItems(observableList);
-                    table.getColumns().addAll(ma, gd, hp, sv, dk);
-                    System.out.println("Run later");
+                    table.getColumns().addAll(ma, gd, hp, dk);
+
+                    Object[] typeOf = new Object[3];
+                    typeOf[0] = (Integer) 1;
+                    typeOf[1] = (Integer) 1;
+                    typeOf[2] = (String) "";
+
+                    setEditCellEnable("Đăng ký", typeOf, gd, hp, dk);
                 }
         );
         System.out.println("I'm running");
@@ -103,7 +270,9 @@ public class MainController<T>{
     Thread getThreadTableBoMon = new Thread(() -> {
         // Tao column cho table nhe
         TableColumn ma = new TableColumn("Mã bộ môn");
+//        ma.getStyleClass().add("-fx-size: 40px");
         // sinh ra phan tu? tu. dong
+
         ma.setCellValueFactory(
                 // tu cai nay
                 // phai co phuong thuc get tu Object
@@ -116,12 +285,16 @@ public class MainController<T>{
         ten.setCellValueFactory(
                 new PropertyValueFactory<BoMon, String>("ten")
         );
+//        setEditCellEnable(ma, ten);
 
         try {
             // cái này là đổ dữ liệu vào table
+            List<BoMon> list = null;
+            list = BoMon.Search.getAll();
+            allData[1] = list;
             ObservableList observableList = FXCollections.observableArrayList(
                     // getAll trả về list của của bộ môn Ctrl + Q xem định nghĩa
-                    BoMon.Search.getAll()
+                    list
             );
 
             // Đây là set cell, hay là phần tử trong bảng
@@ -136,6 +309,10 @@ public class MainController<T>{
             Platform.runLater(
                     () -> {
                         // Cái này là tên cột
+                        Object[] typeOf = new Object[1];
+                        typeOf[0] = (String) "";
+
+                        setEditCellEnable("Bộ môn", typeOf, ten);
                         table.getColumns().addAll(ma, ten);
                     }
             );
@@ -151,12 +328,20 @@ public class MainController<T>{
         TableColumn ten = new TableColumn("Tên đối tượng");
         ten.setCellValueFactory(new PropertyValueFactory<DoiTuong, String>("ten"));
 
-        try{
-            ObservableList observableList = FXCollections.observableArrayList(DoiTuong.Search.getAll());
+        try {
+            List<DoiTuong> list = DoiTuong.Search.getAll();
+            allData[2] = list;
+            ObservableList observableList = FXCollections.observableArrayList(
+                    list
+            );
             table.setItems(observableList);
 
             Platform.runLater(() -> {
                 table.getColumns().addAll(ma, ten);
+                Object[] typeOf = new Object[1];
+                typeOf[0] = (String) "";
+
+                setEditCellEnable("Đối tượng", typeOf, ten);
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -171,12 +356,20 @@ public class MainController<T>{
         TableColumn ten = new TableColumn("Tên giảng đường");
         ten.setCellValueFactory(new PropertyValueFactory<GiangDuong, String>("ten"));
 
-        try{
-            ObservableList observableList = FXCollections.observableArrayList(GiangDuong.Search.getAll());
+        try {
+            List<GiangDuong> list = GiangDuong.Search.getAll();
+            allData[3] = list;
+            ObservableList observableList = FXCollections.observableArrayList(
+                    list
+            );
             table.setItems(observableList);
 
             Platform.runLater(() -> {
                 table.getColumns().addAll(ma, ten);
+                Object[] typeOf = new Object[1];
+                typeOf[0] = (String) "";
+
+                setEditCellEnable("Giảng đường", typeOf, ten);
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -202,12 +395,21 @@ public class MainController<T>{
         TableColumn thoiGian = new TableColumn("Thời gian bắt đầu");
         thoiGian.setCellValueFactory(new PropertyValueFactory<HocPhan, String>("thoiGian"));
 
-        try{
-            ObservableList observableList = FXCollections.observableArrayList(HocPhan.Search.getAll());
+        try {
+            List<HocPhan> list = HocPhan.Search.getAll();
+            allData[4] = list;
+            ObservableList observableList = FXCollections.observableArrayList(list);
             table.setItems(observableList);
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(ma, maMonHoc, soTinChi, maMucThu , giaoVienGiangDay, thoiGian);
+                table.getColumns().addAll(ma, maMonHoc, soTinChi, maMucThu, giaoVienGiangDay, thoiGian);
+                Object[] typeOf = new Object[4];
+                typeOf[0] = (Integer) 1;
+                typeOf[1] = (Integer) 1;
+                typeOf[2] = (String) "";
+                typeOf[3] = (String) "";
+
+                setEditCellEnable("Học phần", typeOf, soTinChi, maMucThu, giaoVienGiangDay, thoiGian);
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -222,12 +424,18 @@ public class MainController<T>{
         TableColumn ten = new TableColumn("Tên khoa");
         ten.setCellValueFactory(new PropertyValueFactory<Khoa, String>("ten"));
 
-        try{
-            ObservableList observableList = FXCollections.observableArrayList(Khoa.Search.getAll());
+        try {
+            List<Khoa> list = Khoa.Search.getAll();
+            allData[5] = list;
+            ObservableList observableList = FXCollections.observableArrayList(list);
             table.setItems(observableList);
 
             Platform.runLater(() -> {
                 table.getColumns().addAll(ma, ten);
+                Object[] typeOf = new Object[1];
+                typeOf[0] = (String) "";
+
+                setEditCellEnable("Khoa", typeOf, ten);
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -242,12 +450,17 @@ public class MainController<T>{
         TableColumn ten = new TableColumn("Tên môn học");
         ten.setCellValueFactory(new PropertyValueFactory<MonHoc, String>("ten"));
 
-        try{
-            ObservableList observableList = FXCollections.observableArrayList(MonHoc.Search.getAll());
+        try {
+            List<MonHoc> list = MonHoc.Search.getAll();
+            allData[6] = list;
+            ObservableList observableList = FXCollections.observableArrayList(list);
             table.setItems(observableList);
 
             Platform.runLater(() -> {
                 table.getColumns().addAll(ma, ten);
+                Object[] typeOf = new Object[1];
+                typeOf[0] = (String) "";
+                setEditCellEnable("Môn học", typeOf, ten);
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -265,12 +478,19 @@ public class MainController<T>{
         TableColumn soTien = new TableColumn("Số tiền");
         soTien.setCellValueFactory(new PropertyValueFactory<MucThu, String>("soTien"));
 
-        try{
-            ObservableList observableList = FXCollections.observableArrayList(MucThu.Search.getAll());
+        try {
+            List<MucThu> list = MucThu.Search.getAll();
+            allData[7] = list;
+            ObservableList observableList = FXCollections.observableArrayList(list);
             table.setItems(observableList);
 
             Platform.runLater(() -> {
                 table.getColumns().addAll(maMucThu, moTa, soTien);
+                Object[] typeOf = new Object[2];
+                typeOf[0] = (String) "";
+                typeOf[1] = (Double) 1.1;
+
+                setEditCellEnable("Mức thu", typeOf, moTa, soTien);
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -285,12 +505,19 @@ public class MainController<T>{
         TableColumn ten = new TableColumn("Tên ngành");
         ten.setCellValueFactory(new PropertyValueFactory<Nganh, String>("ten"));
 
-        try{
-            ObservableList observableList = FXCollections.observableArrayList(Nganh.Search.getAll());
+        try {
+            List<Nganh> list = Nganh.Search.getAll();
+            allData[8] = list;
+            ObservableList observableList = FXCollections.observableArrayList(list);
             table.setItems(observableList);
 
             Platform.runLater(() -> {
                 table.getColumns().addAll(ma, ten);
+                Object[] typeOf = new Object[1];
+
+                typeOf[0] = (String) "";
+                setEditCellEnable("Ngành", typeOf, ten);
+
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -320,12 +547,23 @@ public class MainController<T>{
         TableColumn diaChi = new TableColumn("Địa chỉ");
         diaChi.setCellValueFactory(new PropertyValueFactory<SinhVien, String>("diaChi"));
 
-        try{
-            ObservableList observableList = FXCollections.observableArrayList(SinhVien.Search.getAll());
+        try {
+            List<SinhVien> list = SinhVien.Search.getAll();
+            allData[9] = list;
+            ObservableList observableList = FXCollections.observableArrayList(list);
             table.setItems(observableList);
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(maSV, maDT, maBoMon, tenSV, gioiTinh, ngaySinh,  diaChi);
+                table.getColumns().addAll(maSV, maDT, maBoMon, tenSV, gioiTinh, ngaySinh, diaChi);
+                Object[] typeOf = new Object[6];
+                typeOf[0] = (Integer) 1;
+                typeOf[1] = (Integer) 1;
+                typeOf[2] = (String) "";
+                typeOf[3] = (String) "";
+                typeOf[4] = (String) "";
+                typeOf[5] = (String) "";
+
+                setEditCellEnable("Sinh viên", typeOf, maDT, maBoMon, tenSV, gioiTinh, ngaySinh, diaChi);
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -335,29 +573,39 @@ public class MainController<T>{
 
     Thread getThreadTablePhieuThu = new Thread(() -> {
         TableColumn maPT = new TableColumn("Mã Phiếu Thu");
-        maPT.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("maSV"));
+        maPT.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("ma"));
 
         TableColumn soTien = new TableColumn("Số Tiền");
-        soTien.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("maDT"));
+        soTien.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("soTien"));
 
         TableColumn maSV = new TableColumn("Mã Sinh Viên");
-        maSV.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("maBoMon"));
+        maSV.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("maSV"));
 
         TableColumn ngayBatDauThu = new TableColumn("Ngày Bắt Đầu Thu");
-        ngayBatDauThu.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("tenSV"));
+        ngayBatDauThu.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("ngayBatDauThu"));
 
         TableColumn ngayNop = new TableColumn("Ngày Nộp");
-        ngayNop.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("gioiTinh"));
+        ngayNop.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("ngayNop"));
 
         TableColumn trangThai = new TableColumn("Trạng Thái");
-        trangThai.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("ngaySinh"));
+        trangThai.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("trangThai"));
 
-        try{
-            ObservableList observableList = FXCollections.observableArrayList(PhieuThu.Search.getAll());
+        try {
+            List<PhieuThu> list = PhieuThu.Search.getAll();
+            allData[10] = list;
+            ObservableList observableList = FXCollections.observableArrayList(list);
             table.setItems(observableList);
 
             Platform.runLater(() -> {
                 table.getColumns().addAll(maPT, maSV, soTien, ngayBatDauThu, ngayNop, trangThai);
+//                Object[] typeOf = new Object[5];
+//                typeOf[0] = (Integer) 1;
+//                typeOf[1] = (Long) Long.MIN_VALUE;
+//                typeOf[2] = (String) "";
+//                typeOf[3] = (String) "";
+//                typeOf[4] = (Boolean) true;
+
+//                setEditCellEnable("Phiếu thu", typeOf, maSV, soTien, ngayBatDauThu, ngayNop, trangThai);
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -365,35 +613,18 @@ public class MainController<T>{
 
     });
 
-    @FXML
-    void TestHidden(MouseEvent event) throws Exception {
-//        System.out.println(selectTable.getTypeSelector());
-
-        // add từ item vào combobox
-//        selectTable.getItems().addAll();
-        // lấy dữ liệu từ selected trong combobox
-//        System.out.println(selectTable.getValue() == "Đăng ký");
-
-//        task.run();
-
-//        getThreadTableDangKy.run();
-//        getThreadTableHocPhan.run();
-//        table.getItems().removeAll();
-//        System.out.println("Who run before");
-    }
-
     /**
      * File chay khoi tao
      */
     @FXML
     void initialize() {
-        assert address != null : "fx:id=\"address\" was not injected: check your FXML file 'UI.fxml'.";
-        assert selectTable != null : "fx:id=\"selectTable\" was not injected: check your FXML file 'UI.fxml'.";
-        assert add != null : "fx:id=\"add\" was not injected: check your FXML file 'UI.fxml'.";
-        assert repair != null : "fx:id=\"repair\" was not injected: check your FXML file 'UI.fxml'.";
-        assert delete != null : "fx:id=\"delete\" was not injected: check your FXML file 'UI.fxml'.";
-        assert search != null : "fx:id=\"search\" was not injected: check your FXML file 'UI.fxml'.";
-        assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'UI.fxml'.";
+        assert address != null : "fx:id=\"address\" was not injected: check your FXML file 'Admin.fxml'.";
+        assert selectTable != null : "fx:id=\"selectTable\" was not injected: check your FXML file 'Admin.fxml'.";
+        assert add != null : "fx:id=\"add\" was not injected: check your FXML file 'Admin.fxml'.";
+        assert repair != null : "fx:id=\"repair\" was not injected: check your FXML file 'Admin.fxml'.";
+        assert delete != null : "fx:id=\"delete\" was not injected: check your FXML file 'Admin.fxml'.";
+        assert search != null : "fx:id=\"search\" was not injected: check your FXML file 'Admin.fxml'.";
+        assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'Admin.fxml'.";
 
         ArrayList arrayList = new ArrayList();
         arrayList.add("Bộ môn");
@@ -409,191 +640,300 @@ public class MainController<T>{
         arrayList.add("Sinh viên");
 
         //
+//        getThreadTableBoMon.run();
+
         selectTable.getItems().addAll(arrayList);
         selectTable.setOnAction((e) -> {
-            switch(selectTable.getValue().toString()){
-                case "Bộ môn":
-                    refreshTableView();
-                    getThreadTableBoMon.run();
-                    break;
-                case "Đăng ký":
-                    refreshTableView();
-                    getThreadTableDangKy.run();
-                    break;
-                case "Đối tượng":
-                    refreshTableView();
-                    getThreadTableDoiTuong.run();
-                    break;
-                case "Giảng đường":
-                    refreshTableView();
-                    getThreadTableGiangDuong.run();
-                    break;
-                case "Học phần":
-                    refreshTableView();
-                    getThreadTableHocPhan.run();
-                    break;
-                case "Khoa":
-                    refreshTableView();
-                    getThreadTableKhoa.run();
-                    break;
-                case "Môn học":
-                    refreshTableView();
-                    getThreadTableMonHoc.run();
-                    break;
-                case "Mức thu":
-                    refreshTableView();
-                    getThreadTableMucThu.run();
-                    break;
-                case "Ngành":
-                    refreshTableView();
-                    getThreadTableNganh.run();
-                    break;
-                case "Sinh viên":
-                    refreshTableView();
-                    getThreadTableSinhVien.run();
-                    break;
-                case "Phiếu thu":
-                    refreshTableView();
-                    getThreadTablePhieuThu.run();
-                    break;
-            }
+            Platform.runLater(() -> {
+                switch (selectTable.getValue().toString()) {
+                    case "Bộ môn":
+                        search.setPromptText("Tên bộ môn");
+                        refreshTableView();
+                        getThreadTableBoMon.run();
+                        break;
+                    case "Đăng ký":
+                        search.setPromptText("Tên mã đăng ký");
+                        refreshTableView();
+                        getThreadTableDangKy.run();
+                        break;
+                    case "Đối tượng":
+                        search.setPromptText("Tên đối tượng");
+                        refreshTableView();
+                        getThreadTableDoiTuong.run();
+                        break;
+                    case "Giảng đường":
+                        search.setPromptText("Tên giảng đường");
+                        refreshTableView();
+                        getThreadTableGiangDuong.run();
+                        break;
+                    case "Học phần":
+                        search.setPromptText("Tên giáo viên giảng dạy");
+                        refreshTableView();
+                        getThreadTableHocPhan.run();
+                        break;
+                    case "Khoa":
+                        search.setPromptText("Tên khoa");
+                        refreshTableView();
+                        getThreadTableKhoa.run();
+                        break;
+                    case "Môn học":
+                        search.setPromptText("Tên môn học");
+                        refreshTableView();
+                        getThreadTableMonHoc.run();
+                        break;
+                    case "Mức thu":
+                        search.setPromptText("Tìm kiếm mô tả");
+                        refreshTableView();
+                        getThreadTableMucThu.run();
+                        break;
+                    case "Ngành":
+                        search.setPromptText("Tên ngành");
+                        refreshTableView();
+                        getThreadTableNganh.run();
+                        break;
+                    case "Sinh viên":
+                        search.setPromptText("Tên sinh viên");
+                        refreshTableView();
+                        getThreadTableSinhVien.run();
+                        break;
+                    case "Phiếu thu":
+                        search.setPromptText("Tìm kiếm mã sinh viên");
+                        refreshTableView();
+                        getThreadTablePhieuThu.run();
+                        break;
+                }
+            });
         });
+//        selectTable.getSelectionModel().select(0);
+//        refreshTableView();
+//        System.out.println(table.isEditable());
     }
 
     private void refreshTableView() {
-        table.getItems().clear();
+//        table.getItems().clear();
         table.getColumns().clear();
         table.refresh();
     }
 
-    public void onAddButtonClicked(){
-        switch(selectTable.getValue().toString()){
+    public void onAddButtonClicked() throws IOException {
+        Stage secondaryStage = new Stage();
+        secondaryStage.setResizable(false);
+        Parent root;
+        switch (selectTable.getValue().toString()) {
             case "Bộ môn":
-//                BoMon.Insert()
+                // nếu là bộ môn
+                secondaryStage.setTitle("Thêm của bộ môn");
+                 root = FXMLLoader.load(getClass().getResource("../view/InsertBoMon.fxml"));
+                 // Đây là setSize cho giao diện tùy mn để
+                secondaryStage.setScene(new Scene(root, 462, 294));
                 break;
             case "Đăng ký":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
-                getThreadTableDangKy.run();
+
                 break;
             case "Đối tượng":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
-                getThreadTableDoiTuong.run();
+
                 break;
             case "Giảng đường":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
-                getThreadTableGiangDuong.run();
+
                 break;
             case "Học phần":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
-                getThreadTableHocPhan.run();
+
                 break;
             case "Khoa":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
-                getThreadTableKhoa.run();
+
                 break;
             case "Môn học":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
-                getThreadTableMonHoc.run();
+
                 break;
             case "Mức thu":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
-                getThreadTableMucThu.run();
+
                 break;
             case "Ngành":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
-                getThreadTableNganh.run();
+
                 break;
             case "Sinh viên":
-                table.getItems().clear();
-                table.getColumns().clear();
-                table.refresh();
-                getThreadTableSinhVien.run();
+
                 break;
+            case "Phiếu thu":
+
+                break;
+        }
+
+        secondaryStage.showAndWait();
+    }
+
+    public void onDeleteButtonClicked() {
+        Alert info = new Alert(Alert.AlertType.CONFIRMATION, "Bạn có thực sự muốn xóa?");
+        info.showAndWait();
+        if (info.getResult() == ButtonType.OK) {
+            Platform.runLater(() -> {
+                switch (selectTable.getValue().toString()) {
+                    case "Bộ môn":
+                        BoMon boMon = (BoMon) table.getSelectionModel().getSelectedItem();
+                        BoMon.Delete.whereId("" + boMon.getMa());
+                        break;
+
+                    case "Đăng ký":
+                        DangKy dangKy = (DangKy) table.getSelectionModel().getSelectedItem();
+                        DangKy.Delete.whereId(dangKy.getMaDangKy());
+                        break;
+
+                    case "Đối tượng":
+                        DoiTuong doiTuong = (DoiTuong) table.getSelectionModel().getSelectedItem();
+                        DoiTuong.Delete.whereId("" + doiTuong.getMa());
+                        break;
+
+                    case "Giảng đường":
+                        GiangDuong giangDuong = (GiangDuong) table.getSelectionModel().getSelectedItem();
+                        GiangDuong.Delete.whereId("" + giangDuong.getMa());
+                        break;
+
+                    case "Học phần":
+                        HocPhan hocPhan = (HocPhan) table.getSelectionModel().getSelectedItem();
+                        HocPhan.Delete.whereId("" + hocPhan.getMa());
+                        break;
+
+                    case "Khoa":
+                        Khoa khoa = (Khoa) table.getSelectionModel().getSelectedItem();
+                        Khoa.Delete.whereId("" + khoa.getMa());
+                        break;
+
+                    case "Môn học":
+                        MonHoc monHoc = (MonHoc) table.getSelectionModel().getSelectedItem();
+                        MonHoc.Delete.whereId("" + monHoc.getMa());
+                        break;
+
+                    case "Mức thu":
+                        MucThu mucThu = (MucThu) table.getSelectionModel().getSelectedItem();
+                        MucThu.Delete.whereId("" + mucThu.getMaMucThu());
+                        break;
+                    case "Ngành":
+                        Nganh nganh = (Nganh) table.getSelectionModel().getSelectedItem();
+                        MucThu.Delete.whereId("" + nganh.getMa());
+                        break;
+                    case "Sinh viên":
+                        SinhVien sinhVien = (SinhVien) table.getSelectionModel().getSelectedItem();
+                        SinhVien.Delete.whereId("" + sinhVien.getMaSV());
+                        break;
+
+                }
+                table.getItems().remove(table.getSelectionModel().getSelectedItem());
+                new Alert(Alert.AlertType.INFORMATION, "Xóa thành công!!!").showAndWait();
+            });
+
         }
     }
 
-    public void onUpdateButtonClicked(){
+    @FXML
+    void actionSearch(ActionEvent event) throws SQLException {
+        Platform.runLater(() -> {
+            try {
+                ObservableList filterData = null;
+                switch (selectTable.getValue().toString()) {
+                    case "Bộ môn":
+                        filterData = FXCollections.observableArrayList(
+                                BoMon.Search.getAll()
+                        ).filtered(e -> {
+                            return ((BoMon) e).
+                                    getTen().toLowerCase().
+                                    contains(search.getText().toLowerCase());
+                        });
+                        break;
+                    case "Đăng ký":
+                        filterData = FXCollections.observableArrayList(
+                                DangKy.Search.getAll()
+                        ).filtered(e -> {
+                            return ((DangKy) e).
+                                    getMaDangKy().toLowerCase().
+                                    contains(search.getText().toLowerCase());
+                        });
+                        break;
+                    case "Đối tượng":
+                        filterData = FXCollections.observableArrayList(
+                                DoiTuong.Search.getAll()
+                        ).filtered(e -> {
+                            return ((DoiTuong) e).
+                                    getTen().toLowerCase().
+                                    contains(search.getText().toLowerCase());
+                        });
+                        break;
+                    case "Giảng đường":
+                        filterData = FXCollections.observableArrayList(
+                                GiangDuong.Search.getAll()
+                        ).filtered(e -> {
+                            return ((GiangDuong) e).
+                                    getTen().toLowerCase().
+                                    contains(search.getText().toLowerCase());
+                        });
+                        break;
+                    case "Học phần":
+                        filterData = FXCollections.observableArrayList(
+                                HocPhan.Search.getAll()
+                        ).filtered(e -> {
+                            return ((HocPhan) e).
+                                    getGiaoVienGiangDay().toLowerCase().
+                                    contains(search.getText().toLowerCase());
+                        });
+                        break;
+                    case "Khoa":
+                        filterData = FXCollections.observableArrayList(
+                                Khoa.Search.getAll()
+                        ).filtered(e -> {
+                            return ((Khoa) e).
+                                    getTen().toLowerCase().
+                                    contains(search.getText().toLowerCase());
+                        });
+                        break;
+                    case "Môn học":
+                        filterData = FXCollections.observableArrayList(
+                                MonHoc.Search.getAll()
+                        ).filtered(e -> {
+                            return ((MonHoc) e).
+                                    getTen().toLowerCase().
+                                    contains(search.getText().toLowerCase());
+                        });
+                        break;
+                    case "Mức thu":
+                        filterData = FXCollections.observableArrayList(
+                                MucThu.Search.getAll()
+                        ).filtered(e -> {
+                            return ((MucThu) e).
+                                    getMoTa().toLowerCase().
+                                    contains(search.getText().toLowerCase());
+                        });
+                        break;
+                    case "Ngành":
+                        filterData = FXCollections.observableArrayList(
+                                Nganh.Search.getAll()
+                        ).filtered(e -> {
+                            return ((Nganh) e).
+                                    getTen().toLowerCase().
+                                    contains(search.getText().toLowerCase());
+                        });
+                        break;
+                    case "Sinh viên":
+                        filterData = FXCollections.observableArrayList(
+                                SinhVien.Search.getAll()
+                        ).filtered(e -> {
+                            return ((SinhVien) e).
+                                    getTenSV().toLowerCase().
+                                    contains(search.getText().toLowerCase());
+                        });
+                        break;
+                    case "Phiếu thu":
+                        filterData = FXCollections.observableArrayList(
+                                PhieuThu.Search.getAll()
+                        ).filtered(e -> {
+                            return ((Integer) (((PhieuThu) e).
+                                    getMaSV())).toString().contains(search.getText());
+                        });
+                        break;
+                }
 
-    }
-
-    public void onDeleteButtonClicked(){
-        switch(selectTable.getValue().toString()){
-            case "Bộ môn":
-                BoMon boMon = (BoMon) table.getSelectionModel().getSelectedItem();
-                BoMon.Delete.whereId("" + boMon.getMa());
-                refreshTableView();
-                getThreadTableBoMon.run();
-                break;
-            case "Đăng ký":
-                DangKy dangKy = (DangKy) table.getSelectionModel().getSelectedItem();
-                DangKy.Delete.whereId(dangKy.getMaDangKy());
-                refreshTableView();
-                getThreadTableDangKy.run();
-                break;
-            case "Đối tượng":
-                DoiTuong doiTuong = (DoiTuong) table.getSelectionModel().getSelectedItem();
-                DoiTuong.Delete.whereId("" + doiTuong.getMa());
-                refreshTableView();
-                getThreadTableDoiTuong.run();
-                break;
-            case "Giảng đường":
-                GiangDuong giangDuong = (GiangDuong) table.getSelectionModel().getSelectedItem();
-                GiangDuong.Delete.whereId("" + giangDuong.getMa());
-                refreshTableView();
-                getThreadTableGiangDuong.run();
-                break;
-            case "Học phần":
-                HocPhan hocPhan = (HocPhan) table.getSelectionModel().getSelectedItem();
-                HocPhan.Delete.whereId("" + hocPhan.getMa());
-                refreshTableView();
-                getThreadTableHocPhan.run();
-                break;
-            case "Khoa":
-                Khoa khoa = (Khoa) table.getSelectionModel().getSelectedItem();
-                Khoa.Delete.whereId("" + khoa.getMa());
-                refreshTableView();
-                getThreadTableKhoa.run();
-                break;
-            case "Môn học":
-                MonHoc monHoc = (MonHoc) table.getSelectionModel().getSelectedItem();
-                MonHoc.Delete.whereId("" + monHoc.getMa());
-                refreshTableView();
-                getThreadTableMonHoc.run();
-                break;
-            case "Mức thu":
-                MucThu mucThu = (MucThu) table.getSelectionModel().getSelectedItem();
-                MucThu.Delete.whereId("" + mucThu.getMaMucThu());
-                refreshTableView();
-                getThreadTableMucThu.run();
-                break;
-            case "Ngành":
-                Nganh nganh = (Nganh) table.getSelectionModel().getSelectedItem();
-                MucThu.Delete.whereId("" + nganh.getMa());
-                refreshTableView();
-                getThreadTableNganh.run();
-                break;
-            case "Sinh viên":
-                SinhVien sinhVien = (SinhVien) table.getSelectionModel().getSelectedItem();
-                SinhVien.Delete.whereId("" + sinhVien.getMaSV());
-                refreshTableView();
-                getThreadTableSinhVien.run();
-                break;
-        }
+                table.setItems(filterData);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        });
     }
 }

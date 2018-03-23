@@ -195,7 +195,8 @@ public class SinhVien {
          */
         public static Boolean where(String where, SinhVien newSinhVien) throws SQLException {
             try {
-                statement = "UPDATE SINHVIEN set " +
+                statement = "UPDATE SINHVIEN " +
+                        "SET " +
 //                        "masv = " + newSinhVien.getMaSV() + ", " +
                         "madt = " + newSinhVien.getMaDT() + ", " +
                         "mabm = " + newSinhVien.getMaBoMon() + ", " +

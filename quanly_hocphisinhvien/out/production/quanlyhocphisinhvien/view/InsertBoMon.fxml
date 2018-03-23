@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="294.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.add.InsertBM">
+    <children>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="80.0" layoutY="29.0" prefHeight="42.0" prefWidth="303.0" style="-fx-border-color: gray;" text="Nhập thông tin Bộ môn" />
+        <JFXTextField id="newName" fx:id="txtNewName" layoutX="80.0" layoutY="130.0" prefHeight="42.0" prefWidth="303.0" promptText="Nhập tên bộ môn" />
+        <JFXButton id="btnXacNhan" fx:id="btnXacNhan" buttonType="RAISED" layoutX="136.0" layoutY="211.0" onAction="#onXacNhanClick" text="Xác nhận" />
+        <JFXButton id="btnHuy" fx:id="btnHuy" buttonType="RAISED" layoutX="265.0" layoutY="211.0" onAction="#onHuyClick" text="Hủy bỏ" viewOrder="1.0" />
+    </children>
+</AnchorPane>

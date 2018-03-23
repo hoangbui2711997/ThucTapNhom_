@@ -186,7 +186,8 @@ public class HocPhan {
          */
         public static Boolean where(String where, HocPhan newHocPhan) throws SQLException {
             try {
-                statement = "UPDATE HOCPHAN SET " +
+                statement = "UPDATE HOCPHAN " +
+                        "SET " +
 //                        "mahp = " + newHocPhan.getMa() + ", " +
                         "mamonhoc = " + newHocPhan.getMaMonHoc() + ", " +
                         "sotinchi = " + newHocPhan.getSoTinChi() + ", " +

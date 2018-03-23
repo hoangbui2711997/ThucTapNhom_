@@ -160,9 +160,11 @@ public class DoiTuong {
                 return false;
             }
         }
+
+        public static Boolean whereId(String where, DoiTuong dt) throws SQLException {
+            return Update.where("madt = " + where, dt);
+        }
     }
 
-    public static Boolean whereId(String where, DoiTuong dt) throws SQLException {
-        return Update.where("madt = " + where, dt);
-    }
+
 }

@@ -97,7 +97,7 @@ public class SearchDB implements ISearch{
             Object magd = resultSet.getObject(2);
             Object mahp = resultSet.getObject(3);
 //            Object masv = resultSet.getObject(4);
-            Object thoigianDK = resultSet.getObject(5);
+            Object thoigianDK = resultSet.getObject(4);
 
             return DangKy.getInstanceID(
                     (String) madk,
