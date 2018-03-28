@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,33 +53,53 @@ public class LoginController {
 
     @FXML
     void checkSignInManager(ActionEvent event) throws SQLException, IOException {
-        String user = txtManager.getText();
-        String passWord = txtPassword.getText();
-        btnSignIn.setVisible(false);
-        spinManager.setVisible(true);
-        if(User.checkSignin(user, passWord)) {
-            Parent root = FXMLLoader.load(getClass().getResource("../view/Admin.fxml"));
-            Main.primaryStage.setScene(new Scene(root, 1200, 700));
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Sai mật khẩu hoặc tài khoản đăng nhập!!!").showAndWait();
-        }
-        btnSignIn.setVisible(true);
-        spinManager.setVisible(false);
+        new Thread(() -> {
+            Platform.runLater(() -> {
+                String user = txtManager.getText();
+                String passWord = txtPassword.getText();
+                btnSignIn.setVisible(false);
+                spinManager.setVisible(true);
+                try {
+                    if (User.checkSignin(user, passWord)) {
+                        Parent root = FXMLLoader.load(getClass().getResource("../view/Admin.fxml"));
+                        Main.primaryStage.setScene(new Scene(root, 1200, 700));
+                    } else {
+                        new Alert(Alert.AlertType.ERROR, "Sai mật khẩu hoặc tài khoản đăng nhập!!!").showAndWait();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                btnSignIn.setVisible(true);
+                spinManager.setVisible(false);
+            });
+        }).start();
     }
 
     @FXML
     void checkSignInStudent(ActionEvent event) throws IOException, SQLException {
-        btnSignInStudent.setVisible(false);
-        spinStudent.setVisible(true);
-        if(SinhVien.Search.where("masv = " + txtStudentCode.getText()) != null) {
-            Parent root = FXMLLoader.load(getClass().getResource("../view/SV.fxml"));
-            Main.primaryStage.setTitle(txtStudentCode.getText());
-            Main.primaryStage.setScene(new Scene(root, 1200, 700));
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Mã sinh viên không đúng!!!").showAndWait();
-        }
-        spinStudent.setVisible(false);
-        btnSignInStudent.setVisible(true);
+        new Thread(() -> {
+            Platform.runLater(() -> {
+            btnSignInStudent.setVisible(false);
+            spinStudent.setVisible(true);
+            try {
+                if(SinhVien.Search.where("masv = " + txtStudentCode.getText()) != null) {
+                    Parent root = FXMLLoader.load(getClass().getResource("../view/SV.fxml"));
+                    Main.primaryStage.setTitle(txtStudentCode.getText());
+                    Main.primaryStage.setScene(new Scene(root, 1200, 700));
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Mã sinh viên không đúng!!!").showAndWait();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            spinStudent.setVisible(false);
+            btnSignInStudent.setVisible(true);
+        });
+        }).start();
     }
 
     @FXML

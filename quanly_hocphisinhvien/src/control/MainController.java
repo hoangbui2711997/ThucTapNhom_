@@ -1,47 +1,48 @@
 package control;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
+import control.add.InsertBM;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.converter.BooleanStringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LongStringConverter;
-import model.database.DB_Connection;
 import model.objects.*;
 
-import javax.lang.model.type.UnionType;
+import javax.script.Bindings;
 
 public class MainController<T> {
+
+    public static Object lock = new Object();
+
+    @FXML
+    private AnchorPane window;
 
     @FXML
     private ResourceBundle resources;
@@ -70,10 +71,14 @@ public class MainController<T> {
     @FXML
     private TableView<?> table;
 
+    @FXML
+    private JFXSpinner spinWait;
+
     /**
      * Đây là hàm dùng để sử lý khi update -- chưa xong
+     *
      * @param whatObject là String xác định đây là Object nào
-     * @param event event gọi từ function setEditCellEnable
+     * @param event      event gọi từ function setEditCellEnable
      */
     public void handlerEventCommit(String whatObject, TableColumn.CellEditEvent event) {
         int rowChangeWhenCommit = event.getTablePosition().getRow();
@@ -91,6 +96,15 @@ public class MainController<T> {
                     break;
                 case "Đăng ký":
                     DangKy dangKy = (DangKy) table.getItems().get(rowChangeWhenCommit);
+//                    String []date = event.getNewValue().toString().split("-");
+//                    for (int i = 0; i < date.length; i++) {
+//                        System.out.println(date[i]);
+//                    }
+                    Date realDate = Date.valueOf(event.getNewValue().toString());
+                    dangKy.setThoiGianDangKy(realDate);
+
+//                    System.out.println(realDate.toString());
+//                    System.out.println(dangKy);
                     allData[0].set(rowChangeWhenCommit, dangKy);
                     DangKy.Update.whereId(dangKy.getMaDangKy() + "", dangKy);
 
@@ -153,15 +167,16 @@ public class MainController<T> {
                     // Bắt đầu làm update từ đây lưu ý thứ tự của các trường
                     break;
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
     /**
      * Hàm tiền sử lý và gọi hàm khi update
-     * @param whatObject là String xác định đây là Object nào
-     * @param typesOf truyền vào mảng các đối tượng cần xác định kiểu để convert về String
+     *
+     * @param whatObject  là String xác định đây là Object nào
+     * @param typesOf     truyền vào mảng các đối tượng cần xác định kiểu để convert về String
      * @param tableColumn các column cần chỉnh sửa, đặt thuộc tính
      */
     public void setEditCellEnable(String whatObject, Object[] typesOf, TableColumn... tableColumn) {
@@ -200,11 +215,11 @@ public class MainController<T> {
 //                    System.out.println(event.getTablePosition().getRow());
 //                    System.out.println(event.getTablePosition().getColumn());
                     Alert thongBao = new Alert(Alert.AlertType.WARNING, "Bạn có chắc chắn muốn muốn thay đổi!", ButtonType.OK, ButtonType.CANCEL);
-                    if(thongBao.showAndWait().get().equals(ButtonType.OK)) {
+                    if (thongBao.showAndWait().get().equals(ButtonType.OK)) {
 
-                        handlerEventCommit(whatObject , event);
+                        handlerEventCommit(whatObject, event);
                     } else {
-                       // do nothing in here
+                        // do nothing in here
                         table.refresh();
                     }
                 }
@@ -227,7 +242,7 @@ public class MainController<T> {
      * allData[9] = danh sách sinh viên
      * allData[10] = danh sách phiếu thu
      */
-    List[] allData = new ArrayList[11];
+    public static List[] allData = new ArrayList[11];
 
     // Tạo thread gọi data từ bảng đăng ký trong csdl rồi add vào table
     Thread getThreadTableDangKy = new Thread(() -> {
@@ -251,31 +266,31 @@ public class MainController<T> {
                 new PropertyValueFactory<DangKy, String>("thoiGianDangKy")
         );
         //
-
-        List<DangKy> list = null;
         try {
-            list = DangKy.Search.getAll();
+            List<DangKy> list = DangKy.Search.getAll();
+            allData[0] = list;
+
+            Platform.runLater(() -> {
+                        synchronized (lock) {
+                            ObservableList observableList = FXCollections.observableArrayList(
+                                    list
+                            );
+                            table.setItems(observableList);
+                            table.getColumns().addAll(ma, gd, hp, dk);
+
+                            Object[] typeOf = new Object[3];
+                            typeOf[0] = (Integer) 1;
+                            typeOf[1] = (Integer) 1;
+                            typeOf[2] = (String) "";
+
+                            setEditCellEnable("Đăng ký", typeOf, gd, hp, dk);
+                        }
+                    }
+            );
+            System.out.println("I'm running");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
-
-        allData[0] = list;
-        ObservableList observableList = FXCollections.observableArrayList(
-                list
-        );
-        Platform.runLater(() -> {
-                    table.setItems(observableList);
-                    table.getColumns().addAll(ma, gd, hp, dk);
-
-                    Object[] typeOf = new Object[3];
-                    typeOf[0] = (Integer) 1;
-                    typeOf[1] = (Integer) 1;
-                    typeOf[2] = (String) "";
-
-                    setEditCellEnable("Đăng ký", typeOf, gd, hp, dk);
-                }
-        );
-        System.out.println("I'm running");
     });
 
     // những cái dưới tương tự cái trên
@@ -301,16 +316,10 @@ public class MainController<T> {
 
         try {
             // cái này là đổ dữ liệu vào table
-            List<BoMon> list = null;
-            list = BoMon.Search.getAll();
+            List<BoMon> list = BoMon.Search.getAll();
             allData[1] = list;
-            ObservableList observableList = FXCollections.observableArrayList(
-                    // getAll trả về list của của bộ môn Ctrl + Q xem định nghĩa
-                    list
-            );
 
-            // Đây là set cell, hay là phần tử trong bảng
-            table.setItems(observableList);
+
             // Run later biết cái này chưa nói đi
             // Khi mà ông chạy 1 thread -> sang cái function này nhé
             // Nhưng mà trong lúc đấy nó lại gọi form của thread gọi tới thread này
@@ -320,12 +329,20 @@ public class MainController<T> {
             ///
             Platform.runLater(
                     () -> {
-                        // Cái này là tên cột
-                        Object[] typeOf = new Object[1];
-                        typeOf[0] = (String) "";
+                        synchronized (lock) {
+                            ObservableList observableList = FXCollections.observableArrayList(
+                                    // getAll trả về list của của bộ môn Ctrl + Q xem định nghĩa
+                                    list
+                            );
+                            // Đây là set cell, hay là phần tử trong bảng
+                            table.setItems(observableList);
+                            // Cái này là tên cột
+                            Object[] typeOf = new Object[1];
+                            typeOf[0] = (String) "";
 
-                        setEditCellEnable("Bộ môn", typeOf, ten);
-                        table.getColumns().addAll(ma, ten);
+                            setEditCellEnable("Bộ môn", typeOf, ten);
+                            table.getColumns().addAll(ma, ten);
+                        }
                     }
             );
         } catch (SQLException e) {
@@ -343,17 +360,19 @@ public class MainController<T> {
         try {
             List<DoiTuong> list = DoiTuong.Search.getAll();
             allData[2] = list;
-            ObservableList observableList = FXCollections.observableArrayList(
-                    list
-            );
-            table.setItems(observableList);
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(ma, ten);
-                Object[] typeOf = new Object[1];
-                typeOf[0] = (String) "";
+                synchronized (lock) {
+                    ObservableList observableList = FXCollections.observableArrayList(
+                            list
+                    );
+                    table.setItems(observableList);
+                    table.getColumns().addAll(ma, ten);
+                    Object[] typeOf = new Object[1];
+                    typeOf[0] = (String) "";
 
-                setEditCellEnable("Đối tượng", typeOf, ten);
+                    setEditCellEnable("Đối tượng", typeOf, ten);
+                }
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -371,17 +390,20 @@ public class MainController<T> {
         try {
             List<GiangDuong> list = GiangDuong.Search.getAll();
             allData[3] = list;
-            ObservableList observableList = FXCollections.observableArrayList(
-                    list
-            );
-            table.setItems(observableList);
+
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(ma, ten);
-                Object[] typeOf = new Object[1];
-                typeOf[0] = (String) "";
+                synchronized (lock) {
+                    ObservableList observableList = FXCollections.observableArrayList(
+                            list
+                    );
+                    table.setItems(observableList);
+                    table.getColumns().addAll(ma, ten);
+                    Object[] typeOf = new Object[1];
+                    typeOf[0] = (String) "";
 
-                setEditCellEnable("Giảng đường", typeOf, ten);
+                    setEditCellEnable("Giảng đường", typeOf, ten);
+                }
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -410,18 +432,22 @@ public class MainController<T> {
         try {
             List<HocPhan> list = HocPhan.Search.getAll();
             allData[4] = list;
-            ObservableList observableList = FXCollections.observableArrayList(list);
-            table.setItems(observableList);
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(ma, maMonHoc, soTinChi, maMucThu, giaoVienGiangDay, thoiGian);
-                Object[] typeOf = new Object[4];
-                typeOf[0] = (Integer) 1;
-                typeOf[1] = (Integer) 1;
-                typeOf[2] = (String) "";
-                typeOf[3] = (String) "";
+                synchronized (lock) {
+                    ObservableList observableList = FXCollections.observableArrayList(
+                            list
+                    );
+                    table.setItems(observableList);
+                    table.getColumns().addAll(ma, maMonHoc, soTinChi, maMucThu, giaoVienGiangDay, thoiGian);
+                    Object[] typeOf = new Object[4];
+                    typeOf[0] = (Integer) 1;
+                    typeOf[1] = (Integer) 1;
+                    typeOf[2] = (String) "";
+                    typeOf[3] = (String) "";
 
-                setEditCellEnable("Học phần", typeOf, soTinChi, maMucThu, giaoVienGiangDay, thoiGian);
+                    setEditCellEnable("Học phần", typeOf, soTinChi, maMucThu, giaoVienGiangDay, thoiGian);
+                }
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -439,15 +465,20 @@ public class MainController<T> {
         try {
             List<Khoa> list = Khoa.Search.getAll();
             allData[5] = list;
-            ObservableList observableList = FXCollections.observableArrayList(list);
-            table.setItems(observableList);
+
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(ma, ten);
-                Object[] typeOf = new Object[1];
-                typeOf[0] = (String) "";
+                synchronized (lock) {
+                    ObservableList observableList = FXCollections.observableArrayList(
+                            list
+                    );
+                    table.setItems(observableList);
+                    table.getColumns().addAll(ma, ten);
+                    Object[] typeOf = new Object[1];
+                    typeOf[0] = (String) "";
 
-                setEditCellEnable("Khoa", typeOf, ten);
+                    setEditCellEnable("Khoa", typeOf, ten);
+                }
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -465,14 +496,19 @@ public class MainController<T> {
         try {
             List<MonHoc> list = MonHoc.Search.getAll();
             allData[6] = list;
-            ObservableList observableList = FXCollections.observableArrayList(list);
-            table.setItems(observableList);
+
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(ma, ten);
-                Object[] typeOf = new Object[1];
-                typeOf[0] = (String) "";
-                setEditCellEnable("Môn học", typeOf, ten);
+                synchronized (lock) {
+                    ObservableList observableList = FXCollections.observableArrayList(
+                            list
+                    );
+                    table.setItems(observableList);
+                    table.getColumns().addAll(ma, ten);
+                    Object[] typeOf = new Object[1];
+                    typeOf[0] = (String) "";
+                    setEditCellEnable("Môn học", typeOf, ten);
+                }
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -493,16 +529,20 @@ public class MainController<T> {
         try {
             List<MucThu> list = MucThu.Search.getAll();
             allData[7] = list;
-            ObservableList observableList = FXCollections.observableArrayList(list);
-            table.setItems(observableList);
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(maMucThu, moTa, soTien);
-                Object[] typeOf = new Object[2];
-                typeOf[0] = (String) "";
-                typeOf[1] = (Double) 1.1;
+                synchronized (lock) {
+                    ObservableList observableList = FXCollections.observableArrayList(
+                            list
+                    );
+                    table.setItems(observableList);
+                    table.getColumns().addAll(maMucThu, moTa, soTien);
+                    Object[] typeOf = new Object[2];
+                    typeOf[0] = (String) "";
+                    typeOf[1] = (Double) 1.1;
 
-                setEditCellEnable("Mức thu", typeOf, moTa, soTien);
+                    setEditCellEnable("Mức thu", typeOf, moTa, soTien);
+                }
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -520,16 +560,19 @@ public class MainController<T> {
         try {
             List<Nganh> list = Nganh.Search.getAll();
             allData[8] = list;
-            ObservableList observableList = FXCollections.observableArrayList(list);
-            table.setItems(observableList);
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(ma, ten);
-                Object[] typeOf = new Object[1];
+                synchronized (lock) {
+                    ObservableList observableList = FXCollections.observableArrayList(
+                            list
+                    );
+                    table.setItems(observableList);
+                    table.getColumns().addAll(ma, ten);
+                    Object[] typeOf = new Object[1];
 
-                typeOf[0] = (String) "";
-                setEditCellEnable("Ngành", typeOf, ten);
-
+                    typeOf[0] = (String) "";
+                    setEditCellEnable("Ngành", typeOf, ten);
+                }
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -562,20 +605,24 @@ public class MainController<T> {
         try {
             List<SinhVien> list = SinhVien.Search.getAll();
             allData[9] = list;
-            ObservableList observableList = FXCollections.observableArrayList(list);
-            table.setItems(observableList);
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(maSV, maDT, maBoMon, tenSV, gioiTinh, ngaySinh, diaChi);
-                Object[] typeOf = new Object[6];
-                typeOf[0] = (Integer) 1;
-                typeOf[1] = (Integer) 1;
-                typeOf[2] = (String) "";
-                typeOf[3] = (String) "";
-                typeOf[4] = (String) "";
-                typeOf[5] = (String) "";
+                synchronized (lock) {
+                    ObservableList observableList = FXCollections.observableArrayList(
+                            list
+                    );
+                    table.setItems(observableList);
+                    table.getColumns().addAll(maSV, maDT, maBoMon, tenSV, gioiTinh, ngaySinh, diaChi);
+                    Object[] typeOf = new Object[6];
+                    typeOf[0] = (Integer) 1;
+                    typeOf[1] = (Integer) 1;
+                    typeOf[2] = (String) "";
+                    typeOf[3] = (String) "";
+                    typeOf[4] = (String) "";
+                    typeOf[5] = (String) "";
 
-                setEditCellEnable("Sinh viên", typeOf, maDT, maBoMon, tenSV, gioiTinh, ngaySinh, diaChi);
+                    setEditCellEnable("Sinh viên", typeOf, maDT, maBoMon, tenSV, gioiTinh, ngaySinh, diaChi);
+                }
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -605,11 +652,15 @@ public class MainController<T> {
         try {
             List<PhieuThu> list = PhieuThu.Search.getAll();
             allData[10] = list;
-            ObservableList observableList = FXCollections.observableArrayList(list);
-            table.setItems(observableList);
 
             Platform.runLater(() -> {
-                table.getColumns().addAll(maPT, maSV, soTien, ngayBatDauThu, ngayNop, trangThai);
+                synchronized (lock) {
+                    ObservableList observableList = FXCollections.observableArrayList(
+                            list
+                    );
+
+                    table.setItems(observableList);
+                    table.getColumns().addAll(maPT, maSV, soTien, ngayBatDauThu, ngayNop, trangThai);
 //                Object[] typeOf = new Object[5];
 //                typeOf[0] = (Integer) 1;
 //                typeOf[1] = (Long) Long.MIN_VALUE;
@@ -618,12 +669,40 @@ public class MainController<T> {
 //                typeOf[4] = (Boolean) true;
 
 //                setEditCellEnable("Phiếu thu", typeOf, maSV, soTien, ngayBatDauThu, ngayNop, trangThai);
+                }
             });
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     });
+
+    //    public void stopAllThread() {
+//        if(!getThreadTableBoMon.isInterrupted()) {
+//            getThreadTableBoMon.interrupt();
+//        } else if(!getThreadTableSinhVien.isInterrupted()){
+//            getThreadTableSinhVien.interrupt();
+//        } else if(!getThreadTableDangKy.isInterrupted()) {
+//            getThreadTableDangKy.interrupt();
+//        } else if(!getThreadTableDoiTuong.isInterrupted()) {
+//            getThreadTableDoiTuong.interrupt();
+//        } else if(!getThreadTableGiangDuong.isInterrupted()) {
+//            getThreadTableGiangDuong.interrupt();
+//        } else if(!getThreadTableHocPhan.isInterrupted()) {
+//            getThreadTableHocPhan.interrupt();
+//        } else if(!getThreadTablePhieuThu.isInterrupted()) {
+//            getThreadTablePhieuThu.interrupt();
+//        } else if(!getThreadTableNganh.isInterrupted()) {
+//            getThreadTableNganh.interrupt();
+//        } else if(!getThreadTableMucThu.isInterrupted()) {
+//            getThreadTableMucThu.interrupt();
+//        } else if(!getThreadTableMonHoc.isInterrupted()) {
+//            getThreadTableMonHoc.interrupt();
+//        } else if(!getThreadTableKhoa.isInterrupted()) {
+//            getThreadTableKhoa.interrupt();
+//        }
+//    }
+    ExecutorService executorService = Executors.newFixedThreadPool(11);
 
     /**
      * File chay khoi tao
@@ -638,6 +717,7 @@ public class MainController<T> {
         assert search != null : "fx:id=\"search\" was not injected: check your FXML file 'Admin.fxml'.";
         assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'Admin.fxml'.";
 
+
         ArrayList arrayList = new ArrayList();
         arrayList.add("Bộ môn");
         arrayList.add("Đăng ký");
@@ -650,75 +730,120 @@ public class MainController<T> {
         arrayList.add("Ngành");
         arrayList.add("Phiếu thu");
         arrayList.add("Sinh viên");
-
+        spinWait.setVisible(false);
         //
 //        getThreadTableBoMon.run();
-
         selectTable.getItems().addAll(arrayList);
-        selectTable.setOnAction((e) -> {
-            Platform.runLater(() -> {
-                switch (selectTable.getValue().toString()) {
-                    case "Bộ môn":
-                        search.setPromptText("Tên bộ môn");
-                        refreshTableView();
-                        getThreadTableBoMon.run();
-                        break;
-                    case "Đăng ký":
-                        search.setPromptText("Tên mã đăng ký");
-                        refreshTableView();
-                        getThreadTableDangKy.run();
-                        break;
-                    case "Đối tượng":
-                        search.setPromptText("Tên đối tượng");
-                        refreshTableView();
-                        getThreadTableDoiTuong.run();
-                        break;
-                    case "Giảng đường":
-                        search.setPromptText("Tên giảng đường");
-                        refreshTableView();
-                        getThreadTableGiangDuong.run();
-                        break;
-                    case "Học phần":
-                        search.setPromptText("Tên giáo viên giảng dạy");
-                        refreshTableView();
-                        getThreadTableHocPhan.run();
-                        break;
-                    case "Khoa":
-                        search.setPromptText("Tên khoa");
-                        refreshTableView();
-                        getThreadTableKhoa.run();
-                        break;
-                    case "Môn học":
-                        search.setPromptText("Tên môn học");
-                        refreshTableView();
-                        getThreadTableMonHoc.run();
-                        break;
-                    case "Mức thu":
-                        search.setPromptText("Tìm kiếm mô tả");
-                        refreshTableView();
-                        getThreadTableMucThu.run();
-                        break;
-                    case "Ngành":
-                        search.setPromptText("Tên ngành");
-                        refreshTableView();
-                        getThreadTableNganh.run();
-                        break;
-                    case "Sinh viên":
-                        search.setPromptText("Tên sinh viên");
-                        refreshTableView();
-                        getThreadTableSinhVien.run();
-                        break;
-                    case "Phiếu thu":
-                        search.setPromptText("Tìm kiếm mã sinh viên");
-                        refreshTableView();
-                        getThreadTablePhieuThu.run();
-                        break;
+        try {
+            selectTable.setOnAction((e) -> {
+
+                // chấm dứt hết các thread ở các bảng
+                try {
+                    executorService.awaitTermination(0, TimeUnit.SECONDS);
+                } catch (InterruptedException e1) {
+                    System.out.println("Hello");
+                    e1.printStackTrace();
+                }
+
+                synchronized (lock) {
+                    waitOfSpin();
+                    Platform.runLater(() -> {
+                        try {
+                            switch (selectTable.getValue().toString()) {
+                                case "Bộ môn":
+                                    search.setPromptText("Tên bộ môn");
+                                    refreshTableView();
+//                            System.out.println("1");
+//                            getThreadTableBoMon.start();
+                                    executorService.execute(getThreadTableBoMon);
+                                    break;
+                                case "Đăng ký":
+                                    search.setPromptText("Tên mã đăng ký");
+                                    refreshTableView();
+                                    executorService.execute(getThreadTableDangKy);
+                                    break;
+                                case "Đối tượng":
+                                    search.setPromptText("Tên đối tượng");
+                                    refreshTableView();
+                                    executorService.execute(getThreadTableDoiTuong);
+                                    break;
+                                case "Giảng đường":
+                                    search.setPromptText("Tên giảng đường");
+                                    refreshTableView();
+                                    executorService.execute(getThreadTableGiangDuong);
+                                    break;
+                                case "Học phần":
+                                    search.setPromptText("Tên giáo viên giảng dạy");
+                                    refreshTableView();
+                                    executorService.execute(getThreadTableHocPhan);
+                                    break;
+                                case "Khoa":
+                                    search.setPromptText("Tên khoa");
+                                    refreshTableView();
+                                    executorService.execute(getThreadTableKhoa);
+                                    break;
+                                case "Môn học":
+                                    search.setPromptText("Tên môn học");
+                                    refreshTableView();
+                                    executorService.execute(getThreadTableMonHoc);
+                                    break;
+                                case "Mức thu":
+                                    search.setPromptText("Tìm kiếm mô tả");
+                                    refreshTableView();
+                                    executorService.execute(getThreadTableMucThu);
+                                    break;
+                                case "Ngành":
+                                    search.setPromptText("Tên ngành");
+                                    refreshTableView();
+                                    executorService.execute(getThreadTableNganh);
+                                    break;
+                                case "Sinh viên":
+                                    search.setPromptText("Tên sinh viên");
+                                    refreshTableView();
+                                    executorService.execute(getThreadTableSinhVien);
+                                    break;
+                                case "Phiếu thu":
+                                    search.setPromptText("Tìm kiếm mã sinh viên");
+                                    refreshTableView();
+                                    executorService.execute(getThreadTablePhieuThu);
+                                    break;
+                            }
+                        } catch (Exception exc) {
+                            System.out.println("No NO");
+                            System.out.println(exc.getCause());
+                        } finally {
+                            // run into current thread ...
+//                    new Thread(() -> {
+//                        long currentTime = System.currentTimeMillis();
+//                        while(true) {
+//                            if(System.currentTimeMillis() - currentTime > 100) {
+//                                break;
+//                            }
+//                        }
+//                    }).run();
+                            System.out.println("Hello world");
+                            submitOfSpin();
+                        }
+                    });
                 }
             });
-        });
+        } catch (Exception e) {
+            System.out.println("Hello you got some issue " + e.getMessage());
+            refreshTableView();
+        }
 //        selectTable.getSelectionModel().select(0);
 //        refreshTableView();
 //        System.out.println(table.isEditable());
+    }
+
+    private void waitOfSpin() {
+        spinWait.setVisible(true);
+        table.setVisible(false);
+    }
+
+    private void submitOfSpin() {
+        spinWait.setVisible(false);
+        table.setVisible(true);
     }
 
     /**
@@ -730,55 +855,75 @@ public class MainController<T> {
         table.refresh();
     }
 
+
     /**
      * Phần thêm ở đây -- chưa xong
+     *
      * @throws IOException
      */
-    public void onAddButtonClicked() throws IOException {
-        Stage secondaryStage = new Stage();
-        secondaryStage.setResizable(false);
-        Parent root;
-        switch (selectTable.getValue().toString()) {
-            case "Bộ môn":
-                // nếu là bộ môn
-                secondaryStage.setTitle("Thêm của bộ môn");
-                 root = FXMLLoader.load(getClass().getResource("../view/InsertBoMon.fxml"));
-                 // Đây là setSize cho giao diện tùy mn để
-                secondaryStage.setScene(new Scene(root, 462, 294));
-                break;
-            case "Đăng ký":
+    public void onAddButtonClicked() throws IOException, InterruptedException {
+        Platform.runLater(() -> {
 
-                break;
-            case "Đối tượng":
+            Stage secondaryStage = new Stage();
+            JFXAlert alert = null;
+            secondaryStage.setResizable(false);
+            switch (selectTable.getValue().toString()) {
+                case "Bộ môn":
 
-                break;
-            case "Giảng đường":
 
-                break;
-            case "Học phần":
+                    secondaryStage.setTitle("Thêm của bộ môn");
+                    Parent root = null;
+                    try {
+                        root = FXMLLoader.load(getClass().getResource("../view/InsertBoMon.fxml"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    secondaryStage.setScene(new Scene(root, 462, 294));
+                    alert = new JFXAlert(secondaryStage);
+                    alert.setGraphic(root);
 
-                break;
-            case "Khoa":
+                    // nếu là bộ môn
+                    break;
+                case "Đăng ký":
 
-                break;
-            case "Môn học":
+                    break;
+                case "Đối tượng":
 
-                break;
-            case "Mức thu":
+                    break;
+                case "Giảng đường":
 
-                break;
-            case "Ngành":
+                    break;
+                case "Học phần":
 
-                break;
-            case "Sinh viên":
+                    break;
+                case "Khoa":
 
-                break;
-            case "Phiếu thu":
+                    break;
+                case "Môn học":
 
-                break;
-        }
+                    break;
+                case "Mức thu":
 
-        secondaryStage.showAndWait();
+                    break;
+                case "Ngành":
+
+                    break;
+                case "Sinh viên":
+
+                    break;
+                case "Phiếu thu":
+
+                    break;
+            }
+
+//        secondaryStage.showAndWait();
+
+            alert.showAndWait();
+            table.getItems().clear();
+            table.getItems().addAll(
+                allData[1]
+            );
+        });
     }
 
     /**
@@ -848,6 +993,7 @@ public class MainController<T> {
 
     /**
      * Tìm kiếm đã xong
+     *
      * @param event
      * @throws SQLException
      */

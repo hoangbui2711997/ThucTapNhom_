@@ -2,6 +2,7 @@ package control.add;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import control.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,18 +31,22 @@ public class InsertBM {
     @FXML
     private Hyperlink address;
 
-    public void onXacNhanClick(ActionEvent actionEvent) {
+    public void onXacNhanClick(ActionEvent actionEvent) throws InterruptedException {
         String newBoMonName = txtNewName.getText();
         if(newBoMonName.isEmpty()){
             new Alert(Alert.AlertType.ERROR, "Chưa nhập tên bộ môn!").showAndWait();
         }
         else{
-            BoMon newBoMon = new BoMon(txtNewName.getText());
+
+
+            BoMon boMon= new BoMon(txtNewName.getText());
             try {
-                BoMon.Insert(newBoMon);
+                boMon = BoMon.Insert(boMon);
+                MainController.allData[1].add(boMon);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
             Stage stage = (Stage) btnHuy.getScene().getWindow();
             stage.close();
         }

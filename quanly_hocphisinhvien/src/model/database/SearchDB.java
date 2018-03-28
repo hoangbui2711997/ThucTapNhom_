@@ -51,9 +51,9 @@ public class SearchDB implements ISearch{
      */
     // searchCommand thực thi câu lệnh statement và trả về kết quả
     public ResultSet searchCommand(String statement) throws SQLException {
-        PreparedStatement preparedStatement = conn.prepareStatement(statement);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        return resultSet;
+            PreparedStatement preparedStatement = conn.prepareStatement(statement);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
     }
 
     /**

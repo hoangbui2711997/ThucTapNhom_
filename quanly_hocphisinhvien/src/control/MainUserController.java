@@ -31,6 +31,9 @@ import model.objects.*;
 import view.Main;
 
 public class MainUserController {
+
+    private static Object lock = new Object();
+    ExecutorService threadPool = Executors.newFixedThreadPool(3);
     @FXML
     private ResourceBundle resources;
 
@@ -91,52 +94,56 @@ public class MainUserController {
                 hienThiDangKy = MucThu_MonHoc_HocPhan.getAll();
 //            mucThus = MucThu.Search.getAll();
 //            monHocs = MonHoc.Search.getAll();
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-            ObservableList observableList = FXCollections.observableArrayList(hienThiDangKy);
 //        ObservableList observableList1 = FXCollections.observableArrayList(mucThus);
 //        ObservableList observableList2 = FXCollections.observableArrayList(monHocs);
 
 //        tableRegis.setItems(observableList1);
 //        tableRegis.setItems(observableList2);
             Platform.runLater(() -> {
-                tableRegis.setItems(observableList);
-                addAllTable(tableRegis);
+                synchronized (lock) {
+                    ObservableList observableList = FXCollections.observableArrayList(hienThiDangKy);
+                    tableRegis.setItems(observableList);
+                    addAllTable(tableRegis);
+                }
             });
         });
     });
     Thread getThreadTablePhieuThu = new Thread(() -> {
         Platform.runLater(() -> {
-            TableColumn maPT = new TableColumn("Mã Phiếu Thu" );
-            maPT.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("ma" ));
+            TableColumn maPT = new TableColumn("Mã Phiếu Thu");
+            maPT.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("ma"));
 
-            TableColumn soTien = new TableColumn("Số Tiền" );
-            soTien.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("soTien" ));
+            TableColumn soTien = new TableColumn("Số Tiền");
+            soTien.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("soTien"));
 
-            TableColumn maSV = new TableColumn("Mã Sinh Viên" );
-            maSV.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("maSV" ));
+            TableColumn maSV = new TableColumn("Mã Sinh Viên");
+            maSV.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("maSV"));
 
-            TableColumn ngayBatDauThu = new TableColumn("Ngày Bắt Đầu Thu" );
-            ngayBatDauThu.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("ngayBatDauThu" ));
+            TableColumn ngayBatDauThu = new TableColumn("Ngày Bắt Đầu Thu");
+            ngayBatDauThu.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("ngayBatDauThu"));
 
-            TableColumn ngayNop = new TableColumn("Ngày Nộp" );
-            ngayNop.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("ngayNop" ));
+            TableColumn ngayNop = new TableColumn("Ngày Nộp");
+            ngayNop.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("ngayNop"));
 
-            TableColumn trangThai = new TableColumn("Trạng Thái" );
-            trangThai.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("trangThai" ));
+            TableColumn trangThai = new TableColumn("Trạng Thái");
+            trangThai.setCellValueFactory(new PropertyValueFactory<PhieuThu, String>("trangThai"));
 
             try {
                 hienThiPhieuThu = PhieuThu.Search.whereCondition("masv = " + Main.primaryStage.getTitle());
-                ObservableList observableList = FXCollections.observableArrayList(
-                        hienThiPhieuThu
-                );
-                tableRegis.setItems(observableList);
+
 
                 Platform.runLater(() -> {
-                    tableRegis.getColumns().addAll(maPT, maSV, soTien, ngayBatDauThu, ngayNop, trangThai);
+                    synchronized (lock) {
+                        ObservableList observableList = FXCollections.observableArrayList(
+                                hienThiPhieuThu
+                        );
+                        tableRegis.setItems(observableList);
+                        tableRegis.getColumns().addAll(maPT, maSV, soTien, ngayBatDauThu, ngayNop, trangThai);
+                    }
                 });
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -175,12 +182,19 @@ public class MainUserController {
 
         // -- Nếu tồn tại dữ liệu
         if (list != null) {
-            refresh();
-            ObservableList observableList = FXCollections.observableArrayList(list);
-            tableRegis.setItems(observableList);
-            addAllTable(tableRegis);
+            List<MucThu_MonHoc_HocPhan> finalList = list;
+
+            Platform.runLater(() -> {
+                synchronized (lock) {
+                    refresh();
+                    ObservableList observableList = FXCollections.observableArrayList(finalList);
+                    tableRegis.setItems(observableList);
+                    addAllTable(tableRegis);
+                }
+            });
+
         } else {
-            new Alert(Alert.AlertType.INFORMATION, "Lịch sử đăng ký của bạn không tồn tại!!!" ).showAndWait();
+            new Alert(Alert.AlertType.INFORMATION, "Lịch sử đăng ký của bạn không tồn tại!!!").showAndWait();
         }
     }
 
@@ -193,7 +207,7 @@ public class MainUserController {
 
         if (!getThreadTableHocPhan.isAlive()) {
             refreshAll();
-            getThreadTablePhieuThu.run();
+            threadPool.execute(getThreadTablePhieuThu);
         }
     }
 
@@ -222,49 +236,62 @@ public class MainUserController {
 
     @FXML
     void actionSearchSubjectRegis(ActionEvent event) {
-        if (!btnRegis.isDisable()) {
-            ObservableList filterData = FXCollections.observableArrayList(hienThiDangKy);
-            filterData = filterData.filtered(o -> {
-                return ((MucThu_MonHoc_HocPhan) o).
-                        getMonHoc().toLowerCase().
-                        contains(txtSearchRegis.getText().toLowerCase());
-            });
+        ObservableList filterData = null;
+        synchronized (lock) {
+            if (!btnRegis.isDisable()) {
+                filterData = FXCollections.observableArrayList(hienThiDangKy);
+                filterData = filterData.filtered(o -> {
+                    return ((MucThu_MonHoc_HocPhan) o).
+                            getMonHoc().toLowerCase().
+                            contains(txtSearchRegis.getText().toLowerCase());
+                });
+            } else {
+                filterData = FXCollections.observableArrayList(hienThiPhieuThu);
+                filterData = filterData.filtered(o -> {
+                    return ((MucThu_MonHoc_HocPhan) o).
+                            getMonHoc().toLowerCase().
+                            contains(txtSearchRegis.getText());
+                });
+            }
 
-            tableRegis.setItems(filterData);
-        } else {
-            ObservableList filterData = FXCollections.observableArrayList(hienThiPhieuThu);
-            filterData = filterData.filtered(o -> {
-                return ((MucThu_MonHoc_HocPhan) o).
-                        getMonHoc().toLowerCase().
-                        contains(txtSearchRegis.getText());
+            ObservableList finalFilterData = filterData;
+            Platform.runLater(() -> {
+                tableRegis.setItems(finalFilterData);
             });
-
-            tableRegis.setItems(filterData);
         }
     }
 
     @FXML
     void actionSearchSubjectRegisted(ActionEvent event) throws SQLException {
-        if (!btnBack.isDisable()) {
-            refreshAll();
-        }
-        initEnableAllButton();
-        btnBack.setDisable(false);
-        btnRegis.setDisable(true);
+        synchronized (lock) {
+            if (!btnBack.isDisable()) {
+                refreshAll();
+            }
+            initEnableAllButton();
+            btnBack.setDisable(false);
+            btnRegis.setDisable(true);
 
-        List<MucThu_MonHoc_HocPhan> list = null;
+            List<MucThu_MonHoc_HocPhan> list = null;
 
-        // -- Add data
-        list = MucThu_MonHoc_HocPhan.getHistory(Main.primaryStage.getTitle());
+            // -- Add data
+            list = MucThu_MonHoc_HocPhan.getHistory(Main.primaryStage.getTitle());
 
-        // -- Nếu tồn tại dữ liệu
-        if (list != null) {
-            refresh();
-            ObservableList observableList = FXCollections.observableArrayList(list);
-            tableRegis.setItems(observableList);
-            addAllTable(tableRegis);
-        } else {
-            new Alert(Alert.AlertType.INFORMATION, "Lịch sử đăng ký của bạn không tồn tại!!!" ).showAndWait();
+            // -- Nếu tồn tại dữ liệu
+            if (list != null) {
+                refresh();
+
+
+                List<MucThu_MonHoc_HocPhan> finalList = list;
+                Platform.runLater(() -> {
+                    synchronized (lock) {
+                        ObservableList observableList = FXCollections.observableArrayList(finalList);
+                        tableRegis.setItems(observableList);
+                        addAllTable(tableRegis);
+                    }
+                });
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "Lịch sử đăng ký của bạn không tồn tại!!!").showAndWait();
+            }
         }
     }
 
@@ -285,7 +312,6 @@ public class MainUserController {
             System.out.println(pt);
 
             PhieuThu.Insert(pt);
-
         }
     }
 
@@ -303,9 +329,9 @@ public class MainUserController {
         assert tableWaitToBeSubmit != null : "fx:id=\"tableWaitToBeSubmit\" was not injected: check your FXML file 'SV.fxml'.";
         assert btnSummit != null : "fx:id=\"btnSummit\" was not injected: check your FXML file 'SV.fxml'.";
 
-        getThreadTableHocPhan.run();
+        threadPool.execute(getThreadTableHocPhan);
 
-//        getThreadTableMonHoc.run();
+//        getThreadTableMonHoc.start();
 
     }
 
@@ -320,38 +346,43 @@ public class MainUserController {
 //        private SimpleStringProperty monHoc, giaoVienGiangDay, thoiGian, tenGD, maDangKy;
         Thread t_AddAllTable = new Thread(() -> {
 
-            TableColumn ma = new TableColumn("Mã học phần" );
-            ma.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("maHocPhan" ));
+            TableColumn ma = new TableColumn("Mã học phần");
+            ma.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("maHocPhan"));
 
-            TableColumn maDangKy = new TableColumn("Mã học đăng ký" );
-            maDangKy.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("maDangKy" ));
+            TableColumn maDangKy = new TableColumn("Mã học đăng ký");
+            maDangKy.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("maDangKy"));
 
-            TableColumn giangDuong = new TableColumn("Tên giảng đường" );
-            giangDuong.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("tenGD" ));
+            TableColumn giangDuong = new TableColumn("Tên giảng đường");
+            giangDuong.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("tenGD"));
 
-            TableColumn soTienMotTinChi = new TableColumn("Số tiền một tín chỉ" );
-            soTienMotTinChi.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("mucThu" ));
+            TableColumn soTienMotTinChi = new TableColumn("Số tiền một tín chỉ");
+            soTienMotTinChi.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("mucThu"));
 //
-            TableColumn tongSoTien = new TableColumn("Tổng số tiền" );
-            tongSoTien.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("soTien" ));
+            TableColumn tongSoTien = new TableColumn("Tổng số tiền");
+            tongSoTien.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("soTien"));
 //
-            TableColumn monHoc = new TableColumn("Môn học" );
-            monHoc.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("monHoc" ));
+            TableColumn monHoc = new TableColumn("Môn học");
+            monHoc.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("monHoc"));
 //
-            TableColumn soTinChi = new TableColumn("Số tín chỉ" );
-            soTinChi.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("soTinChi" ));
+            TableColumn soTinChi = new TableColumn("Số tín chỉ");
+            soTinChi.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("soTinChi"));
 //
-            TableColumn giaoVienGiangDay = new TableColumn("Giáo viên" );
-            giaoVienGiangDay.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("giaoVienGiangDay" ));
+            TableColumn giaoVienGiangDay = new TableColumn("Giáo viên");
+            giaoVienGiangDay.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("giaoVienGiangDay"));
 
-            TableColumn thoiGian = new TableColumn("Thời gian bắt đầu" );
-            thoiGian.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("thoiGian" ));
+            TableColumn thoiGian = new TableColumn("Thời gian bắt đầu");
+            thoiGian.setCellValueFactory(new PropertyValueFactory<MucThu_MonHoc_HocPhan, String>("thoiGian"));
 
-            tableView.getColumns().addAll(maDangKy, ma, monHoc, giaoVienGiangDay, soTinChi, soTienMotTinChi, tongSoTien,
-                    giangDuong, thoiGian);
+            Platform.runLater(() -> {
+                synchronized (lock) {
+                    tableView.getColumns().addAll(maDangKy, ma, monHoc, giaoVienGiangDay, soTinChi, soTienMotTinChi, tongSoTien,
+                            giangDuong, thoiGian);
+                }
+            });
+
         });
 
-        t_AddAllTable.run();
+        threadPool.execute(t_AddAllTable);
     }
 
     private void refreshAll() {

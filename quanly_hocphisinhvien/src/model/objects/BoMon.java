@@ -87,11 +87,12 @@ public class BoMon {
 
             int id = InsertDB.getInstance().initInsert("BOMON");
 
-            statement = "INSERT BOMON(ten) VALUES" +
+            statement = "INSERT into BOMON(tenbm) VALUES" +
                     "(" +
 //                    + boMon.getMa() + ", " +
                     "N'" + boMon.getTen() + "'" +
                     ")";
+            System.out.println(statement);
             // wait form input
             // wait form input
             // wait form input

@@ -122,7 +122,6 @@ public class DangKy {
 //                    dangKy.getMaSinhVien() +", " +
                             "'" + dangKy.getThoiGianDangKy() + "'" +
                             ")";
-
                     break;
                 }
             }
@@ -187,11 +186,12 @@ public class DangKy {
                 statement = "UPDATE DANGKY " +
                         "SET " +
 //                        "madk = " + newDangKy.getMaDangKy() + ", " +
-                        "tengd = " + newDangKy.getMaGiangDuong() + ", " +
+                        "magd = " + newDangKy.getMaGiangDuong() + ", " +
                         "mahp = " + newDangKy.getMaHocPhan() + ", " +
 //                        "masv = " + newDangKy.getMaSinhVien() + ", " +
                         "thoigiandk = '" + newDangKy.getThoiGianDangKy() + "' " +
                         "WHERE " + where;
+                System.out.println(statement);
                 UpdateDB.getInstance().updateCommand(statement);
                 return true;
             } catch (SQLException e) {

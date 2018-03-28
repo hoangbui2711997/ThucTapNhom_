@@ -12,6 +12,11 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/quanly_hocphisinhvien$Main.coverage" NAME="Main Coverage Results" MODIFIED="1522056757828" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>sample.*</FILTER>
+    </SUITE>
+  </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
@@ -61,63 +66,86 @@
       <file leaf-file-name="MainController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/control/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="159" column="0" lean-forward="true" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+            <state relative-caret-position="234">
+              <caret line="103" column="52" lean-forward="true" selection-start-line="103" selection-start-column="52" selection-end-line="103" selection-end-column="52" />
               <folding>
-                <element signature="method#handlerEventCommit#0;class#MainController#0" expanded="false" />
+                <element signature="docComment;method#handlerEventCommit#0;class#MainController#0" expanded="false" />
                 <element signature="docComment;method#setEditCellEnable#0;class#MainController#0" expanded="false" />
-                <element signature="method#setEditCellEnable#0;class#MainController#0" expanded="false" />
-                <element signature="e#6586#6611#0" expanded="false" />
-                <element signature="e#7923#7996#0" expanded="false" />
+                <element signature="e#7033#7058#0" expanded="false" />
+                <element signature="e#8370#8443#0" expanded="false" />
                 <element signature="docComment;field#allData#0;class#MainController#0" expanded="false" />
-                <element signature="e#9458#10966#0" expanded="false" />
-                <element signature="e#10506#10906#0" expanded="false" />
-                <element signature="e#11054#13118#0" expanded="false" />
-                <element signature="e#11153#11204#0" expanded="false" />
-                <element signature="e#11291#11304#0" expanded="false" />
-                <element signature="e#12210#12247#0" expanded="false" />
-                <element signature="e#12711#13019#0" expanded="false" />
-                <element signature="e#13169#14074#0" expanded="false" />
-                <element signature="e#13762#13987#0" expanded="false" />
-                <element signature="e#14127#15045#0" expanded="false" />
-                <element signature="e#14732#14959#0" expanded="false" />
-                <element signature="e#15095#16845#0" expanded="false" />
-                <element signature="e#16315#16758#0" expanded="false" />
-                <element signature="e#16892#17732#0" expanded="false" />
-                <element signature="e#17425#17645#0" expanded="false" />
-                <element signature="e#17781#18637#0" expanded="false" />
-                <element signature="e#18328#18550#0" expanded="false" />
-                <element signature="e#18686#19770#0" expanded="false" />
-                <element signature="e#19394#19683#0" expanded="false" />
-                <element signature="e#19818#20666#0" expanded="false" />
-                <element signature="e#20357#20579#0" expanded="false" />
-                <element signature="e#20717#22650#0" expanded="false" />
-                <element signature="e#22041#22563#0" expanded="false" />
-                <element signature="e#22701#24498#0" expanded="false" />
-                <element signature="e#23905#24411#0" expanded="false" />
-                <element signature="e#24011#24061#0" expanded="false" />
+                <element signature="e#9920#11629#0" expanded="false" />
+                <element signature="e#10769#11468#0" expanded="false" />
+                <element signature="e#11717#13945#0" expanded="false" />
+                <element signature="e#11816#11867#0" expanded="false" />
+                <element signature="e#11954#11967#0" expanded="false" />
+                <element signature="e#12547#12584#0" expanded="false" />
+                <element signature="e#13048#13846#0" expanded="false" />
+                <element signature="e#13996#15005#0" expanded="false" />
+                <element signature="e#14426#14918#0" expanded="false" />
+                <element signature="e#15058#16081#0" expanded="false" />
+                <element signature="e#15501#15995#0" expanded="false" />
+                <element signature="e#16131#18031#0" expanded="false" />
+                <element signature="e#17222#17944#0" expanded="false" />
+                <element signature="e#18078#19057#0" expanded="false" />
+                <element signature="e#18483#18970#0" expanded="false" />
+                <element signature="e#19106#20101#0" expanded="false" />
+                <element signature="e#19525#20014#0" expanded="false" />
+                <element signature="e#20150#21376#0" expanded="false" />
+                <element signature="e#20729#21289#0" expanded="false" />
+                <element signature="e#21424#22409#0" expanded="false" />
+                <element signature="e#21834#22322#0" expanded="false" />
+                <element signature="e#22460#24551#0" expanded="false" />
+                <element signature="e#23655#24464#0" expanded="false" />
+                <element signature="e#24602#26526#0" expanded="false" />
+                <element signature="e#25677#26439#0" expanded="false" />
+                <element signature="e#26021#26071#0" expanded="false" />
                 <element signature="docComment;method#initialize#0;class#MainController#0" expanded="false" />
                 <element signature="method#initialize#0;class#MainController#0" expanded="false" />
-                <element signature="e#25753#25755#0" expanded="false" />
-                <element signature="e#25876#28533#0" expanded="false" />
-                <element signature="e#25915#28521#0" expanded="false" />
-                <element signature="e#28536#28588#0" expanded="false" />
+                <element signature="e#29155#29157#0" expanded="false" />
+                <element signature="e#29295#34182#0" expanded="false" />
+                <element signature="e#29728#34148#0" expanded="false" />
+                <element signature="e#30014#30068#0" expanded="false" />
+                <element signature="e#33593#33623#0" expanded="false" />
+                <element signature="e#34337#34389#0" expanded="false" />
+                <element signature="method#waitOfSpin#0;class#MainController#0" expanded="false" />
+                <element signature="method#submitOfSpin#0;class#MainController#0" expanded="false" />
+                <element signature="docComment;method#refreshTableView#0;class#MainController#0" expanded="false" />
                 <element signature="method#refreshTableView#0;class#MainController#0" expanded="false" />
+                <element signature="docComment;method#onAddButtonClicked#0;class#MainController#0" expanded="false" />
+                <element signature="method#onAddButtonClicked#0;class#MainController#0" expanded="false" />
+                <element signature="e#35104#36737#0" expanded="false" />
+                <element signature="docComment;method#onDeleteButtonClicked#0;class#MainController#0" expanded="false" />
                 <element signature="method#onDeleteButtonClicked#0;class#MainController#0" expanded="false" />
-                <element signature="e#30412#33025#0" expanded="false" />
+                <element signature="e#37021#39634#0" expanded="false" />
+                <element signature="docComment;method#actionSearch#0;class#MainController#0" expanded="false" />
                 <element signature="method#actionSearch#0;class#MainController#0" expanded="false" />
-                <element signature="e#33233#38509#0" expanded="false" />
-                <element signature="e#33566#33784#0" expanded="false" />
-                <element signature="e#34016#34240#0" expanded="false" />
-                <element signature="e#34476#34697#0" expanded="false" />
-                <element signature="e#34937#35160#0" expanded="false" />
-                <element signature="e#35394#35627#0" expanded="false" />
-                <element signature="e#35854#36071#0" expanded="false" />
-                <element signature="e#36303#36522#0" expanded="false" />
-                <element signature="e#36754#36974#0" expanded="false" />
-                <element signature="e#37203#37421#0" expanded="false" />
-                <element signature="e#37657#37880#0" expanded="false" />
-                <element signature="e#38116#38298#0" expanded="false" />
+                <element signature="e#39849#45125#0" expanded="false" />
+                <element signature="e#40182#40400#0" expanded="false" />
+                <element signature="e#40632#40856#0" expanded="false" />
+                <element signature="e#41092#41313#0" expanded="false" />
+                <element signature="e#41553#41776#0" expanded="false" />
+                <element signature="e#42010#42243#0" expanded="false" />
+                <element signature="e#42470#42687#0" expanded="false" />
+                <element signature="e#42919#43138#0" expanded="false" />
+                <element signature="e#43370#43590#0" expanded="false" />
+                <element signature="e#43819#44037#0" expanded="false" />
+                <element signature="e#44273#44496#0" expanded="false" />
+                <element signature="e#44732#44914#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DangKy.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/objects/DangKy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="282">
+              <caret line="191" column="60" lean-forward="false" selection-start-line="191" selection-start-column="60" selection-end-line="191" selection-end-column="60" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2442#2443#0" expanded="true" />
+                <element signature="e#2513#2514#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -129,18 +157,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>MONHOC</find>
-      <find>monHoc</find>
-      <find>mucThu</find>
-      <find>HOCPHAN</find>
-      <find>S</find>
       <find>synchronized</find>
       <find>searchC</find>
       <find>searchCommand</find>
@@ -166,9 +189,13 @@
       <find>see</find>
       <find>row</find>
       <find>event.getRowValue()</find>
+      <find>run</find>
+      <find>.start()</find>
+      <find>start()</find>
+      <find>last</find>
+      <find>MucThu_MonHoc_HocPhan</find>
     </findStrings>
     <replaceStrings>
-      <replace>SearchDB</replace>
       <replace>maGiangDuong</replace>
       <replace>doiTuong</replace>
       <replace>newDoiTuong</replace>
@@ -198,6 +225,7 @@
       <replace>apiNote</replace>
       <replace>rowChangeWhenCommit</replace>
       <replace>table.getItems().get(rowChangeWhenCommit)</replace>
+      <replace>start</replace>
     </replaceStrings>
   </component>
   <component name="FindManager">
@@ -213,7 +241,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/HOCPHAN" />
         <option value="$PROJECT_DIR$/src/DOITUONG" />
         <option value="$PROJECT_DIR$/src/TENSV" />
         <option value="$PROJECT_DIR$/src/NGAYSINH" />
@@ -237,16 +264,12 @@
         <option value="$PROJECT_DIR$/src/model/objects/MucThu.java" />
         <option value="$PROJECT_DIR$/src/model/database/DeleteDB.java" />
         <option value="$PROJECT_DIR$/src/view/Login.fxml" />
-        <option value="$PROJECT_DIR$/src/control/LoginController.java" />
         <option value="$PROJECT_DIR$/src/giangduong" />
         <option value="$PROJECT_DIR$/src/hp" />
         <option value="$PROJECT_DIR$/src/model/TestModelHere.java" />
-        <option value="$PROJECT_DIR$/src/model/objects/DangKy.java" />
         <option value="$PROJECT_DIR$/src/model/objects/LichSuPhieuThu.java" />
         <option value="$PROJECT_DIR$/src/control/container/MucThu_MonHoc_HocPhan.java" />
         <option value="$PROJECT_DIR$/src/view/SV.fxml" />
-        <option value="$PROJECT_DIR$/src/model/database/SearchDB.java" />
-        <option value="$PROJECT_DIR$/src/control/MainUserController.java" />
         <option value="$PROJECT_DIR$/src/view/InsertBoMon.fxml" />
         <option value="$PROJECT_DIR$/src/control/InsertBM.java" />
         <option value="$PROJECT_DIR$/src/Test.java" />
@@ -255,14 +278,19 @@
         <option value="$PROJECT_DIR$/src/view/style.css" />
         <option value="$PROJECT_DIR$/src/view/UI.fxml" />
         <option value="$PROJECT_DIR$/src/model/objects/DoiTuong.java" />
-        <option value="$PROJECT_DIR$/src/view/Main.java" />
         <option value="$PROJECT_DIR$/src/model/objects/Nganh.java" />
         <option value="$PROJECT_DIR$/src/model/objects/HocPhan.java" />
         <option value="$PROJECT_DIR$/src/model/objects/PhieuThu.java" />
         <option value="$PROJECT_DIR$/src/model/objects/SinhVien.java" />
+        <option value="$PROJECT_DIR$/src/view/Admin.fxml" />
+        <option value="$PROJECT_DIR$/src/model/database/SearchDB.java" />
+        <option value="$PROJECT_DIR$/src/control/LoginController.java" />
+        <option value="$PROJECT_DIR$/src/control/MainUserController.java" />
+        <option value="$PROJECT_DIR$/src/view/Main.java" />
         <option value="$PROJECT_DIR$/src/model/objects/BoMon.java" />
         <option value="$PROJECT_DIR$/src/control/add/InsertBM.java" />
-        <option value="$PROJECT_DIR$/src/view/Admin.fxml" />
+        <option value="$PROJECT_DIR$/src/view/alert.fxml" />
+        <option value="$PROJECT_DIR$/src/model/objects/DangKy.java" />
         <option value="$PROJECT_DIR$/src/control/MainController.java" />
       </list>
     </option>
@@ -298,8 +326,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -344,6 +370,13 @@
               <item name="quanly_hocphisinhvien" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="quanly_hocphisinhvien" type="b2602c69:ProjectViewProjectNode" />
+              <item name="quanly_hocphisinhvien" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
               <item name="objects" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -352,25 +385,12 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="quanly_hocphisinhvien" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="quanly_hocphisinhvien" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="mssql-jdbc-6.4.0.jre9" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="quanly_hocphisinhvien" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="mssql-jdbc-6.4.0.jre9" type="70bed36:NamedLibraryElementNode" />
-              <item name="mssql-jdbc-6.4.0.jre9.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -746,12 +766,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32771823" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30030257" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32771823" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27760968" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.49086758" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26952526" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3583461" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -760,47 +779,53 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" x="92" y="92" width="462" height="232" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" x="92" y="92" width="462" height="232" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.50913244" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32771823" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.49086758" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39816234" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3583461" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32771823" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" x="92" y="92" width="462" height="232" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.50913244" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32771823" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2473525" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26928896" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32771823" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
@@ -817,114 +842,18 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/model/objects/PhieuThu.java</url>
-          <line>153</line>
-          <properties />
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="76" />
+      <option name="time" value="80" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="JUnit">
-        <watch expression="((SQLServerResultSet42)rs).cekTable" custom="com.microsoft.sqlserver.jdbc.SQLServerResultSet42" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/giangduong">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5185">
-          <caret line="305" column="4" lean-forward="false" selection-start-line="305" selection-start-column="4" selection-end-line="305" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/TestModelHere.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="77" column="47" lean-forward="false" selection-start-line="77" selection-start-column="47" selection-end-line="77" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/database/InsertDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/javafx.fxml/javafx/fxml/FXMLLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="1786" column="0" lean-forward="false" selection-start-line="1786" selection-start-column="0" selection-end-line="1786" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/javafx.base/javafx/collections/ObservableList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="45" column="17" lean-forward="false" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/control/container/MucThu_MonHoc_HocPhan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="140" column="44" lean-forward="true" selection-start-line="140" selection-start-column="44" selection-end-line="140" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/util/concurrent/Executor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="130" column="15" lean-forward="false" selection-start-line="130" selection-start-column="15" selection-end-line="131" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/database/SearchDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="85" column="0" lean-forward="true" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/database/DeleteDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="29" column="29" lean-forward="true" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/javafx.controls/javafx/scene/control/TableView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="1090" column="15" lean-forward="false" selection-start-line="1090" selection-start-column="15" selection-end-line="1090" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/database/DB_Connection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/control/SearchController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/objects/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -940,25 +869,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/SV.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="28" lean-forward="false" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
       </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="28" lean-forward="false" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/Login.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="4301">
           <caret line="253" column="23" lean-forward="false" selection-start-line="253" selection-start-column="23" selection-end-line="253" selection-end-column="23" />
-          <folding />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/lang/Runnable.java">
@@ -975,23 +902,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/testTable.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="41" lean-forward="false" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/testTable.fxml" />
     <entry file="file://$PROJECT_DIR$/src/control/container/TableExample.java" />
     <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/javafx.controls/javafx/scene/control/cell/TextFieldTableCell.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="129">
           <caret line="88" column="67" lean-forward="false" selection-start-line="88" selection-start-column="67" selection-end-line="88" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1000,7 +916,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1018,19 +933,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="37" column="33" lean-forward="false" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/javafx.controls/javafx/scene/control/cell/CellUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
           <caret line="256" column="0" lean-forward="false" selection-start-line="256" selection-start-column="0" selection-end-line="256" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1038,7 +944,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="8863" column="0" lean-forward="false" selection-start-line="8863" selection-start-column="0" selection-end-line="8863" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1046,9 +951,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
           <caret line="2620" column="0" lean-forward="false" selection-start-line="2620" selection-start-column="0" selection-end-line="2620" selection-end-column="0" />
-          <folding>
-            <element signature="e#96799#96800#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1056,7 +958,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="348">
           <caret line="198" column="0" lean-forward="false" selection-start-line="198" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1064,7 +965,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
           <caret line="372" column="0" lean-forward="false" selection-start-line="372" selection-start-column="0" selection-end-line="372" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1072,15 +972,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
           <caret line="140" column="6" lean-forward="false" selection-start-line="140" selection-start-column="6" selection-end-line="140" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/objects/DangKy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1359">
-          <caret line="94" column="32" lean-forward="false" selection-start-line="94" selection-start-column="32" selection-end-line="94" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1088,7 +979,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="160" column="13" lean-forward="false" selection-start-line="160" selection-start-column="13" selection-end-line="160" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1096,7 +986,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1802">
           <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1104,7 +993,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="189" column="25" lean-forward="false" selection-start-line="189" selection-start-column="25" selection-end-line="189" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1112,31 +1000,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1700">
           <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/objects/LichSuPhieuThu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="56" column="24" lean-forward="true" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#691#692#0" expanded="true" />
-            <element signature="e#724#725#0" expanded="true" />
-            <element signature="e#775#776#0" expanded="true" />
-            <element signature="e#802#803#0" expanded="true" />
-            <element signature="e#839#840#0" expanded="true" />
-            <element signature="e#874#875#0" expanded="true" />
-            <element signature="e#909#910#0" expanded="true" />
-            <element signature="e#946#947#0" expanded="true" />
-            <element signature="e#1000#1001#0" expanded="true" />
-            <element signature="e#1031#1032#0" expanded="true" />
-            <element signature="e#1079#1080#0" expanded="true" />
-            <element signature="e#1122#1123#0" expanded="true" />
-            <element signature="e#1725#1726#0" expanded="true" />
-            <element signature="e#1779#1780#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1144,7 +1007,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="123" column="27" lean-forward="false" selection-start-line="123" selection-start-column="27" selection-end-line="123" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1152,156 +1014,181 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1869">
           <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/objects/Nganh.java">
+    <entry file="file://$PROJECT_DIR$/src/view/UI.fxml" />
+    <entry file="file://$PROJECT_DIR$/src/view/InsertBoMon.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="148" column="0" lean-forward="false" selection-start-line="144" selection-start-column="17" selection-end-line="148" selection-end-column="0" />
+        <state relative-caret-position="238">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/database/DB_Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="34" column="24" lean-forward="true" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/database/DeleteDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="29" column="29" lean-forward="true" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/Admin.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="79" column="45" lean-forward="true" selection-start-line="79" selection-start-column="45" selection-end-line="79" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/lang/System.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7107">
+          <caret line="1702" column="23" lean-forward="false" selection-start-line="1702" selection-start-column="23" selection-end-line="1702" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/javafx.base/javafx/collections/ObservableListBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="245" column="0" lean-forward="false" selection-start-line="245" selection-start-column="0" selection-end-line="245" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/control/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-242">
+          <caret line="64" column="44" lean-forward="false" selection-start-line="64" selection-start-column="44" selection-end-line="64" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/javafx.controls/javafx/scene/control/Alert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="219" column="18" lean-forward="true" selection-start-line="219" selection-start-column="18" selection-end-line="219" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="43" column="13" lean-forward="true" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/objects/SinhVien.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2635">
+          <caret line="198" column="25" lean-forward="false" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/objects/PhieuThu.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
+        <state relative-caret-position="2703">
           <caret line="196" column="25" lean-forward="false" selection-start-line="196" selection-start-column="25" selection-end-line="196" selection-end-column="25" />
-          <folding>
-            <element signature="method#PhieuThu#0;class#PhieuThu#0" expanded="false" />
-            <element signature="method#PhieuThu#1;class#PhieuThu#0" expanded="false" />
-            <element signature="method#getInstanceID#0;class#PhieuThu#0" expanded="false" />
-            <element signature="method#Search#0;class#Search#0;class#PhieuThu#0" expanded="false" />
-            <element signature="docComment;method#getAll#0;class#Search#0;class#PhieuThu#0" expanded="false" />
-            <element signature="method#toString#0;class#PhieuThu#0" expanded="false" />
-            <element signature="method#Insert#0;class#PhieuThu#0" expanded="false" />
-            <element signature="e#4933#4951#0" expanded="false" />
-            <element signature="class#Delete#0;class#PhieuThu#0" expanded="false" />
-            <element signature="docComment;method#where#0;class#Delete#0;class#PhieuThu#0" expanded="false" />
-            <element signature="method#where#0;class#Delete#0;class#PhieuThu#0" expanded="false" />
-            <element signature="docComment;method#where#0;class#Update#0;class#PhieuThu#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/objects/SinhVien.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="198" column="25" lean-forward="false" selection-start-line="198" selection-start-column="25" selection-end-line="198" selection-end-column="25" />
-          <folding>
-            <element signature="method#SinhVien#0;class#SinhVien#0" expanded="false" />
-            <element signature="method#SinhVien#1;class#SinhVien#0" expanded="false" />
-            <element signature="method#getInstanceID#0;class#SinhVien#0" expanded="false" />
-            <element signature="class#Search#0;class#SinhVien#0" expanded="false" />
-            <element signature="method#Search#0;class#Search#0;class#SinhVien#0" expanded="false" />
-            <element signature="method#where#0;class#Search#0;class#SinhVien#0" expanded="false" />
-            <element signature="docComment;method#getAll#0;class#Search#0;class#SinhVien#0" expanded="false" />
-            <element signature="method#getAll#0;class#Search#0;class#SinhVien#0" expanded="false" />
-            <element signature="method#Insert#0;class#SinhVien#0" expanded="false" />
-            <element signature="e#3843#3953#0" expanded="false" />
-            <element signature="e#4499#4610#0" expanded="false" />
-            <element signature="class#Delete#0;class#SinhVien#0" expanded="false" />
-            <element signature="docComment;method#where#0;class#Delete#0;class#SinhVien#0" expanded="false" />
-            <element signature="method#where#0;class#Delete#0;class#SinhVien#0" expanded="false" />
-            <element signature="method#toString#0;class#SinhVien#0" expanded="false" />
-            <element signature="docComment;method#where#0;class#Update#0;class#SinhVien#0" expanded="false" />
-            <element signature="method#whereId#0;class#Update#0;class#SinhVien#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/objects/BoMon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="156" column="18" lean-forward="true" selection-start-line="156" selection-start-column="18" selection-end-line="156" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/control/LoginController.java">
+    <entry file="file://$PROJECT_DIR$/src/model/objects/Nganh.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="58" column="79" lean-forward="false" selection-start-line="58" selection-start-column="74" selection-end-line="58" selection-end-column="79" />
+        <state relative-caret-position="2091">
+          <caret line="148" column="0" lean-forward="false" selection-start-line="144" selection-start-column="17" selection-end-line="148" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/Admin.fxml">
+    <entry file="file://$PROJECT_DIR$/src/model/constract/IInsert.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-716">
-          <caret line="79" column="45" lean-forward="true" selection-start-line="79" selection-start-column="45" selection-end-line="79" selection-end-column="45" />
-          <folding>
-            <marker date="1521789567552" expanded="true" signature="5561:7791" ph="..." />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/UI.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="139" column="20" lean-forward="true" selection-start-line="139" selection-start-column="20" selection-end-line="139" selection-end-column="20" />
+        <state relative-caret-position="102">
+          <caret line="6" column="18" lean-forward="false" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="18" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/InsertBoMon.fxml">
+    <entry file="file://$PROJECT_DIR$/src/model/database/InsertDB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        <state relative-caret-position="544">
+          <caret line="38" column="25" lean-forward="false" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="25" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/control/add/InsertBM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-123">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        <state relative-caret-position="510">
+          <caret line="46" column="36" lean-forward="false" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/database/SearchDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5100">
+          <caret line="308" column="22" lean-forward="false" selection-start-line="308" selection-start-column="22" selection-end-line="308" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/alert.fxml" />
+    <entry file="file://$PROJECT_DIR$/src/model/objects/BoMon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="16" column="33" lean-forward="true" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+          <folding>
+            <element signature="e#1170#1171#0" expanded="true" />
+            <element signature="e#1206#1207#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/control/MainUserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="156" column="5" lean-forward="false" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
+        <state relative-caret-position="202">
+          <caret line="223" column="46" lean-forward="true" selection-start-line="223" selection-start-column="46" selection-end-line="223" selection-end-column="46" />
           <folding>
-            <element signature="e#1733#1789#0" expanded="false" />
-            <element signature="e#2212#3166#0" expanded="false" />
-            <element signature="e#2246#3158#0" expanded="false" />
-            <element signature="e#2288#2326#0" expanded="false" />
-            <element signature="e#2448#2495#0" expanded="false" />
-            <element signature="e#2730#2816#0" expanded="false" />
-            <element signature="e#3031#3146#0" expanded="false" />
-            <element signature="e#3216#4846#0" expanded="false" />
-            <element signature="e#3250#4838#0" expanded="false" />
-            <element signature="e#4604#4736#0" expanded="false" />
+            <element signature="e#1847#1903#0" expanded="false" />
+            <element signature="e#2326#3351#0" expanded="false" />
+            <element signature="e#2360#3343#0" expanded="false" />
+            <element signature="e#2402#2440#0" expanded="false" />
+            <element signature="e#2562#2609#0" expanded="false" />
+            <element signature="e#2749#2835#0" expanded="false" />
+            <element signature="e#3050#3331#0" expanded="false" />
+            <element signature="e#3401#5120#0" expanded="false" />
+            <element signature="e#3435#5112#0" expanded="false" />
+            <element signature="e#4583#5010#0" expanded="false" />
             <element signature="method#actionDelete#0;class#MainUserController#0" expanded="false" />
-            <element signature="method#actionLookHistoryRegis#0;class#MainUserController#0" expanded="false" />
-            <element signature="e#5246#5265#0" expanded="false" />
+            <element signature="e#5520#5539#0" expanded="false" />
             <element signature="method#actionLookTax#0;class#MainUserController#0" expanded="false" />
-            <element signature="method#actionRegis#0;class#MainUserController#0" expanded="false" />
             <element signature="method#actionSearchSubjectRegis#0;class#MainUserController#0" expanded="false" />
-            <element signature="e#7668#7865#0" expanded="false" />
-            <element signature="e#8068#8251#0" expanded="false" />
+            <element signature="e#8231#8444#0" expanded="false" />
+            <element signature="e#8598#8797#0" expanded="false" />
+            <element signature="e#8902#8977#0" expanded="false" />
             <element signature="method#actionSearchSubjectRegisted#0;class#MainUserController#0" expanded="false" />
+            <element signature="e#9673#9974#0" expanded="false" />
             <element signature="method#actionSubmit#0;class#MainUserController#0" expanded="false" />
             <element signature="method#initialize#0;class#MainUserController#0" expanded="false" />
             <element signature="docComment;method#addAllTable#0;class#MainUserController#0" expanded="false" />
             <element signature="method#addAllTable#0;class#MainUserController#0" expanded="false" />
-            <element signature="e#11261#11321#0" expanded="false" />
-            <element signature="e#11511#13367#0" expanded="false" />
+            <element signature="e#12286#12346#0" expanded="false" />
+            <element signature="e#12536#14501#0" expanded="false" />
+            <element signature="e#14231#14488#0" expanded="false" />
             <element signature="method#refreshAll#0;class#MainUserController#0" expanded="false" />
             <element signature="method#bringMeBack#0;class#MainUserController#0" expanded="false" />
+            <element signature="method#refresh#0;class#MainUserController#0" expanded="false" />
             <element signature="method#initEnableAllButton#0;class#MainUserController#0" expanded="false" />
             <element signature="docComment;method#initDisableAllButton#0;class#MainUserController#0" expanded="false" />
             <element signature="method#initDisableAllButton#0;class#MainUserController#0" expanded="false" />
@@ -1309,65 +1196,121 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/control/container/MucThu_MonHoc_HocPhan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="190" column="41" lean-forward="false" selection-start-line="190" selection-start-column="41" selection-end-line="190" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/objects/LichSuPhieuThu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/database/UpdateDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/javafx.base/javafx/beans/property/StringProperty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="64" column="10" lean-forward="false" selection-start-line="64" selection-start-column="10" selection-end-line="64" selection-end-column="10" />
+          <folding>
+            <element signature="e#1467#1468#0" expanded="false" />
+            <element signature="e#1489#1490#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/objects/DangKy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="191" column="60" lean-forward="false" selection-start-line="191" selection-start-column="60" selection-end-line="191" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2442#2443#0" expanded="true" />
+            <element signature="e#2513#2514#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/control/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="159" column="0" lean-forward="true" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+        <state relative-caret-position="234">
+          <caret line="103" column="52" lean-forward="true" selection-start-line="103" selection-start-column="52" selection-end-line="103" selection-end-column="52" />
           <folding>
-            <element signature="method#handlerEventCommit#0;class#MainController#0" expanded="false" />
+            <element signature="docComment;method#handlerEventCommit#0;class#MainController#0" expanded="false" />
             <element signature="docComment;method#setEditCellEnable#0;class#MainController#0" expanded="false" />
-            <element signature="method#setEditCellEnable#0;class#MainController#0" expanded="false" />
-            <element signature="e#6586#6611#0" expanded="false" />
-            <element signature="e#7923#7996#0" expanded="false" />
+            <element signature="e#7033#7058#0" expanded="false" />
+            <element signature="e#8370#8443#0" expanded="false" />
             <element signature="docComment;field#allData#0;class#MainController#0" expanded="false" />
-            <element signature="e#9458#10966#0" expanded="false" />
-            <element signature="e#10506#10906#0" expanded="false" />
-            <element signature="e#11054#13118#0" expanded="false" />
-            <element signature="e#11153#11204#0" expanded="false" />
-            <element signature="e#11291#11304#0" expanded="false" />
-            <element signature="e#12210#12247#0" expanded="false" />
-            <element signature="e#12711#13019#0" expanded="false" />
-            <element signature="e#13169#14074#0" expanded="false" />
-            <element signature="e#13762#13987#0" expanded="false" />
-            <element signature="e#14127#15045#0" expanded="false" />
-            <element signature="e#14732#14959#0" expanded="false" />
-            <element signature="e#15095#16845#0" expanded="false" />
-            <element signature="e#16315#16758#0" expanded="false" />
-            <element signature="e#16892#17732#0" expanded="false" />
-            <element signature="e#17425#17645#0" expanded="false" />
-            <element signature="e#17781#18637#0" expanded="false" />
-            <element signature="e#18328#18550#0" expanded="false" />
-            <element signature="e#18686#19770#0" expanded="false" />
-            <element signature="e#19394#19683#0" expanded="false" />
-            <element signature="e#19818#20666#0" expanded="false" />
-            <element signature="e#20357#20579#0" expanded="false" />
-            <element signature="e#20717#22650#0" expanded="false" />
-            <element signature="e#22041#22563#0" expanded="false" />
-            <element signature="e#22701#24498#0" expanded="false" />
-            <element signature="e#23905#24411#0" expanded="false" />
-            <element signature="e#24011#24061#0" expanded="false" />
+            <element signature="e#9920#11629#0" expanded="false" />
+            <element signature="e#10769#11468#0" expanded="false" />
+            <element signature="e#11717#13945#0" expanded="false" />
+            <element signature="e#11816#11867#0" expanded="false" />
+            <element signature="e#11954#11967#0" expanded="false" />
+            <element signature="e#12547#12584#0" expanded="false" />
+            <element signature="e#13048#13846#0" expanded="false" />
+            <element signature="e#13996#15005#0" expanded="false" />
+            <element signature="e#14426#14918#0" expanded="false" />
+            <element signature="e#15058#16081#0" expanded="false" />
+            <element signature="e#15501#15995#0" expanded="false" />
+            <element signature="e#16131#18031#0" expanded="false" />
+            <element signature="e#17222#17944#0" expanded="false" />
+            <element signature="e#18078#19057#0" expanded="false" />
+            <element signature="e#18483#18970#0" expanded="false" />
+            <element signature="e#19106#20101#0" expanded="false" />
+            <element signature="e#19525#20014#0" expanded="false" />
+            <element signature="e#20150#21376#0" expanded="false" />
+            <element signature="e#20729#21289#0" expanded="false" />
+            <element signature="e#21424#22409#0" expanded="false" />
+            <element signature="e#21834#22322#0" expanded="false" />
+            <element signature="e#22460#24551#0" expanded="false" />
+            <element signature="e#23655#24464#0" expanded="false" />
+            <element signature="e#24602#26526#0" expanded="false" />
+            <element signature="e#25677#26439#0" expanded="false" />
+            <element signature="e#26021#26071#0" expanded="false" />
             <element signature="docComment;method#initialize#0;class#MainController#0" expanded="false" />
             <element signature="method#initialize#0;class#MainController#0" expanded="false" />
-            <element signature="e#25753#25755#0" expanded="false" />
-            <element signature="e#25876#28533#0" expanded="false" />
-            <element signature="e#25915#28521#0" expanded="false" />
-            <element signature="e#28536#28588#0" expanded="false" />
+            <element signature="e#29155#29157#0" expanded="false" />
+            <element signature="e#29295#34182#0" expanded="false" />
+            <element signature="e#29728#34148#0" expanded="false" />
+            <element signature="e#30014#30068#0" expanded="false" />
+            <element signature="e#33593#33623#0" expanded="false" />
+            <element signature="e#34337#34389#0" expanded="false" />
+            <element signature="method#waitOfSpin#0;class#MainController#0" expanded="false" />
+            <element signature="method#submitOfSpin#0;class#MainController#0" expanded="false" />
+            <element signature="docComment;method#refreshTableView#0;class#MainController#0" expanded="false" />
             <element signature="method#refreshTableView#0;class#MainController#0" expanded="false" />
+            <element signature="docComment;method#onAddButtonClicked#0;class#MainController#0" expanded="false" />
+            <element signature="method#onAddButtonClicked#0;class#MainController#0" expanded="false" />
+            <element signature="e#35104#36737#0" expanded="false" />
+            <element signature="docComment;method#onDeleteButtonClicked#0;class#MainController#0" expanded="false" />
             <element signature="method#onDeleteButtonClicked#0;class#MainController#0" expanded="false" />
-            <element signature="e#30412#33025#0" expanded="false" />
+            <element signature="e#37021#39634#0" expanded="false" />
+            <element signature="docComment;method#actionSearch#0;class#MainController#0" expanded="false" />
             <element signature="method#actionSearch#0;class#MainController#0" expanded="false" />
-            <element signature="e#33233#38509#0" expanded="false" />
-            <element signature="e#33566#33784#0" expanded="false" />
-            <element signature="e#34016#34240#0" expanded="false" />
-            <element signature="e#34476#34697#0" expanded="false" />
-            <element signature="e#34937#35160#0" expanded="false" />
-            <element signature="e#35394#35627#0" expanded="false" />
-            <element signature="e#35854#36071#0" expanded="false" />
-            <element signature="e#36303#36522#0" expanded="false" />
-            <element signature="e#36754#36974#0" expanded="false" />
-            <element signature="e#37203#37421#0" expanded="false" />
-            <element signature="e#37657#37880#0" expanded="false" />
-            <element signature="e#38116#38298#0" expanded="false" />
+            <element signature="e#39849#45125#0" expanded="false" />
+            <element signature="e#40182#40400#0" expanded="false" />
+            <element signature="e#40632#40856#0" expanded="false" />
+            <element signature="e#41092#41313#0" expanded="false" />
+            <element signature="e#41553#41776#0" expanded="false" />
+            <element signature="e#42010#42243#0" expanded="false" />
+            <element signature="e#42470#42687#0" expanded="false" />
+            <element signature="e#42919#43138#0" expanded="false" />
+            <element signature="e#43370#43590#0" expanded="false" />
+            <element signature="e#43819#44037#0" expanded="false" />
+            <element signature="e#44273#44496#0" expanded="false" />
+            <element signature="e#44732#44914#0" expanded="false" />
           </folding>
         </state>
       </provider>
